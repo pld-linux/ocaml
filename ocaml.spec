@@ -16,14 +16,23 @@ License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	51530ed183b511ce19fed325c8ab1b43
 Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
+# Source1-md5:	2b555271d2630698fcd3a9b9acfd1440
 Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
+# Source2-md5:	7a23eb2287e04d359500dcaa8a8b504c
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.html.tar.gz
+# Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.dvi.gz
+# Source4-md5:	035915d1a530aa7ec9b194d9a7d258eb
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
+# Source5-md5:	96d8eb4ca5abd58c9a280ba59f73b192
 Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.dvi.gz
+# Source6-md5:	fcd87c235109364242a0c9ccf176dff8
 Source7:	http://www.oefai.at/~markus/ocaml_sources/pure-fun-1.0.4.tar.bz2
+# Source7-md5:	567bc681b4cc1cfcbbfb6fa5f012019b
 Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
+# Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-manlinks.patch
 Patch2:		%{name}-db3.patch
