@@ -1,0 +1,50 @@
+diff -ur ocaml-3.04/tools/objinfo.ml ocaml-3.04-/tools/objinfo.ml
+--- ocaml-3.04/tools/objinfo.ml	Mon Mar 27 14:18:09 2000
++++ ocaml-3.04-/tools/objinfo.ml	Wed May  8 11:30:02 2002
+@@ -62,6 +62,29 @@
+       print_string name; print_newline())
+     crcs
+ 
++let print_opt_info ui =
++  print_string "  Unit name: "; print_string ui.Compilenv.ui_name; 
++  print_newline();
++  print_string "  Interfaces imported:"; print_newline();
++  List.iter
++    (fun (name, digest) ->
++      print_string "\t"; print_digest digest; print_string "\t";
++      print_string name; print_newline())
++    ui.Compilenv.ui_imports_cmi;
++  print_string "  Infos imported:"; print_newline();
++  List.iter
++    (fun (name, digest) ->
++      print_string "\t"; print_digest digest; print_string "\t";
++      print_string name; print_newline())
++    ui.Compilenv.ui_imports_cmx
++
++let print_opt_library_info lib =
++  print_string "  Extra C object files:";
++  List.iter print_spaced_string lib.Compilenv.lib_ccobjs; print_newline();
++  print_string "  Extra C options:";
++  List.iter print_spaced_string lib.Compilenv.lib_ccopts; print_newline();
++  List.iter print_opt_info (List.map fst lib.Compilenv.lib_units)
++
+ let dump_obj filename =
+   print_string "File "; print_string filename; print_newline();
+   let ic = open_in_bin filename in
+@@ -86,6 +109,16 @@
+     let crcs = input_value ic in
+     close_in ic;
+     print_intf_info name sign comps crcs
++  end else 
++  if buffer = cmx_magic_number then begin
++     let ui = (input_value ic : Compilenv.unit_infos) in
++     close_in ic;
++     print_opt_info ui
++  end else 
++  if buffer = cmxa_magic_number then begin
++     let li = (input_value ic : Compilenv.library_infos) in
++     close_in ic;
++     print_opt_library_info li
+   end else begin
+     prerr_endline "Not an object file"; exit 2
+   end
