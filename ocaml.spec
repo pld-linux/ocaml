@@ -10,7 +10,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	5
+Release:	6
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -34,6 +34,8 @@ BuildRequires:	db3-devel
 %{!?_without_emacs:BuildRequires:	xemacs-common}
 %{!?_without_emacs:BuildRequires:	xemacs-fsf-compat-pkg}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		no_install_post_strip	1
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
