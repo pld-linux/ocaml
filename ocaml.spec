@@ -1,36 +1,47 @@
-
-# conditional build:
-# --without emacs
-# --without tk
-# --without x11  (implies --without tk)
+#
+# Conditional build:
+# --without emacs	- don't build with emacs
+# --without tk		- don't build with tk
+# --without x11		- don't build with X11 (implies --without tk)
 
 %{?_without_x11:%define	_without_tk	1}
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.05
-Release:	1
+Version:	3.06
+Release:	3
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
-Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.ps.gz
-Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.html.tar.gz
-Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.ps.gz
+Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	51530ed183b511ce19fed325c8ab1b43
+Source1:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
+# Source1-md5:	2b555271d2630698fcd3a9b9acfd1440
+Source2:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
+# Source2-md5:	7a23eb2287e04d359500dcaa8a8b504c
+Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.html.tar.gz
+# Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
+Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.dvi.gz
+# Source4-md5:	035915d1a530aa7ec9b194d9a7d258eb
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
-Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.ps.gz
+# Source5-md5:	96d8eb4ca5abd58c9a280ba59f73b192
+Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.dvi.gz
+# Source6-md5:	fcd87c235109364242a0c9ccf176dff8
+Source7:	http://www.oefai.at/~markus/ocaml_sources/pure-fun-1.0.4.tar.bz2
+# Source7-md5:	567bc681b4cc1cfcbbfb6fa5f012019b
+Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
+# Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch0:		%{name}-build.patch
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-manlinks.patch
-Patch3:		%{name}-db3.patch
-Patch4:		%{name}-powerpcfix.patch
-Patch5:		%{name}-objinfo.patch
-Patch6:		%{name}-opt-symbols.patch
-Patch7:		%{name}-mano.patch
+Patch1:		%{name}-manlinks.patch
+Patch2:		%{name}-db3.patch
+Patch3:		%{name}-objinfo.patch
+Patch4:		%{name}-opt-symbols.patch
+Patch5:		%{name}-mano.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
+Obsoletes:	ocaml-ocamldoc
+Provides:	ocaml-ocamldoc
 BuildRequires:	db3-devel
 %{!?_without_tk:BuildRequires:		tk-devel}
 %{!?_without_x11:BuildRequires:		XFree86-devel}
@@ -235,27 +246,43 @@ This sources come helpful during debugging of user programs with ocamldebug.
 ¬ród³a te co¶ przydatne przy odpluskwianiu programów u¿ytkownika
 z u¿yciem ocamldebug.
 
+# maybe we'll want to add some more stuff here?
+%package examples
+Summary:	Example source code for OCaml
+Summary(pl):	Przyk³adowe kody ¼ród³owe w OCamlu
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+
+%description examples
+This packages contains sources for Okasaki's Purely Functional 
+Datastructures in OCaml, along with some contributions.
+
+%description examples -l pl
+Pakiet ten zawiera ¼ród³a Czysto-Funkcjonalnych Struktur Danych 
+Okasaki'ego, prze³o¿one na OCamla, wraz z dodatkami.
+
 %prep
 %setup -q -T -b 0
 %setup -q -T -D -a 1
+%setup -q -T -D -c -n %{name}-%{version}/examples -a 7
+%setup -q -T -D -c -n %{name}-%{version}/examples -a 8
+%setup -q -T -D -n %{name}-%{version} -a 3
+%setup -q -T -D -n %{name}-%{version} -a 5
 # order mess with docs somewhat
 mkdir docs
 mkdir docs/html
 mv htmlman docs/html/ocaml
 cp %{SOURCE2} docs/ocaml.ps.gz
-%setup -q -T -D -a 3
-mv camlp4-%{version}-refman.html docs/html/camlp4
+mv camlp4-%{version}-manual.html docs/html/camlp4
 cp %{SOURCE4} docs/camlp4.ps.gz
-%setup -q -T -D -a 5
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
 cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+#%patch4 -p1
 %patch5 -p1
-#%patch6 -p1
-%patch7 -p1
 
 %build
 ./configure \
@@ -264,7 +291,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
 	-host %{_host} \
-	%{?_without_tk:-notk} \
+	%{?_without_tk:-no-tk} \
 	-with-pthread
 
 %{__make} world bootstrap opt.opt
@@ -272,6 +299,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_includedir},%{_examplesdir}/%{name}{,-labltk}-%{version}}
 
 %{__make} install \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
@@ -304,7 +332,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*.mli
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.ml{,i}
 
 # move includes to the proper place
-install -d $RPM_BUILD_ROOT%{_includedir}
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
 ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
@@ -317,14 +344,13 @@ done
 
 # this isn't installed by default, but is useful
 install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
+cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 # shutup checkfiles
-#rm -f $RPM_BUILD_ROOT%{_mandir}/man3
+rm -rf $RPM_BUILD_ROOT%{_mandir}/man3
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
 %clean
@@ -337,15 +363,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
-%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
-%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
+%{!?_without_tk:%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so}
+%{!?_without_tk:%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so}
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
 %doc docs/html/ocaml
 %attr(755,root,root) %{_bindir}/ocaml*
-%exclude %{_bindir}/ocamlbrowser
+%{!?_without_tk:%exclude %{_bindir}/ocamlbrowser}
 %exclude %{_bindir}/ocamlrun
 %attr(755,root,root) %{_bindir}/*labels
 %{_includedir}/caml
@@ -369,6 +395,10 @@ rm -rf $RPM_BUILD_ROOT
 %files lib-source
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/*.ml
+
+%files examples
+%defattr(644,root,root,755)
+%{_examplesdir}/%{name}-%{version}
 
 # they are poor, html is much better
 #%files manpages
@@ -410,6 +440,7 @@ rm -rf $RPM_BUILD_ROOT
 %files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*.cm*
+%{_libdir}/%{name}/graphics.a
 %{_libdir}/%{name}/libgraphics.a
 
 %files x11graphics
