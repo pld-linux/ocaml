@@ -15,13 +15,12 @@ License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.info.tar.gz
-Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
-Source3:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.ps.gz
-Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.html.tar.gz
-Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.ps.gz
-Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
-Source7:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.ps.gz
+Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
+Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.ps.gz
+Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.html.tar.gz
+Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.ps.gz
+Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
+Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.ps.gz
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-manlinks.patch
@@ -67,17 +66,6 @@ PostScript documentation for OCaml.
 
 %description doc-ps -l pl
 Dokumentacja dla OCamla w formacie PostSript.
-
-%package doc-html
-Summary:	HTML documentation for OCaml
-Summary(pl):	Dokumentacja dla OCaml-a w formacie HTML
-Group:		Development/Tools
-
-%description doc-html
-HTML documentation for OCaml.
-
-%description doc-html -l pl
-Dokumentacja dla OCaml-a w formacie HTML.
 
 %package emacs
 Summary:	Emacs mode for OCaml
@@ -221,18 +209,17 @@ OCamla. S± one wymagane do kompilacji niektórych programów.
 %prep
 %setup -q -T -b 0
 %setup -q -T -D -a 1
-%setup -q -T -D -a 2
 # order mess with docs somewhat
 mkdir docs
 mkdir docs/html
 mv htmlman docs/html/ocaml
-cp %{SOURCE3} docs/ocaml.ps.gz
-%setup -q -T -D -a 4
+cp %{SOURCE2} docs/ocaml.ps.gz
+%setup -q -T -D -a 3
 mv camlp4-%{version}-refman.html docs/html/camlp4
-cp %{SOURCE5} docs/camlp4.ps.gz
-%setup -q -T -D -a 6
+cp %{SOURCE4} docs/camlp4.ps.gz
+%setup -q -T -D -a 5
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
-cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
+cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 
 %patch0 -p1
 %patch1 -p1
@@ -262,20 +249,8 @@ sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/
 %{__make} -C camlp4 optp4
 %{__make} -C tools objinfo
 
-# hack info pages to contain dir entry
-cat <<EOF >infoman/ocaml.info
-INFO-DIR-SECTION Programming Languages:
-START-INFO-DIR-ENTRY
-* Ocaml: (ocaml).                             The Ocaml language
-END-INFO-DIR-ENTRY
-EOF
-zcat infoman/ocaml.info.gz >> infoman/ocaml.info
-
-gzip -9nf infoman/ocaml.info
-
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_infodir}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
@@ -324,17 +299,8 @@ mv otherlibs/labltk/example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{vers
 
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
-install infoman/*info* $RPM_BUILD_ROOT%{_infodir}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
-%postun
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
 
 %files runtime
 %defattr(644,root,root,755)
@@ -344,6 +310,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
+%doc docs/html/*
 %attr(755,root,root) %{_bindir}/ocaml
 %attr(755,root,root) %{_bindir}/ocaml[cmdlopy]*
 %attr(755,root,root) %{_bindir}/*labels
@@ -368,7 +335,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/camlheader_ur
 %attr(755,root,root) %{_libdir}/%{name}/*labels
 %{_mandir}/man*/*ocaml*
-%{_infodir}/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -420,7 +386,3 @@ rm -rf $RPM_BUILD_ROOT
 %files doc-ps
 %defattr(644,root,root,755)
 %doc docs/*.ps.gz
-
-%files doc-html
-%defattr(644,root,root,755)
-%doc docs/html/*
