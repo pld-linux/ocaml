@@ -7,10 +7,10 @@
 %{?_without_x11:%define	_without_tk	1}
 
 Summary:	The Objective Caml compiler and programming environment
-Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
+Summary(pl):	Kompilator Obiektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.06
-Release:	3
+Release:	4
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -38,6 +38,7 @@ Patch2:		%{name}-db3.patch
 Patch3:		%{name}-objinfo.patch
 Patch4:		%{name}-opt-symbols.patch
 Patch5:		%{name}-mano.patch
+Patch6:		%{name}-nomanpages.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 Obsoletes:	ocaml-ocamldoc
@@ -283,6 +284,9 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch3 -p1
 #%patch4 -p1
 %patch5 -p1
+%ifarch alpha
+%patch6 -p1
+%endif
 
 %build
 ./configure \
