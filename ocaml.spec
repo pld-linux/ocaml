@@ -39,12 +39,9 @@ Source7:	http://www.oefai.at/~markus/ocaml_sources/pure-fun-1.0.4.tar.bz2
 Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
 # Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch0:		%{name}-build.patch
-Patch1:		%{name}-manlinks.patch
-Patch2:		%{name}-db3.patch
-Patch3:		%{name}-objinfo.patch
-Patch4:		%{name}-opt-symbols.patch
-Patch5:		%{name}-mano.patch
-Patch6:		%{name}-tk8.4.patch
+Patch1:		%{name}-db3.patch
+Patch2:		%{name}-objinfo.patch
+Patch3:		%{name}-mano.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 Obsoletes:	ocaml-ocamldoc
@@ -52,7 +49,7 @@ Provides:	ocaml-ocamldoc
 %{?with_x11:BuildRequires:		XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
-%{?with_tk:BuildRequires:		tk-devel >= 8.4.3}
+%{?with_tk:BuildRequires:		tk-devel}
 %if %{with emacs}
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
@@ -287,12 +284,9 @@ cp %{SOURCE4} docs/camlp4.ps.gz
 mv camlp4-%{p4ver}-tutorial.html docs/html/camlp4-tutorial
 cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
-%patch5 -p1
-#%patch6 -p1
 
 %build
 ./configure \
@@ -390,6 +384,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/caml
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/threads
+%dir %{_libdir}/%{name}/vmthreads
+%dir %{_libdir}/%{name}/vmthreads/*.cm*
+%dir %{_libdir}/%{name}/vmthreads/*.a
 %{_libdir}/%{name}/*.a
 %{_libdir}/%{name}/*.o
 %{_libdir}/%{name}/*.cm*
@@ -398,7 +395,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/camlheader
 %{_libdir}/%{name}/camlheader_ur
 %dir %{_libdir}/%{name}/ocamldoc
-%{_libdir}/%{name}/ocamldoc/*.sty
 %{_libdir}/%{name}/ocamldoc/*.hva
 %attr(755,root,root) %{_libdir}/%{name}/expunge
 %attr(755,root,root) %{_libdir}/%{name}/extract_crc
@@ -409,6 +405,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/*.ml
 %{_libdir}/%{name}/*.mli
+%{_libdir}/%{name}/*/*.mli
 
 %files examples
 %defattr(644,root,root,755)
