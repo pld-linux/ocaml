@@ -310,7 +310,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
-%doc docs/html/*
+%doc docs/html/ocaml
 %attr(755,root,root) %{_bindir}/ocaml
 %attr(755,root,root) %{_bindir}/ocaml[cmdlopy]*
 %attr(755,root,root) %{_bindir}/*labels
@@ -342,6 +342,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files camlp4
 %defattr(644,root,root,755)
+%doc docs/html/camlp4*
 %attr(755,root,root) %{_bindir}/*camlp4*
 %attr(755,root,root) %{_bindir}/ocpp
 %attr(755,root,root) %{_bindir}/odyl
