@@ -204,6 +204,7 @@ Summary:	Compiled parts of OCaml compiler
 Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	ocaml-devel
 
 %description compiler-objects
 This package contains *.cmi and *.cmo files being parts of OCaml
