@@ -7,10 +7,12 @@ URL:		http://pauillac.inria.fr/caml/
 Vendor:		Group of implementors <caml-light@inria.fr>
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
-Patch0:		ocaml-ext_prof.patch
-Patch1:		ocaml-opt.patch
+Patch0:		%{name}-ext_prof.patch
+Patch1:		%{name}-opt.patch
 Copyright:	Distributable
 Group:		Development/Languages
+Group(de):	Entwicklung/Sprachen
+Group(pl):	Programowanie/Jêzyki
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -18,19 +20,23 @@ Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
 
 This package comprises two batch compilers (a fast bytecode compiler
-and an optimizing native-code compiler), an interactive toplevel system,
-Lex&Yacc tools, a replay debugger, and a comprehensive library.
+and an optimizing native-code compiler), an interactive toplevel
+system, Lex&Yacc tools, a replay debugger, and a comprehensive
+library.
 
 %description -l pl
 Objektowy Caml jest funkcjonalnym, obiektowo zorientowanym jêzykiem
 wysokiego poziomu rodziny jêzyków ML.
 
-Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode
-oraz zoptymalizowany natywny kompilator), interaktywny g³ówny system,
+Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode oraz
+zoptymalizowany natywny kompilator), interaktywny g³ówny system,
 narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 
 %package emacs
 Group:		Development/Tools
+Group(de):	Entwicklung/Werkzeuge
+Group(fr):	Development/Outils
+Group(pl):	Programowanie/Narzêdzia
 Summary:	Emacs mode for OCaml
 Summary(pl):	Tryb Emacsa dla OCaml
 Requires:	%{name} = %{version}
@@ -61,6 +67,7 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
 
 %install
+rm -rf $RPM_BUILD_ROOT
 umask 022
 rm -rf $RPM_BUILD_ROOT
 echo	BINDIR=$RPM_BUILD_ROOT%{_bindir} >> config/Makefile
@@ -81,7 +88,7 @@ mv -f ocamlc		$RPM_BUILD_ROOT%{_bindir}/ocamlc.byte
 mv -f ocamlc.opt	$RPM_BUILD_ROOT%{_bindir}/ocamlc
 mv -f ocamlopt		$RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
 mv -f ocamlopt.opt	$RPM_BUILD_ROOT%{_bindir}/ocamlopt
-rm -f			$RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
+rm -f -f			$RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
 
 strip			$RPM_BUILD_ROOT%{_bindir}/* || :
 %clean
