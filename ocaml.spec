@@ -14,17 +14,17 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.07
-Release:	8
+Version:	3.08
+Release:	1	
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2dd038055f5e1350078ad81270411b78
+Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.0.tar.gz
+# Source0-md5:	c6ef478362295c150101cdd2efcd38e0
 Source1:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
-# Source1-md5:	9ac1f7e9e381b95504f0e7868d9fbf52
+# Source1-md5:	0daee5643db6960682c1a7d84467885f
 Source2:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
-# Source2-md5:	09a9ac4bc1ec90ca4d16743ffbe76c78
+# Source2-md5:	35a5d4318456c0982e72ee3f33364bf5
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
@@ -274,7 +274,7 @@ Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -a1 -a3 -a5
+%setup -q -a1 -a3 -a5 -n %{name}-%{version}.0
 mkdir examples
 tar xjf %{SOURCE7} -C examples
 tar xzf %{SOURCE8} -C examples
@@ -290,9 +290,9 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+#%patch3 -p1
+#%patch4 -p1
+#%patch5 -p1
 #%patch6 -p1
 
 %build
