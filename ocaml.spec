@@ -358,15 +358,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
-%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
-%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
+%{!?_without_tk:%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so}
+%{!?_without_tk:%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so}
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
 %doc docs/html/ocaml
 %attr(755,root,root) %{_bindir}/ocaml*
-%exclude %{_bindir}/ocamlbrowser
+%{!?_without_tk:%exclude %{_bindir}/ocamlbrowser}
 %exclude %{_bindir}/ocamlrun
 %attr(755,root,root) %{_bindir}/*labels
 %{_includedir}/caml
