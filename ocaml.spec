@@ -7,10 +7,10 @@
 %{?_without_x11:%define	_without_tk	1}
 
 Summary:	The Objective Caml compiler and programming environment
-Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
+Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	6
+Release:	7
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -27,7 +27,9 @@ Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-manlinks.patch
 Patch3:		%{name}-db3.patch
 Patch4:		%{name}-powerpcfix.patch
+Patch5:		%{name}-objinfo.patch
 URL:		http://caml.inria.fr/
+Requires:	ocaml-runtime = %{version}-%{release}
 BuildRequires:	db3-devel
 %{!?_without_tk:BuildRequires:		tk-devel}
 %{!?_without_x11:BuildRequires:		XFree86-devel}
@@ -58,25 +60,23 @@ narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 Summary:	PostScript documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie PostSript
 Group:		Development/Tools
-Requires:	%{name} = %{version}
 
 %description doc-ps
-PostScript documentation for OCaml
+PostScript documentation for OCaml.
 
 %description doc-ps -l pl
-Dokumentacja dla OCaml-a w formacie PostSript
+Dokumentacja dla OCamla w formacie PostSript.
 
 %package doc-html
 Summary:	HTML documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie HTML
 Group:		Development/Tools
-Requires:	%{name} = %{version}
 
 %description doc-html
-HTML documentation for OCaml
+HTML documentation for OCaml.
 
 %description doc-html -l pl
-Dokumentacja dla OCaml-a w formacie HTML
+Dokumentacja dla OCaml-a w formacie HTML.
 
 %package emacs
 Summary:	Emacs mode for OCaml
@@ -85,43 +85,93 @@ Group:		Development/Tools
 Requires:	%{name} = %{version}
 
 %description emacs
-Emacs mode files for Objective Caml language
+Emacs mode files for Objective Caml language.
 
 %description emacs -l pl
-Pliki trybu Emacsa dla jêzyka Objektowego Caml
+Pliki trybu Emacsa dla jêzyka Objektowego Camla.
 
-%package labltk
+%package runtime
+Summary:	Runtime system for OCaml
+Summary(pl):	¦rodowisko uruchomieniowe dla OCamla
+Group:		Libraries
+
+%description runtime
+This package contains binaries needed to run bytecode OCaml programs:
+ocamlrun bytecode interpreter, and basic dynamic link libraries.
+
+%description runtime -l pl
+Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
+OCamlu skompilowanych do bytecodu: interpreter bytecodu ocamlrun oraz
+podstawowe bibliotki linkowane dynamicznie.
+
+%package labltk-devel
 Summary:	LabelTk library for OCaml
 Summary(pl):	Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name}-labltk = %{version}-%{release}
+
+%description labltk-devel
+LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
+contains files needed to develop OCaml programs using LablTk.
+
+%description labltk-devel -l pl
+Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
+Tcl/Tk. Pakiet ten zawiera pliki niezbêdne do tworzenia programów
+u¿ywaj±cych LablTk.
+
+%package labltk
+Summary:	Runtime for LabelTk library
+Summary(pl):	¦rodowisko uruchomieniowe dla biblioteki LablTk
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description labltk
-LablTk gives OCaml program access to Tcl/Tk GUI widgets.
+LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
+contains files needed to run bytecode OCaml programs using LablTk.
 
 %description labltk -l pl
 Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
-Tcl/Tk.
+Tcl/Tk. Pakiet ten zawiera binaria potrzebne do uruchamiania programów
+u¿ywaj±cych LablTk.
+
+%package x11graphics-devel
+Summary:	X11 graphic output for OCaml
+Summary(pl):	Iksowe wyj¶cie graficzne dla OCamla
+Group:		Development/Libraries
+Requires:	%{name}-x11graphics = %{version}-%{release}
+
+%description x11graphics-devel
+x11graphics module gives OCaml program access to drawing in X11
+windows. This package contains files needed to develop OCaml programs
+using x11graphics.
+
+%description x11graphics-devel -l pl
+Modu³ x11graphics daje programom napisanym w OCamlu dostêp do
+rysowania po oknach X11. Pakiet ten zawiera pliki niezbêdne do
+tworzenia programów u¿ywaj±cych x11graphics.
 
 %package x11graphics
 Summary:	X11 graphic output for OCaml
 Summary(pl):	Iksowe wyj¶cie graficzne dla OCamla
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description x11graphics
-This package gives OCaml program access to drawing in X11 windows.
+x11graphics module gives OCaml program access to drawing in X11
+windows. This package contains files needed to run bytecode OCaml
+programs using x11graphics.
 
 %description x11graphics -l pl
-Ten pakiet daje programom napisanym w OCamlu dostêp do rysowania po
-oknach X11.
+Modu³ x11graphics daje programom napisanym w OCamlu dostêp do
+rysowania po oknach X11. Pakiet ten zawiera binaria potrzebne do
+uruchamiania programów u¿ywaj±cych x11graphics.
 
 %package camlp4
 Summary:	Objective Caml Preprocessor
 Summary(pl):	Preprocesor Ocamla
 Group:		Development/Languages
-Requires:	%{name} = %{version}
-Provides:	camlp4 = %{version}
+Requires:	%{name} = %{version}-%{release}
+Provides:	camlp4 = %{version}-%{release}
 Obsoletes:	camlp4
 
 %description camlp4
@@ -153,6 +203,20 @@ Camlp4 umie ³adnie wypisaæ normaln± sk³adniê Camla lub "poprawion±".
 Dziêki temu jest mo¿liwe posiadanie wersji swoich ¼róde³
 kompilowalnych przez kompilatora Ocamla bez preprocesingu.
 
+%package devel
+Summary:	Compiled parts of OCaml compiler
+Summary(pl):	Skompilowane kawa³ki kompilatora OCamla
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+
+%description devel
+This package contains *.cmi and *.cmo files being parts of OCaml
+compiler. They are needed to compile some programs.
+
+%description devel -l pl
+Pakiet ten zawiera pliki *.cmi oraz *.cmo bêd±ce cze¶ciami kompilatora
+OCamla. S± one wymagane do kompilacji niektórych programów.
+
 %prep
 %setup -q -T -b 0
 %setup -q -T -D -a 1
@@ -176,6 +240,7 @@ cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
 %ifarch ppc
 %patch4 -p1
 %endif
+%patch5 -p1
 
 %build
 ./configure \
@@ -193,6 +258,7 @@ sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/
 
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
 %{__make} -C camlp4 optp4
+%{__make} -C tools objinfo
 
 # hack info pages to contain dir entry
 cat <<EOF >infoman/ocaml.info
@@ -218,9 +284,7 @@ install -d $RPM_BUILD_ROOT%{_infodir}
 	EMACSDIR="%{_libdir}/emacs/site-lisp"
 %endif
 
-cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
-	$RPM_BUILD_ROOT%{_libdir}/%{name}
-
+# symlink .opt versions of compilers (if present)
 for f in ocamlc ocamlopt; do
 	if test -f $RPM_BUILD_ROOT%{_bindir}/$f.opt; then
 		mv -f $RPM_BUILD_ROOT%{_bindir}/$f \
@@ -229,7 +293,37 @@ for f in ocamlc ocamlopt; do
 	fi
 done
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*.ml{,i}
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.ml{,i}
+
+# move includes to the proper place
+install -d $RPM_BUILD_ROOT%{_includedir}
+mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/ocaml
+# but leave compatibility symlink
+ln -s ../../include/ocaml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
+
+# compiled sourec of compiler, needed by some programs
+install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler
+cp {{asm,byte}comp,parsing,typing,utils}/*.{cmi,cmo,cmx,o} \
+	$RPM_BUILD_ROOT%{_libdir}/%{name}/compiler
+
+# this isn't installed by default, but is useful
+install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
+
+# instead of adding new directories to ld.conf, we use single dirctory
+# for dlls comming from other packages, they should be symlinked here
+echo %{_libdir}/%{name} > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf
+
+
+%{!?_without_tk:(cd $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk && ln -s dll*.so ..)}
+
+# dirty hack:
+# ocamlc.opt doesn't work correctly while making toplevel with threads
+cp $RPM_BUILD_ROOT%{_bindir}/ocamlmktop{,.tmp}
+sed -e 's/ocamlc/ocamlc.byte/' $RPM_BUILD_ROOT%{_bindir}/ocamlmktop.tmp \
+	> $RPM_BUILD_ROOT%{_bindir}/ocamlmktop
+rm -f $RPM_BUILD_ROOT%{_bindir}/ocamlmktop.tmp
+
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 install infoman/*info* $RPM_BUILD_ROOT%{_infodir}
@@ -246,25 +340,28 @@ rm -rf $RPM_BUILD_ROOT
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 
+%files runtime
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ocamlrun
+%attr(755,root,root) %{_libdir}/%{name}/dll[bmnstu]*.so
+
 %files
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755,root,root) %{_bindir}/ocaml
-%attr(755,root,root) %{_bindir}/ocaml[cmdlopry]*
+%attr(755,root,root) %{_bindir}/ocaml[cmdlopy]*
 %attr(755,root,root) %{_bindir}/*labels
+%{_includedir}/ocaml
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/threads
 %{_libdir}/%{name}/[abefhimnopqrstuw]*.*
 %{_libdir}/%{name}/callback.*
 %{_libdir}/%{name}/char.*
-%{_libdir}/%{name}/condition.*
 %{_libdir}/%{name}/dbm.*
 %{_libdir}/%{name}/digest.*
 %{_libdir}/%{name}/dynlink.*
-%attr(755,root,root) %{_libdir}/%{name}/dll[bmnstu]*.so
 %{_libdir}/%{name}/g[ce]*.*
 %{_libdir}/%{name}/l*.cm*
-%{_libdir}/%{name}/l*.mli
 %{_libdir}/%{name}/lib[abc]*.a
 %{_libdir}/%{name}/libmldbm.a
 %{_libdir}/%{name}/lib[nstu]*.a
@@ -277,6 +374,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man*/*ocaml*
 %{_infodir}/*
 
+%files devel
+%defattr(644,root,root,755)
+%{_libdir}/%{name}/compiler
+
 %files camlp4
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*camlp4*
@@ -287,24 +388,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man*/*ocpp*
 
 %if %{!?_without_tk:1}%{?_without_tk:0}
-%files labltk
+%files labltk-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/labltk
 %attr(755,root,root) %{_bindir}/ocamlbrowser
 %dir %{_libdir}/%{name}/labltk
 %{_libdir}/%{name}/labltk/*.cm*
 %{_libdir}/%{name}/labltk/*.a
-%{_libdir}/%{name}/labltk/*.mli
-%attr(755,root,root) %{_libdir}/%{name}/labltk/*.so
-%attr(755,root,root) %{_libdir}/%{name}/labltk/labltktop
 %attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
+
+%files labltk
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/labltk/dlllabltk*
+%{_libdir}/%{name}/dlllabltk*
 %endif
 
 %if %{!?_without_x11:1}%{?_without_x11:0}
-%files x11graphics
+%files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*
 %{_libdir}/%{name}/libgraphics.a
+
+%files x11graphics
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/dllgraphics.so
 %endif
 
