@@ -33,12 +33,12 @@ zoptymalizowany natywny kompilator), interaktywny g³ówny system,
 narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 
 %package emacs
+Summary:	Emacs mode for OCaml
+Summary(pl):	Tryb Emacsa dla OCaml
 Group:		Development/Tools
 Group(de):	Entwicklung/Werkzeuge
 Group(fr):	Development/Outils
 Group(pl):	Programowanie/Narzêdzia
-Summary:	Emacs mode for OCaml
-Summary(pl):	Tryb Emacsa dla OCaml
 Requires:	%{name} = %{version}
 # xemacs doesn't have Provide emacs ?
 #BuildRequires:	emacs
@@ -57,7 +57,7 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 
 %build
 ./configure \
-	-cc "cc $RPM_OPT_FLAGS" \
+	-cc "%{__cc} %{rpmcflags}" \
 	-bindir %{_bindir} \
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
@@ -69,7 +69,6 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 %install
 rm -rf $RPM_BUILD_ROOT
 umask 022
-rm -rf $RPM_BUILD_ROOT
 echo	BINDIR=$RPM_BUILD_ROOT%{_bindir} >> config/Makefile
 echo	LIBDIR=$RPM_BUILD_ROOT%{_libdir}/%{name} >> config/Makefile
 echo	MANDIR=$RPM_BUILD_ROOT%{_mandir}/man1 >> config/Makefile
@@ -81,16 +80,15 @@ make	install
 cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}
 			
-gzip -9nf LICENSE Changes README $RPM_BUILD_ROOT%{_mandir}/man*/*
+gzip -9nf LICENSE Changes README
 
 cd $RPM_BUILD_ROOT%{_bindir}
 mv -f ocamlc		$RPM_BUILD_ROOT%{_bindir}/ocamlc.byte
 mv -f ocamlc.opt	$RPM_BUILD_ROOT%{_bindir}/ocamlc
 mv -f ocamlopt		$RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
 mv -f ocamlopt.opt	$RPM_BUILD_ROOT%{_bindir}/ocamlopt
-rm -f -f			$RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
+rm -f			$RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
 
-strip			$RPM_BUILD_ROOT%{_bindir}/* || :
 %clean
 rm -rf $RPM_BUILD_ROOT
 
