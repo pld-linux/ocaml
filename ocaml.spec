@@ -186,7 +186,9 @@ cp config/Makefile config/Makefile.tmp
 sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/Makefile
 
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
+%ifnarch ppc
 %{__make} -C camlp4 optp4
+%endif
 
 # hack info pages to contain dir entry
 cat <<EOF >infoman/ocaml.info
@@ -216,8 +218,11 @@ cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}
 
 for f in ocamlc ocamlopt camlp4o camlp4r; do
-	mv -f $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT%{_bindir}/$f.byte
-	ln -sf %{_bindir}/$f.opt $RPM_BUILD_ROOT%{_bindir}/$f
+	if test -f $RPM_BUILD_ROOT%{_bindir}/$f.opt; then
+		mv -f $RPM_BUILD_ROOT%{_bindir}/$f \
+			$RPM_BUILD_ROOT%{_bindir}/$f.byte
+		ln -sf %{_bindir}/$f.opt $RPM_BUILD_ROOT%{_bindir}/$f
+	fi
 done
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
