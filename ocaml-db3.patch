@@ -1,7 +1,7 @@
 diff -ur ocaml-3.07beta2/configure ocaml-3.07beta2-/configure
 --- ocaml-3.07beta2/configure	2003-08-20 17:10:58.000000000 +0200
 +++ ocaml-3.07beta2-/configure	2003-08-26 11:12:29.000000000 +0200
-@@ -1225,49 +1225,12 @@
+@@ -1225,51 +1225,12 @@
  
  # See if we can compile the dbm library
  
@@ -20,6 +20,8 @@ diff -ur ocaml-3.07beta2/configure ocaml-3.07beta2-/configure
 -      dbm_link="-ldb1"
 -    elif sh ./hasgot -lgdbm dbm_open; then
 -      dbm_link="-lgdbm"
+-    elif sh ./hasgot -lgdbm_compat -lgdbm dbm_open; then
+-      dbm_link="-lgdbm_compat -lgdbm" 
 -    fi
 -    break
 -  fi
