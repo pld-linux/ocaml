@@ -1,7 +1,7 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	2.02
+Version:	2.04
 Release:	1
 URL:		http://pauillac.inria.fr/caml/
 Vendor:		Group of implementors <caml-light@inria.fr>
