@@ -1,11 +1,13 @@
 #
 # Conditional build:
-# _without_emacs	- without emacs subpackage
-# _without_tk		- without tk support
-# _without_x11		- without X11 support (implies --without tk)
-# _with_db3		- use db3 instead of db 4.x
-#
-%{?_without_x11:%define	_without_tk	1}
+
+%bcond_without emacs	# emacs subpackage
+%bcond_without x11	# without X11 support 
+%bcond_without tk	# tk support
+%bcond_with db3		# use db3 instead of db 4.x
+
+# --without x11 implies --without tk
+%{!?with_x11:%undefine	with_tk}
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
@@ -44,13 +46,15 @@ URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 Obsoletes:	ocaml-ocamldoc
 Provides:	ocaml-ocamldoc
-%{!?_without_x11:BuildRequires:		XFree86-devel}
-%{?_with_db3:BuildRequires:	db3-devel}
-%{!?_with_db3:BuildRequires:	db-devel >= 4.1}
-%{!?_without_tk:BuildRequires:		tk-devel >= 8.4.3}
-%{!?_without_emacs:BuildRequires:	xemacs}
-%{!?_without_emacs:BuildRequires:	xemacs-common}
-%{!?_without_emacs:BuildRequires:	xemacs-fsf-compat-pkg}
+%{?with_x11:BuildRequires:		XFree86-devel}
+%{?with_db3:BuildRequires:	db3-devel}
+%{!?with_db3:BuildRequires:	db-devel >= 4.1}
+%{?with_tk:BuildRequires:		tk-devel >= 8.4.3}
+%if %{with emacs}
+BuildRequires:	xemacs
+BuildRequires:	xemacs-common
+BuildRequires:	xemacs-fsf-compat-pkg
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -294,7 +298,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
 	-host %{_host} \
-	%{?_without_tk:-no-tk} \
+	%{!?with_tk:-no-tk} \
 	-with-pthread
 
 %{__make} world bootstrap opt.opt
@@ -313,7 +317,7 @@ cat > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf <<EOF
 %{_libdir}/%{name}
 EOF
 
-%if %{!?_without_emacs:1}%{?_without_emacs:0}
+%if %{with emacs}
 %{__make} -C emacs DESTDIR=$RPM_BUILD_ROOT install \
 	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
 	        else echo xemacs; fi`" \
@@ -367,8 +371,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
-%{!?_without_tk:%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so}
-%{!?_without_tk:%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so}
+%if %{with tk}
+%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
+%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
+%endif
 
 %files
 %defattr(644,root,root,755)
@@ -424,7 +430,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man*/*camlp4*
 %{_mandir}/man*/*ocpp*
 
-%if %{!?_without_tk:1}%{?_without_tk:0}
+%if %{with tk}
 %files labltk-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/labltk
@@ -441,7 +447,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
 %endif
 
-%if %{!?_without_x11:1}%{?_without_x11:0}
+%if %{with x11}
 %files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*.cm*
@@ -453,7 +459,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dllgraphics.so
 %endif
 
-%if %{!?_without_emacs:1}%{?_without_emacs:0}
+%if %{with emacs}
 %files emacs
 %defattr(644,root,root,755)
 %{_datadir}/emacs/site-lisp/*.el*
