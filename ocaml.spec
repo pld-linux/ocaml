@@ -43,13 +43,13 @@ Patch2:		%{name}-objinfo.patch
 Patch3:		%{name}-mano.patch
 Patch4:		%{name}-unused-var-warning.patch
 Patch5:		%{name}-3.07-patch2.diffs
+Patch6:		%{name}-emacs_batch_mode.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:		XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
 %{?with_tk:BuildRequires:		tk-devel}
 %if %{with emacs}
-BuildRequires:	emacs
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
@@ -292,6 +292,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 ./configure \
