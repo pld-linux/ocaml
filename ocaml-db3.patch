@@ -12,3 +12,50 @@ diff -ur ocaml-3.04--/otherlibs/dbm/cldbm.c ocaml-3.04/otherlibs/dbm/cldbm.c
  #include <alloc.h>
  #include <memory.h>
 
+diff -ur ocaml-3.04/configure ocaml-3.04-/configure
+--- ocaml-3.04/configure	Fri Dec  7 14:23:01 2001
++++ ocaml-3.04-/configure	Mon Jun  3 15:25:25 2002
+@@ -1065,38 +1065,11 @@
+ 
+ # See if we can compile the dbm library
+ 
+-dbm_include="not found"
+-dbm_link="not found"
+-for dir in /usr/include /usr/include/db1 /usr/include/gdbm; do
+-  if test -f $dir/ndbm.h; then
+-    dbm_include=$dir
+-    if sh ./hasgot dbm_open; then
+-      dbm_link=""
+-    elif sh ./hasgot -lndbm dbm_open; then
+-      dbm_link="-lndbm"
+-    elif sh ./hasgot -ldb1 dbm_open; then
+-      dbm_link="-ldb1"
+-    elif sh ./hasgot -lgdbm dbm_open; then
+-      dbm_link="-lgdbm"
+-    else
+-      dbm_include="not found"
+-    fi
+-    break
+-  fi
+-done
+-if test "$dbm_include" = "not found"; then
+-  echo "NDBM not found, the \"dbm\" library will not be supported."
+-else
+-  echo "NDBM found (in $dbm_include)"
+-  if test "$dbm_include" = "/usr/include"; then
+-    dbm_include=""
+-  else
+-    dbm_include="-I$dbm_include"
+-  fi
+-  echo "DBM_INCLUDES=$dbm_include" >> Makefile
+-  echo "DBM_LINK=$dbm_link" >> Makefile
+-  otherlibraries="$otherlibraries dbm"
+-fi
++dbm_include=""
++dbm_link="-ldb"
++echo "DBM_INCLUDES=$dbm_include" >> Makefile
++echo "DBM_LINK=$dbm_link" >> Makefile
++otherlibraries="$otherlibraries dbm"
+ 
+ # Look for tcl/tk
+ 
