@@ -40,9 +40,9 @@ Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
-Patch3:		%{name}-mano.patch
-Patch4:		%{name}-unused-var-warning.patch
-Patch5:		%{name}-3.07-patch2.diffs
+#Patch3:		%{name}-mano.patch
+#Patch4:		%{name}-unused-var-warning.patch
+#Patch5:		%{name}-3.07-patch2.diffs
 #Patch6:		%{name}-emacs_batch_mode.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:		XFree86-devel}
