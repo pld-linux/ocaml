@@ -10,7 +10,7 @@ Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.02
 Release:	3
-License:	Distributable
+License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Group(de):	Entwicklung/Sprachen
