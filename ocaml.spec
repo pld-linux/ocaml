@@ -9,17 +9,17 @@
 # --without x11 implies --without tk
 %{!?with_x:%undefine	with_tk}
 
-%define p4ver 3.06
+%define		p4ver	3.06
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.08
+Version:	3.08.0
 Release:	1	
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.0.tar.gz
+Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	c6ef478362295c150101cdd2efcd38e0
 Source1:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
 # Source1-md5:	0daee5643db6960682c1a7d84467885f
@@ -45,10 +45,10 @@ Patch2:		%{name}-objinfo.patch
 #Patch5:		%{name}-3.07-patch2.diffs
 #Patch6:		%{name}-emacs_batch_mode.patch
 URL:		http://caml.inria.fr/
-%{?with_x:BuildRequires:		XFree86-devel}
+%{?with_x:BuildRequires:	XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
-%{?with_tk:BuildRequires:		tk-devel}
+%{?with_tk:BuildRequires:	tk-devel}
 %if %{with emacs}
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
@@ -274,7 +274,7 @@ Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -a1 -a3 -a5 -n %{name}-%{version}.0
+%setup -q -a1 -a3 -a5
 mkdir examples
 tar xjf %{SOURCE7} -C examples
 tar xzf %{SOURCE8} -C examples
