@@ -8,7 +8,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	1
+Release:	2
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -260,6 +260,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/lib[abc]*.a
 %{_libdir}/%{name}/libmldbm.a
 %{_libdir}/%{name}/lib[nstu]*.a
+%{_libdir}/%{name}/ld.conf
 %attr(755,root,root) %{_libdir}/%{name}/expunge
 %attr(755,root,root) %{_libdir}/%{name}/extract_crc
 %{_libdir}/%{name}/camlheader
