@@ -10,7 +10,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	3
+Release:	4
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -186,6 +186,7 @@ cp config/Makefile config/Makefile.tmp
 sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/Makefile
 
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
+%{__make} -C camlp4 optp4
 
 # hack info pages to contain dir entry
 cat <<EOF >infoman/ocaml.info
@@ -214,12 +215,12 @@ install -d $RPM_BUILD_ROOT%{_infodir}
 cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlc $RPM_BUILD_ROOT%{_bindir}/ocamlc.byte
-ln -sf %{_bindir}/ocamlc.opt $RPM_BUILD_ROOT%{_bindir}/ocamlc
-mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlopt $RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
-ln -sf %{_bindir}/ocamlopt.opt $RPM_BUILD_ROOT%{_bindir}/ocamlopt
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
+for f in ocamlc ocamlopt camlp4o camlp4r; do
+	mv -f $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT%{_bindir}/$f.byte
+	ln -sf %{_bindir}/$f.opt $RPM_BUILD_ROOT%{_bindir}/$f
+done
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 install infoman/*info* $RPM_BUILD_ROOT%{_infodir}
