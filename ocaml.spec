@@ -9,14 +9,14 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.05
+Version:	3.06
 Release:	1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
-Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.ps.gz
+Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
+Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.html.tar.gz
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.dvi.gz
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
