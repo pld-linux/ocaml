@@ -1,7 +1,7 @@
 diff -ur ocaml-3.04/byterun/meta.c ocaml-3.04-/byterun/meta.c
 --- ocaml-3.04/byterun/meta.c	Fri Dec  7 14:39:32 2001
-+++ ocaml-3.04-/byterun/meta.c	Fri May 10 10:03:30 2002
-@@ -142,4 +142,19 @@
++++ ocaml-3.04-/byterun/meta.c	Mon May 20 23:54:41 2002
+@@ -142,4 +142,29 @@
    return Val_unit; /* not reached */
  }
  
@@ -20,10 +20,20 @@ diff -ur ocaml-3.04/byterun/meta.c ocaml-3.04-/byterun/meta.c
 +void print_exception_backtrace(void) { }
 +struct longjmp_buffer * external_raise;
 +
++value array_get(value array, value index) {return Val_unit;}
++value array_get_addr(value array, value index) {return Val_unit;} 
++value array_get_float(value array, value index) {return Val_unit;}
++value array_set(value array, value index, value newval) {return Val_unit;}
++value array_set_addr(value array, value index, value newval) {return Val_unit;}
++value array_set_float(value array, value index, value newval) {return Val_unit;}
++header_t atom_table[1];
++c_primitive builtin_cprim[1];
++struct caml__roots_block *local_roots;
++
  #endif
 diff -ur ocaml-3.04/otherlibs/systhreads/Makefile ocaml-3.04-/otherlibs/systhreads/Makefile
---- ocaml-3.04/otherlibs/systhreads/Makefile	Fri May 10 10:15:25 2002
-+++ ocaml-3.04-/otherlibs/systhreads/Makefile	Fri May 10 10:12:23 2002
+--- ocaml-3.04/otherlibs/systhreads/Makefile	Fri Dec  7 14:40:18 2001
++++ ocaml-3.04-/otherlibs/systhreads/Makefile	Mon May 20 23:50:18 2002
 @@ -31,7 +31,7 @@
  allopt: libthreadsnat.a threads.cmxa
  
