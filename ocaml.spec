@@ -282,7 +282,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
 	-host %{_host} \
-	%{?_without_tk:-notk} \
+	%{?_without_tk:-no-tk} \
 	-with-pthread
 
 %{__make} world bootstrap opt.opt
