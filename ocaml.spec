@@ -28,6 +28,7 @@ Patch2:		%{name}-manlinks.patch
 Patch3:		%{name}-db3.patch
 Patch4:		%{name}-powerpcfix.patch
 Patch5:		%{name}-objinfo.patch
+Patch6:		%{name}-opt-symbols.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 BuildRequires:	db3-devel
@@ -241,6 +242,7 @@ cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
 %patch4 -p1
 %endif
 %patch5 -p1
+%patch6 -p1
 
 %build
 ./configure \
@@ -298,7 +300,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.ml{,i}
 
 # move includes to the proper place
 install -d $RPM_BUILD_ROOT%{_includedir}
-mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/ocaml
+mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
 ln -s ../../include/ocaml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
 
@@ -314,15 +316,10 @@ install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
 # for dlls comming from other packages, they should be symlinked here
 echo %{_libdir}/%{name} > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf
 
+%{!?_without_tk:(cd $RPM_BUILD_ROOT%{_libdir}/%{name} && ln -s labltk/dll*.so .)}
 
-%{!?_without_tk:(cd $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk && ln -s dll*.so ..)}
-
-# dirty hack:
-# ocamlc.opt doesn't work correctly while making toplevel with threads
-cp $RPM_BUILD_ROOT%{_bindir}/ocamlmktop{,.tmp}
-sed -e 's/ocamlc/ocamlc.byte/' $RPM_BUILD_ROOT%{_bindir}/ocamlmktop.tmp \
-	> $RPM_BUILD_ROOT%{_bindir}/ocamlmktop
-rm -f $RPM_BUILD_ROOT%{_bindir}/ocamlmktop.tmp
+install -d $RPM_BUILD_ROOT%{_examplesdir}
+mv otherlibs/labltk/example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
@@ -351,7 +348,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocaml
 %attr(755,root,root) %{_bindir}/ocaml[cmdlopy]*
 %attr(755,root,root) %{_bindir}/*labels
-%{_includedir}/ocaml
+%{_includedir}/caml
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/threads
 %{_libdir}/%{name}/[abefhimnopqrstuw]*.*
@@ -396,6 +393,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/labltk/*.cm*
 %{_libdir}/%{name}/labltk/*.a
 %attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
+%{_examplesdir}/%{name}-labltk-%{version}
 
 %files labltk
 %defattr(644,root,root,755)
