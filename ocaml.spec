@@ -1,14 +1,12 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	2.04
+Version:	3.01
 Release:	1
 URL:		http://pauillac.inria.fr/caml/
 Vendor:		Group of implementors <caml-light@inria.fr>
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
-Patch0:		%{name}-ext_prof.patch
-Patch1:		%{name}-opt.patch
 Copyright:	Distributable
 Group:		Development/Languages
 Group(de):	Entwicklung/Sprachen
@@ -52,8 +50,6 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 %prep
 %setup -q -T -b 0
 %setup -q -T -D -a 1
-%patch0 -p0
-%patch1 -p1
 
 %build
 ./configure \
@@ -67,6 +63,7 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
 
 %install
+
 rm -rf $RPM_BUILD_ROOT
 umask 022
 echo	BINDIR=$RPM_BUILD_ROOT%{_bindir} >> config/Makefile
