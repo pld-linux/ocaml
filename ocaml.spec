@@ -17,18 +17,17 @@ Group:		Development/Languages
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
 Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.ps.gz
-Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.html.tar.gz
-Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-refman.ps.gz
+Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.html.tar.gz
+Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.dvi.gz
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
-Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.ps.gz
+Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.dvi.gz
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-manlinks.patch
 Patch3:		%{name}-db3.patch
-Patch4:		%{name}-powerpcfix.patch
-Patch5:		%{name}-objinfo.patch
-Patch6:		%{name}-opt-symbols.patch
-Patch7:		%{name}-mano.patch
+Patch4:		%{name}-objinfo.patch
+Patch5:		%{name}-opt-symbols.patch
+Patch6:		%{name}-mano.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 BuildRequires:	db3-devel
@@ -250,12 +249,11 @@ cp %{SOURCE4} docs/camlp4.ps.gz
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
 cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch5 -p1
-#%patch6 -p1
-%patch7 -p1
+#%patch5 -p1
+%patch6 -p1
 
 %build
 ./configure \
