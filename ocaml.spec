@@ -22,12 +22,11 @@ Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manu
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
 Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.dvi.gz
 Patch0:		%{name}-build.patch
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-manlinks.patch
-Patch3:		%{name}-db3.patch
-Patch4:		%{name}-objinfo.patch
-Patch5:		%{name}-opt-symbols.patch
-Patch6:		%{name}-mano.patch
+Patch1:		%{name}-manlinks.patch
+Patch2:		%{name}-db3.patch
+Patch3:		%{name}-objinfo.patch
+Patch4:		%{name}-opt-symbols.patch
+Patch5:		%{name}-mano.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 Obsoletes:	ocaml-ocamldoc
@@ -245,7 +244,7 @@ mkdir docs/html
 mv htmlman docs/html/ocaml
 cp %{SOURCE2} docs/ocaml.ps.gz
 %setup -q -T -D -a 3
-mv camlp4-%{version}-refman.html docs/html/camlp4
+mv camlp4-%{version}-manual.html docs/html/camlp4
 cp %{SOURCE4} docs/camlp4.ps.gz
 %setup -q -T -D -a 5
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
@@ -254,8 +253,8 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch5 -p1
-%patch6 -p1
+#%patch4 -p1
+%patch5 -p1
 
 %build
 ./configure \
@@ -324,7 +323,7 @@ cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 # shutup checkfiles
-#rm -f $RPM_BUILD_ROOT%{_mandir}/man3
+rm -rf $RPM_BUILD_ROOT%{_mandir}/man3
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
 %clean
@@ -410,6 +409,7 @@ rm -rf $RPM_BUILD_ROOT
 %files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*.cm*
+%{_libdir}/%{name}/graphics.a
 %{_libdir}/%{name}/libgraphics.a
 
 %files x11graphics
