@@ -2,7 +2,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.02
-Release:	1
+Release:	2
 License:	Distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -16,6 +16,8 @@ BuildRequires:	tk-devel
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		no_install_post_strip	1
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -61,7 +63,7 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 	-bindir %{_bindir} \
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
-	-host %{_host_alias} \
+	-host %{_host} \
 	-with-pthread
 
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt \
@@ -94,9 +96,9 @@ cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}
 			
 mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlc $RPM_BUILD_ROOT%{_bindir}/ocamlc.byte
-mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlc.opt $RPM_BUILD_ROOT%{_bindir}/ocamlc
+ln -sf %{_bindir}/ocamlc.opt $RPM_BUILD_ROOT%{_bindir}/ocamlc
 mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlopt $RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
-mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlopt.opt $RPM_BUILD_ROOT%{_bindir}/ocamlopt
+ln -sf %{_bindir}/ocamlopt.opt $RPM_BUILD_ROOT%{_bindir}/ocamlopt
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
 
 install -d $RPM_BUILD_ROOT%{_infodir}
@@ -118,7 +120,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755, root, root) %{_bindir}/*
-%{_libdir}/%{name}
+%{_libdir}/%{name}/caml
+%{_libdir}/%{name}/labltk
+%{_libdir}/%{name}/threads
+%{_libdir}/%{name}/*.*
+%attr(755,root,root) %{_libdir}/%{name}/expunge
+%attr(755,root,root) %{_libdir}/%{name}/extract_crc
+%attr(755,root,root) %{_libdir}/%{name}/camlheader
+%attr(755,root,root) %{_libdir}/%{name}/camlheader_ur
 %{_mandir}/man*/*
 %{_infodir}/*
 
