@@ -39,19 +39,19 @@ Patch2:		%{name}-db3.patch
 Patch3:		%{name}-objinfo.patch
 Patch4:		%{name}-opt-symbols.patch
 Patch5:		%{name}-mano.patch
+Patch6:		%{name}-tk8.4.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 Obsoletes:	ocaml-ocamldoc
 Provides:	ocaml-ocamldoc
+%{!?_without_x11:BuildRequires:		XFree86-devel}
 %{?_with_db3:BuildRequires:	db3-devel}
 %{!?_with_db3:BuildRequires:	db-devel >= 4.1}
-%{!?_without_tk:BuildRequires:		tk-devel}
-%{!?_without_x11:BuildRequires:		XFree86-devel}
+%{!?_without_tk:BuildRequires:		tk-devel >= 8.4.3}
 %{!?_without_emacs:BuildRequires:	xemacs}
 %{!?_without_emacs:BuildRequires:	xemacs-common}
 %{!?_without_emacs:BuildRequires:	xemacs-fsf-compat-pkg}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -266,12 +266,10 @@ Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -T -b 0
-%setup -q -T -D -a 1
-%setup -q -T -D -c -n %{name}-%{version}/examples -a 7
-%setup -q -T -D -c -n %{name}-%{version}/examples -a 8
-%setup -q -T -D -n %{name}-%{version} -a 3
-%setup -q -T -D -n %{name}-%{version} -a 5
+%setup -q -a1 -a3 -a5
+mkdir examples
+tar xjf %{SOURCE7} -C examples
+tar xzf %{SOURCE8} -C examples
 # order mess with docs somewhat
 mkdir docs
 mkdir docs/html
@@ -287,6 +285,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch3 -p1
 #%patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 ./configure \
