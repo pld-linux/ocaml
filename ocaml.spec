@@ -22,8 +22,8 @@ and an optimizing native-code compiler), an interactive toplevel system,
 Lex&Yacc tools, a replay debugger, and a comprehensive library.
 
 %description -l pl
-Objektowy Caml jest funkcjonalnym, objektowo zorientowanym jêzykiem
-wysokiego poziomuz rodziny jêzyków ML.
+Objektowy Caml jest funkcjonalnym, obiektowo zorientowanym jêzykiem
+wysokiego poziomu rodziny jêzyków ML.
 
 Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode
 oraz zoptymalizowany natywny kompilator), interaktywny g³ówny system,
