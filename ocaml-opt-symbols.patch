@@ -1,0 +1,35 @@
+diff -ur ocaml-3.04/byterun/meta.c ocaml-3.04-/byterun/meta.c
+--- ocaml-3.04/byterun/meta.c	Fri Dec  7 14:39:32 2001
++++ ocaml-3.04-/byterun/meta.c	Fri May 10 10:03:30 2002
+@@ -142,4 +142,19 @@
+   return Val_unit; /* not reached */
+ }
+ 
++value * stack_low;
++value * stack_high;
++value * stack_threshold;
++value * extern_sp;
++value * trapsp;
++int backtrace_active;
++int backtrace_pos;
++code_t * backtrace_buffer;
++value backtrace_last_exn;
++int callback_depth;
++int volatile something_to_do;
++void (* volatile async_action_hook)(void);
++void print_exception_backtrace(void) { }
++struct longjmp_buffer * external_raise;
++
+ #endif
+diff -ur ocaml-3.04/otherlibs/systhreads/Makefile ocaml-3.04-/otherlibs/systhreads/Makefile
+--- ocaml-3.04/otherlibs/systhreads/Makefile	Fri May 10 10:15:25 2002
++++ ocaml-3.04-/otherlibs/systhreads/Makefile	Fri May 10 10:12:23 2002
+@@ -31,7 +31,7 @@
+ allopt: libthreadsnat.a threads.cmxa
+ 
+ libthreads.a: $(BYTECODE_C_OBJS)
+-	$(MKLIB) -o threads $(BYTECODE_C_OBJS)
++	$(MKLIB) -o threads $(BYTECODE_C_OBJS) $(PTHREAD_LINK)
+ 
+ posix_b.o: posix.c
+ 	$(BYTECC) -O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
