@@ -1,26 +1,14 @@
-diff -ur ocaml-3.04--/otherlibs/dbm/cldbm.c ocaml-3.04/otherlibs/dbm/cldbm.c
---- ocaml-3.04--/otherlibs/dbm/cldbm.c	Fri Dec  7 14:39:51 2001
-+++ ocaml-3.04/otherlibs/dbm/cldbm.c	Sat Feb  2 02:38:17 2002
-@@ -15,7 +15,8 @@
- 
- #include <string.h>
- #include <fcntl.h>
--#include <ndbm.h>
-+#define DB_DBM_HSEARCH 1
-+#include <db.h>
- #include <mlvalues.h>
- #include <alloc.h>
- #include <memory.h>
-
-diff -ur ocaml-3.04/configure ocaml-3.04-/configure
---- ocaml-3.04/configure	Fri Dec  7 14:23:01 2001
-+++ ocaml-3.04-/configure	Mon Jun  3 15:25:25 2002
-@@ -1065,38 +1065,11 @@
+diff -ur ocaml-3.07beta2/configure ocaml-3.07beta2-/configure
+--- ocaml-3.07beta2/configure	2003-08-20 17:10:58.000000000 +0200
++++ ocaml-3.07beta2-/configure	2003-08-26 11:12:29.000000000 +0200
+@@ -1225,49 +1225,12 @@
  
  # See if we can compile the dbm library
  
 -dbm_include="not found"
 -dbm_link="not found"
+ use_gdbm_ndbm=no
+-
 -for dir in /usr/include /usr/include/db1 /usr/include/gdbm; do
 -  if test -f $dir/ndbm.h; then
 -    dbm_include=$dir
@@ -32,13 +20,19 @@ diff -ur ocaml-3.04/configure ocaml-3.04-/configure
 -      dbm_link="-ldb1"
 -    elif sh ./hasgot -lgdbm dbm_open; then
 -      dbm_link="-lgdbm"
--    else
--      dbm_include="not found"
 -    fi
 -    break
 -  fi
+-  if test -f $dir/gdbm-ndbm.h; then
+-    dbm_include=$dir
+-    use_gdbm_ndbm=yes
+-    if sh ./hasgot -lgdbm_compat -lgdbm dbm_open; then
+-      dbm_link="-lgdbm_compat -lgdbm"
+-    fi
+-    break   
+-  fi
 -done
--if test "$dbm_include" = "not found"; then
+-if test "$dbm_include" = "not found" || test "$dbm_link" = "not found"; then
 -  echo "NDBM not found, the \"dbm\" library will not be supported."
 -else
 -  echo "NDBM found (in $dbm_include)"
@@ -49,6 +43,9 @@ diff -ur ocaml-3.04/configure ocaml-3.04-/configure
 -  fi
 -  echo "DBM_INCLUDES=$dbm_include" >> Makefile
 -  echo "DBM_LINK=$dbm_link" >> Makefile
+-  if test "$use_gdbm_ndbm" = "yes"; then
+-    echo "#define DBM_USES_GDBM_NDBM" >> s.h
+-  fi
 -  otherlibraries="$otherlibraries dbm"
 -fi
 +dbm_include=""
@@ -59,3 +56,16 @@ diff -ur ocaml-3.04/configure ocaml-3.04-/configure
  
  # Look for tcl/tk
  
+diff -ur ocaml-3.07beta2/otherlibs/dbm/cldbm.c ocaml-3.07beta2-/otherlibs/dbm/cldbm.c
+--- ocaml-3.07beta2/otherlibs/dbm/cldbm.c	2003-07-08 15:50:31.000000000 +0200
++++ ocaml-3.07beta2-/otherlibs/dbm/cldbm.c	2003-08-26 11:11:19.000000000 +0200
+@@ -24,7 +24,8 @@
+ #ifdef DBM_USES_GDBM_NDBM
+ #include <gdbm-ndbm.h>
+ #else
+-#include <ndbm.h>
++#define DB_DBM_HSEARCH 1
++#include <db.h>
+ #endif
+ 
+ /* Quite close to sys_open_flags, but we need RDWR */
