@@ -10,7 +10,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	4
+Release:	5
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -26,6 +26,7 @@ Patch0:		%{name}-build.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-manlinks.patch
 Patch3:		%{name}-db3.patch
+Patch4:		%{name}-powerpcfix.patch
 URL:		http://caml.inria.fr/
 BuildRequires:	db3-devel
 %{!?_without_tk:BuildRequires:		tk-devel}
@@ -170,6 +171,9 @@ cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifarch ppc
+%patch4 -p1
+%endif
 
 %build
 ./configure \
@@ -186,9 +190,7 @@ cp config/Makefile config/Makefile.tmp
 sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/Makefile
 
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
-%ifnarch ppc
 %{__make} -C camlp4 optp4
-%endif
 
 # hack info pages to contain dir entry
 cat <<EOF >infoman/ocaml.info
