@@ -1,11 +1,10 @@
 #
 # Conditional build:
-
 %bcond_without	emacs	# without emacs subpackage
 %bcond_without	x	# without X11 support 
 %bcond_without	tk	# without Tcl/Tk support
 %bcond_with	db3	# use db3 instead of db 4.x
-
+#
 # --without x11 implies --without tk
 %{!?with_x:%undefine	with_tk}
 
@@ -42,9 +41,8 @@ Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
 Patch3:		%{name}-mano.patch
+# needs update for ocaml 3.08
 #Patch4:		%{name}-unused-var-warning.patch
-#Patch5:		%{name}-3.07-patch2.diffs
-#Patch6:		%{name}-emacs_batch_mode.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:	XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -54,7 +52,6 @@ URL:		http://caml.inria.fr/
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
-
 %endif
 Requires:	ocaml-runtime = %{version}-%{release}
 Provides:	ocaml-ocamldoc
@@ -95,7 +92,7 @@ w g³ównym pakiecie.
 Summary:	Emacs mode for OCaml
 Summary(pl):	Tryb OCamla dla Emacsa
 Group:		Development/Tools
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description emacs
 Emacs mode files for Objective Caml language.
@@ -293,11 +290,9 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p1
-#%patch5 -p1
-#%patch6 -p1
 
 %build
-cp /usr/share/automake/config.sub config/gnu
+cp -f /usr/share/automake/config.sub config/gnu
 ./configure \
         -cc "%{__cc} %{rpmcflags}" \
 	-bindir %{_bindir} \
