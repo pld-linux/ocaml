@@ -392,6 +392,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/*.ml
 
 %files examples
+%defattr(644,root,root,755)
 %{_examplesdir}/%{name}-%{version}
 
 # they are poor, html is much better
