@@ -1,9 +1,10 @@
-
-# conditional build:
-# --without emacs
-# --without tk
-# --without x11  (implies --without tk)
-
+#
+# Conditional build:
+# _without_emacs	- without emacs subpackage
+# _without_tk		- without tk support
+# _without_x11		- without X11 support (implies --without tk)
+# _with_db3		- use db3 instead of db 4.x
+#
 %{?_without_x11:%define	_without_tk	1}
 
 Summary:	The Objective Caml compiler and programming environment
@@ -33,7 +34,8 @@ URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 Obsoletes:	ocaml-ocamldoc
 Provides:	ocaml-ocamldoc
-BuildRequires:	db3-devel
+%{?_with_db3:BuildRequires:	db3-devel}
+%{!?_with_db3:BuildRequires:	db-devel >= 4.1}
 %{!?_without_tk:BuildRequires:		tk-devel}
 %{!?_without_x11:BuildRequires:		XFree86-devel}
 %{!?_without_emacs:BuildRequires:	xemacs}
