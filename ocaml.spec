@@ -14,14 +14,14 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.08.2
+Version:	3.08.3
 Release:	1
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.gz
-# Source0-md5:	b79358a09884f5e679433cce284de43e
+# Source0-md5:	b1fc455aca6980e02e8cce8a3cbb4c81
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
 # Source1-md5:	0daee5643db6960682c1a7d84467885f
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
@@ -41,9 +41,8 @@ Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
-Patch3:		%{name}-mano.patch
 # needs update for ocaml 3.08
-#Patch4:		%{name}-unused-var-warning.patch
+#Patch3:		%{name}-unused-var-warning.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:	XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -289,8 +288,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-#%patch4 -p1
+#%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config/gnu
