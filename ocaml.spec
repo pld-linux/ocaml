@@ -39,7 +39,7 @@ Patch0:		%{name}-build.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-manlinks.patch
 Patch3:		%{name}-db3.patch
-URL:		http://caml.inria.fr/caml/
+URL:		http://caml.inria.fr/
 BuildRequires:	db3-devel
 %{!?_without_tk:BuildRequires:	tcl-devel}
 %{!?_without_tk:BuildRequires:	tk-devel}
