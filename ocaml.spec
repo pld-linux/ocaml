@@ -58,7 +58,7 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 	-host %{_host_alias} \
 	-with-pthread
 
-make world bootstrap opt ocamlc.opt ocamlopt.opt
+%{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
 
 %install
 umask 022
@@ -67,7 +67,7 @@ echo	BINDIR=$RPM_BUILD_ROOT%{_bindir} >> config/Makefile
 echo	LIBDIR=$RPM_BUILD_ROOT%{_libdir}/%{name} >> config/Makefile
 echo	MANDIR=$RPM_BUILD_ROOT%{_mandir}/man1 >> config/Makefile
 make	install 
-make -C emacs install \
+%{__make} -C emacs install \
 	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
 	        else echo xemacs; fi`" \
 	EMACSDIR="$RPM_BUILD_ROOT%{_libdir}/emacs/site-lisp"
