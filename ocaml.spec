@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	9
+Release:	10
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
@@ -95,7 +95,7 @@ w g³ównym pakiecie.
 Summary:	Emacs mode for OCaml
 Summary(pl):	Tryb OCamla dla Emacsa
 Group:		Development/Tools
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description emacs
 Emacs mode files for Objective Caml language.
@@ -121,7 +121,7 @@ podstawowe bibliotki linkowane dynamicznie.
 Summary:	LablTk library for OCaml
 Summary(pl):	Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
-Requires:	%{name}-labltk = %{version}-%{release}
+Requires:	%{name}-labltk = %{epoch}:%{version}-%{release}
 
 %description labltk-devel
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
@@ -136,7 +136,7 @@ u¿ywaj±cych LablTk.
 Summary:	Runtime for LablTk library
 Summary(pl):	¦rodowisko uruchomieniowe dla biblioteki LablTk
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description labltk
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
@@ -151,7 +151,7 @@ u¿ywaj±cych LablTk.
 Summary:	X11 graphic output for OCaml
 Summary(pl):	Dostêp do X11 dla OCamla
 Group:		Development/Libraries
-Requires:	%{name}-x11graphics = %{version}-%{release}
+Requires:	%{name}-x11graphics = %{epoch}:%{version}-%{release}
 
 %description x11graphics-devel
 x11graphics module gives OCaml program access to drawing in X11
@@ -167,7 +167,7 @@ niezbêdne do tworzenia programów u¿ywaj±cych x11graphics.
 Summary:	X11 graphic output for OCaml
 Summary(pl):	Dostêp do X11 dla OCamla
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description x11graphics
 x11graphics module gives OCaml program access to drawing in X11
@@ -183,8 +183,8 @@ potrzebne do uruchamiania programów u¿ywaj±cych x11graphics.
 Summary:	Objective Caml Preprocessor
 Summary(pl):	Preprocesor OCamla
 Group:		Development/Languages
-Requires:	%{name} = %{version}-%{release}
-Provides:	camlp4 = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Provides:	camlp4 = %{epoch}:%{version}-%{release}
 Obsoletes:	camlp4
 
 %description camlp4
@@ -220,7 +220,7 @@ sk³adni na drug±.
 Summary:	Compiled parts of OCaml compiler
 Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
 Group:		Development/Languages
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	ocaml-devel
 Provides:	ocaml-devel
 
@@ -236,7 +236,7 @@ OCamla. S± one wymagane do kompilacji niektórych programów.
 Summary:	Files needed to develop programs using ocamldoc
 Summary(pl):	Pliki potrzebne do tworzenia programów u¿ywaj±cych ocamldoc
 Group:		Development/Languages
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description ocamldoc-devel
 You need this package if you are going to write ocamldoc front end or
@@ -250,7 +250,7 @@ dla ocamldoc lub co¶ podobnego.
 Summary:	Sources of OCaml standard library
 Summary(pl):	¬ród³a biblioteki standardowej OCamla
 Group:		Development/Languages
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description lib-source
 This sources come helpful during debugging of user programs with ocamldebug.
@@ -264,7 +264,7 @@ z u¿yciem ocamldebug.
 Summary:	Example source code for OCaml
 Summary(pl):	Przyk³adowe kody ¼ród³owe w OCamlu
 Group:		Development/Languages
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description examples
 This packages contains sources for Okasaki's Purely Functional
