@@ -44,9 +44,6 @@ Patch2:		%{name}-objinfo.patch
 Patch3:		%{name}-mano.patch
 Patch4:		%{name}-unused-var-warning.patch
 URL:		http://caml.inria.fr/
-Requires:	ocaml-runtime = %{version}-%{release}
-Obsoletes:	ocaml-ocamldoc
-Provides:	ocaml-ocamldoc
 %{?with_x11:BuildRequires:		XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
@@ -56,6 +53,9 @@ BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
 %endif
+Requires:	ocaml-runtime = %{version}-%{release}
+Provides:	ocaml-ocamldoc
+Obsoletes:	ocaml-ocamldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
