@@ -399,7 +399,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # they are poor, html is much better
 #%files manpages
-#%{_mandir}/man3/*
+#%%{_mandir}/man3/*
 
 %files compiler-objects
 %defattr(644,root,root,755)
