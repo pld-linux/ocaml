@@ -10,6 +10,7 @@
 %{!?with_x:%undefine	with_tk}
 
 %define		p4ver	3.06
+%define		sver	3.08
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
@@ -19,11 +20,11 @@ Release:	1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.gz
 # Source0-md5:	c6ef478362295c150101cdd2efcd38e0
-Source1:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
+Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
 # Source1-md5:	0daee5643db6960682c1a7d84467885f
-Source2:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
+Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
 # Source2-md5:	35a5d4318456c0982e72ee3f33364bf5
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
@@ -40,7 +41,7 @@ Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
-#Patch3:		%{name}-mano.patch
+Patch3:		%{name}-mano.patch
 #Patch4:		%{name}-unused-var-warning.patch
 #Patch5:		%{name}-3.07-patch2.diffs
 #Patch6:		%{name}-emacs_batch_mode.patch
@@ -274,7 +275,7 @@ Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -a1 -a3 -a5
+%setup -q -a1 -a3 -a5  
 mkdir examples
 tar xjf %{SOURCE7} -C examples
 tar xzf %{SOURCE8} -C examples
@@ -290,7 +291,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 #%patch4 -p1
 #%patch5 -p1
 #%patch6 -p1
