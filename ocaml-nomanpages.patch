@@ -1,0 +1,24 @@
+--- ocaml-3.06/ocamldoc/Makefile~	Wed Oct 22 16:23:07 2003
++++ ocaml-3.06/ocamldoc/Makefile	Wed Oct 22 16:23:07 2003
+@@ -179,7 +179,8 @@
+ 	../otherlibs/bigarray/bigarray.mli \
+ 	../otherlibs/num/num.mli
+ 
+-all: exe lib manpages
++#all: exe lib manpages
++all: exe lib
+ exe: $(OCAMLDOC)
+ lib: $(OCAMLDOC_LIBCMA) $(OCAMLDOC_LIBCMI) 
+ 
+--- ocaml-3.06/ocamldoc/Makefile~	Wed Oct 22 17:07:16 2003
++++ ocaml-3.06/ocamldoc/Makefile	Wed Oct 22 17:07:16 2003
+@@ -279,7 +279,8 @@
+ 	$(CP) ocamldoc.sty ocamldoc.hva *.cmi $(GENERATORS) $(OCAMLDOC_LIBCMA) $(INSTALL_LIBDIR)
+ 	$(CP) $(INSTALL_MLIS) $(INSTALL_CMIS) $(INSTALL_LIBDIR)
+ 	if test -d $(INSTALL_MANODIR); then : ; else $(MKDIR) $(INSTALL_MANODIR); fi
+-	$(CP) stdlib_man/* $(INSTALL_MANODIR)
++
++#	$(CP) stdlib_man/* $(INSTALL_MANODIR)
+ 
+ installopt:
+ 	if test -f $(OCAMLDOC_OPT) ; then $(MAKE) installopt_really ; fi
