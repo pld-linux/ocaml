@@ -15,11 +15,11 @@ Release:	3
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.inria.fr/INRIA/caml-light/%{name}-%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	51530ed183b511ce19fed325c8ab1b43
-Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
+Source1:	ftp://ftp.inria.fr/INRIA/caml-light/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
 # Source1-md5:	2b555271d2630698fcd3a9b9acfd1440
-Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
+Source2:	ftp://ftp.inria.fr/INRIA/caml-light/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
 # Source2-md5:	7a23eb2287e04d359500dcaa8a8b504c
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
