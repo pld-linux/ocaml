@@ -49,9 +49,11 @@ URL:		http://caml.inria.fr/
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
 %{?with_tk:BuildRequires:		tk-devel}
 %if %{with emacs}
+BuildRequires:	emacs
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
+
 %endif
 Requires:	ocaml-runtime = %{version}-%{release}
 Provides:	ocaml-ocamldoc
