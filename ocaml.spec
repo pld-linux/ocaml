@@ -51,7 +51,6 @@ BuildRequires:	db3-devel
 %{!?_without_emacs:BuildRequires:	xemacs-fsf-compat-pkg}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-
 %description
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
@@ -105,7 +104,7 @@ ocamlrun bytecode interpreter, and basic dynamic link libraries.
 %description runtime -l pl
 Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
 OCamlu skompilowanych do bytecodu: interpreter bytecodu ocamlrun oraz
-podstawowe bibliotki linkowane dynamicznie.
+podstawowe biblioteki konsolidowane dynamicznie.
 
 %package labltk-devel
 Summary:	LabelTk library for OCaml
