@@ -7,7 +7,7 @@
 %{?_without_x11:%define	_without_tk	1}
 
 Summary:	The Objective Caml compiler and programming environment
-Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
+Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.06
 Release:	2
@@ -52,28 +52,29 @@ system, Lex&Yacc tools, a replay debugger, and a comprehensive
 library.
 
 %description -l pl
-Objektowy Caml jest funkcjonalnym, obiektowo zorientowanym jêzykiem
-wysokiego poziomu z rodziny jêzyków ML.
+OCaml (Objective Caml) jest funkcyjnym, obiektowo zorientowanym jêzykiem
+wysokiego poziomu z silnym typowaniem. Nale¿y do rodziny jêzyków ML.
 
-Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode oraz
-zoptymalizowany natywny kompilator), interaktywny g³ówny system,
-narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
+Ten pakiet zawiera dwa kompilatory (szybki kompilator do bajtkodu
+oraz optymalizuj±cy kompilator do kodu natywnego), interaktywne ¶rodowisko
+pracy, narzêdzia do tworzenia analizatorów leksykalnych oraz sk³adniowych
+(ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i biblioteki.
 
 %package doc-ps
 Summary:	PostScript documentation for OCaml
-Summary(pl):	Dokumentacja dla OCaml-a w formacie PostSript
+Summary(pl):	Dokumentacja dla OCamla w formacie PostScript
 Group:		Development/Tools
 
 %description doc-ps
 PostScript documentation for OCaml. HTML documentation is in main package.
 
 %description doc-ps -l pl
-Dokumentacja dla OCamla w formacie PostSript. Dokumentacja HTML jest
+Dokumentacja dla OCamla w formacie PostScript. Dokumentacja HTML jest
 w g³ównym pakiecie.
 
 %package emacs
 Summary:	Emacs mode for OCaml
-Summary(pl):	Tryb Emacsa dla OCaml
+Summary(pl):	Tryb OCamla dla Emacsa
 Group:		Development/Tools
 Requires:	%{name} = %{version}
 
@@ -81,7 +82,7 @@ Requires:	%{name} = %{version}
 Emacs mode files for Objective Caml language.
 
 %description emacs -l pl
-Pliki trybu Emacsa dla jêzyka Objektowego Camla.
+Pliki trybu OCamla dla Emacsa.
 
 %package runtime
 Summary:	Runtime system for OCaml
@@ -94,11 +95,11 @@ ocamlrun bytecode interpreter, and basic dynamic link libraries.
 
 %description runtime -l pl
 Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
-OCamlu skompilowanych do bytecodu: interpreter bytecodu ocamlrun oraz
+OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun) oraz
 podstawowe bibliotki linkowane dynamicznie.
 
 %package labltk-devel
-Summary:	LabelTk library for OCaml
+Summary:	LablTk library for OCaml
 Summary(pl):	Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
 Requires:	%{name}-labltk = %{version}-%{release}
@@ -113,7 +114,7 @@ Tcl/Tk. Pakiet ten zawiera pliki niezbêdne do tworzenia programów
 u¿ywaj±cych LablTk.
 
 %package labltk
-Summary:	Runtime for LabelTk library
+Summary:	Runtime for LablTk library
 Summary(pl):	¦rodowisko uruchomieniowe dla biblioteki LablTk
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
@@ -129,7 +130,7 @@ u¿ywaj±cych LablTk.
 
 %package x11graphics-devel
 Summary:	X11 graphic output for OCaml
-Summary(pl):	Iksowe wyj¶cie graficzne dla OCamla
+Summary(pl):	Dostêp do X11 dla OCamla
 Group:		Development/Libraries
 Requires:	%{name}-x11graphics = %{version}-%{release}
 
@@ -139,13 +140,13 @@ windows. This package contains files needed to develop OCaml programs
 using x11graphics.
 
 %description x11graphics-devel -l pl
-Modu³ x11graphics daje programom napisanym w OCamlu dostêp do
-rysowania po oknach X11. Pakiet ten zawiera pliki niezbêdne do
-tworzenia programów u¿ywaj±cych x11graphics.
+Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
+korzystania z interfejsu graficznego X11. Pakiet ten zawiera pliki
+niezbêdne do tworzenia programów u¿ywaj±cych x11graphics.
 
 %package x11graphics
 Summary:	X11 graphic output for OCaml
-Summary(pl):	Iksowe wyj¶cie graficzne dla OCamla
+Summary(pl):	Dostêp do X11 dla OCamla
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -155,13 +156,13 @@ windows. This package contains files needed to run bytecode OCaml
 programs using x11graphics.
 
 %description x11graphics -l pl
-Modu³ x11graphics daje programom napisanym w OCamlu dostêp do
-rysowania po oknach X11. Pakiet ten zawiera binaria potrzebne do
-uruchamiania programów u¿ywaj±cych x11graphics.
+Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
+korzystania z interfejsu graficznego X11. Pakiet ten zawiera binaria
+potrzebne do uruchamiania programów u¿ywaj±cych x11graphics.
 
 %package camlp4
 Summary:	Objective Caml Preprocessor
-Summary(pl):	Preprocesor Ocamla
+Summary(pl):	Preprocesor OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
 Provides:	camlp4 = %{version}-%{release}
@@ -179,26 +180,26 @@ of the normal syntax.
 
 Camlp4 can pretty print the normal Ocaml concrete syntax or the
 revised one. It is therefore always possible to have a version of your
-sources compilable by the compiler Objective Caml without
+sources compilable by the Objective Caml compiler without
 preprocessing.
 
 %description camlp4 -l pl
-Camlp4 jest preprocesorem dla Ocamla. Oferuje narzêdzia do sk³adni
-(gramatyki) oraz umiejêtno¶æ modyfikowania konkretnej sk³adni jêzyka
-(cytowania, rozszerzenia).
+Camlp4 jest preprocesorem OCamla. Oferuje narzêdzia do manipulowania
+sk³adni± (gramatyki) oraz mo¿liwo¶æ modyfikowania oryginalnej sk³adni
+jêzyka (cytowania, rozszerzenia).
 
-Camlp4 mo¿e sparsowaæ normaln± sk³adniê Ocamla lub inn± dowoln±
-definiowaln± przez u¿ytkownika. Jako przyk³ad jest podana alternatywna
-sk³adnia, nazwana "poprawiona", poniewa¿ próbuje poprawiæ drobne
-problemy ze zwyk³± sk³adni±.
+Camlp4 mo¿e sparsowaæ oryginaln± sk³adniê Ocamla lub dowoln± inn±
+definiowaln± przez u¿ytkownika. Jako przyk³ad podana jest alternatywna
+sk³adnia (revised syntax), która próbuje poprawiæ drobne problemy
+wystêpuj±ce w sk³adni oryginalnej.
 
-Camlp4 umie ³adnie wypisaæ normaln± sk³adniê Camla lub "poprawion±".
-Dziêki temu jest mo¿liwe posiadanie wersji swoich ¼róde³
-kompilowalnych przez kompilatora Ocamla bez preprocesingu.
+Camlp4 umie ³adnie formatowaæ ¼ród³a zarówno w oryginalnej jak i
+poprawionej sk³adni OCamla. Potrafi tak¿e t³umaczyæ programy z jednej
+sk³adni na drug±.
 
 %package devel
 Summary:	Compiled parts of OCaml compiler
-Summary(pl):	Skompilowane kawa³ki kompilatora OCamla
+Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
 
@@ -221,7 +222,7 @@ You need this package if you are going to write ocamldoc front end or
 something like that.
 
 %description ocamldoc-devel -l pl
-Bêdziesz potrzebowaæ tego pakietu, je¶li zamierzasza pisaæ front end
+Bêdziesz potrzebowaæ tego pakietu, je¶li zamierzasz pisaæ front end
 dla ocamldoc lub co¶ podobnego.
 
 %package lib-source
@@ -234,7 +235,7 @@ Requires:	%{name} = %{version}-%{release}
 This sources come helpful during debugging of user programs with ocamldebug.
 
 %description lib-source -l pl
-¬ród³a te co¶ przydatne przy odpluskwianiu programów u¿ytkownika
+¬ród³a te s± przydatne przy odpluskwianiu programów u¿ytkownika
 z u¿yciem ocamldebug.
 
 # maybe we'll want to add some more stuff here?
@@ -249,8 +250,8 @@ This packages contains sources for Okasaki's Purely Functional
 Datastructures in OCaml, along with some contributions.
 
 %description examples -l pl
-Pakiet ten zawiera ¼ród³a Czysto-Funkcjonalnych Struktur Danych 
-Okasaki'ego, prze³o¿one na OCamla, wraz z dodatkami.
+Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
+autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
 %setup -q -T -b 0
@@ -305,7 +306,7 @@ EOF
 %{__make} -C emacs DESTDIR=$RPM_BUILD_ROOT install \
 	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
 	        else echo xemacs; fi`" \
-	EMACSDIR="$RPM_BUILD_ROOT%{_libdir}/emacs/site-lisp"
+	EMACSDIR="$RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp"
 %endif
 
 # symlink .opt versions of compilers (if present)
@@ -317,9 +318,6 @@ for f in ocamlc ocamlopt ocamldoc ocamllex; do
 		ln -sf %{_bindir}/$f.opt $RPM_BUILD_ROOT%{_bindir}/$f
 	fi
 done
-
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*.mli
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.ml{,i}
 
 # move includes to the proper place
 install -d $RPM_BUILD_ROOT%{_includedir}
@@ -390,6 +388,7 @@ rm -rf $RPM_BUILD_ROOT
 %files lib-source
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/*.ml
+%{_libdir}/%{name}/*.mli
 
 %files examples
 %defattr(644,root,root,755)
@@ -446,7 +445,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{!?_without_emacs:1}%{?_without_emacs:0}
 %files emacs
 %defattr(644,root,root,755)
-%{_libdir}/emacs/site-lisp/*.el*
+%{_datadir}/emacs/site-lisp/*.el*
 %endif
 
 %files ocamldoc-devel
