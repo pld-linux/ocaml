@@ -253,7 +253,6 @@ Pakiet ten zawiera ¼ród³a Czysto-Funkcjonalnych Struktur Danych
 Okasaki'ego, prze³o¿one na OCamla, wraz z dodatkami.
 
 %prep
-set -x
 %setup -q -T -b 0
 %setup -q -T -D -a 1
 %setup -q -T -D -c -n %{name}-%{version}/examples -a 7
