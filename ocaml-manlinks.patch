@@ -1,24 +1,23 @@
-diff -ur ocaml-3.04--/camlp4/man/Makefile ocaml-3.04/camlp4/man/Makefile
---- ocaml-3.04--/camlp4/man/Makefile	Wed Sep 26 16:32:50 2001
-+++ ocaml-3.04/camlp4/man/Makefile	Sat Feb  2 01:48:21 2002
+diff -ur ocaml-3.05.orig/camlp4/man/Makefile ocaml-3.05/camlp4/man/Makefile
+--- ocaml-3.05.orig/camlp4/man/Makefile	Fri Jul 19 16:53:49 2002
++++ ocaml-3.05/camlp4/man/Makefile	Thu Aug  8 13:39:02 2002
 @@ -14,14 +14,11 @@
  get_promote:
  
  install:
--	-$(MKDIR) $(MANDIR)
--	-cp $(TARGET) $(MANDIR)/.
--	-cd $(MANDIR); rm -f camlp4o.1; ln -s $(TARGET) camlp4o.1
--	-cd $(MANDIR); rm -f camlp4r.1; ln -s $(TARGET) camlp4r.1
--	-cd $(MANDIR); rm -f mkcamlp4.1; ln -s $(TARGET) mkcamlp4.1
--	-cd $(MANDIR); rm -f ocpp.1; ln -s $(TARGET) ocpp.1
--	-cd $(MANDIR); rm -f camlp4o.opt.1; ln -s $(TARGET) camlp4o.opt.1
--	-cd $(MANDIR); rm -f camlp4r.opt.1; ln -s $(TARGET) camlp4r.opt.1
-+	-$(MKDIR) $(DESTDIR)$(MANDIR)
-+	cp $(TARGET) $(DESTDIR)$(MANDIR)/.
+-	-$(MKDIR) $(MANDIR)/man1
+-	-cp $(TARGET) $(MANDIR)/man1/.
+-	-cd $(MANDIR)/man1; rm -f camlp4o.1; ln -s $(TARGET) camlp4o.1
+-	-cd $(MANDIR)/man1; rm -f camlp4r.1; ln -s $(TARGET) camlp4r.1
+-	-cd $(MANDIR)/man1; rm -f mkcamlp4.1; ln -s $(TARGET) mkcamlp4.1
+-	-cd $(MANDIR)/man1; rm -f ocpp.1; ln -s $(TARGET) ocpp.1
+-	-cd $(MANDIR)/man1; rm -f camlp4o.opt.1; ln -s $(TARGET) camlp4o.opt.1
+-	-cd $(MANDIR)/man1; rm -f camlp4r.opt.1; ln -s $(TARGET) camlp4r.opt.1
++	-$(MKDIR) $(MANDIR)/man1/.
++	cp $(TARGET) $(MANDIR)/man1/.
 +	for f in camlp4o camlp4r mkcamlp4 ocpp camlp4o.opt camlp4r.opt ; do \
-+		echo ".so man1/$(TARGET)" > $(DESTDIR)$(MANDIR)/$$f.1 ; \
-+	done
++ 		echo ".so man1/$(TARGET)" > $(MANDIR)/man1/$$f.1 ; \
++ 	done
  
  camlp4.1: camlp4.1.tpl
  	sed -e "s'LIBDIR'$(LIBDIR)'g" camlp4.1.tpl > camlp4.1
-

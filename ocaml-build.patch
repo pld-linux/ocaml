@@ -1,24 +1,24 @@
-diff -ur ocaml-3.04/camlp4/meta/Makefile ocaml-3.04-/camlp4/meta/Makefile
---- ocaml-3.04/camlp4/meta/Makefile	Sat Sep 29 03:08:35 2001
-+++ ocaml-3.04-/camlp4/meta/Makefile	Thu Jan 31 17:20:03 2002
+diff -ur ocaml-3.05/camlp4/meta/Makefile ocaml-3.05-/camlp4/meta/Makefile
+--- ocaml-3.05/camlp4/meta/Makefile	Fri Jul 19 16:53:49 2002
++++ ocaml-3.05-/camlp4/meta/Makefile	Thu Aug  8 13:19:11 2002
 @@ -2,7 +2,7 @@
  
  include ../config/Makefile
  
 -INCLUDES=-I ../camlp4 -I ../boot -I $(OTOP)/utils
 +INCLUDES=-I ../camlp4 -I ../boot -I $(OTOP)/utils -I $(OTOP)/parsing
- OCAMLCFLAGS=$(INCLUDES)
+ OCAMLCFLAGS=-warn-error A $(INCLUDES)
  OBJS=q_MLast.cmo pa_r.cmo pa_rp.cmo pa_extend.cmo pa_extend_m.cmo pa_ifdef.cmo pr_dump.cmo
  CAMLP4RM=pa_r.cmo pa_rp.cmo pr_dump.cmo
-diff -ur ocaml-3.04/camlp4/ocaml_src/meta/Makefile ocaml-3.04-/camlp4/ocaml_src/meta/Makefile
---- ocaml-3.04/camlp4/ocaml_src/meta/Makefile	Tue Oct  2 13:49:03 2001
-+++ ocaml-3.04-/camlp4/ocaml_src/meta/Makefile	Thu Jan 31 17:18:39 2002
+diff -ur ocaml-3.05/camlp4/ocaml_src/meta/Makefile ocaml-3.05-/camlp4/ocaml_src/meta/Makefile
+--- ocaml-3.05/camlp4/ocaml_src/meta/Makefile	Fri Jul 19 16:53:53 2002
++++ ocaml-3.05-/camlp4/ocaml_src/meta/Makefile	Thu Aug  8 13:19:37 2002
 @@ -2,7 +2,7 @@
  
  include ../../config/Makefile
  
 -INCLUDES=-I ../camlp4 -I ../../boot -I $(OTOP)/utils
 +INCLUDES=-I ../camlp4 -I ../../boot -I $(OTOP)/utils -I $(OTOP)/parsing
- OCAMLCFLAGS=$(INCLUDES)
+ OCAMLCFLAGS=-warn-error A $(INCLUDES)
  OBJS=q_MLast.cmo pa_r.cmo pa_rp.cmo pa_extend.cmo pa_extend_m.cmo pa_ifdef.cmo pr_dump.cmo
  CAMLP4RM=pa_r.cmo pa_rp.cmo pr_dump.cmo
