@@ -30,6 +30,8 @@ Patch5:		%{name}-opt-symbols.patch
 Patch6:		%{name}-mano.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
+Obsoletes:	ocaml-ocamldoc
+Provides:	ocaml-ocamldoc
 BuildRequires:	db3-devel
 %{!?_without_tk:BuildRequires:		tk-devel}
 %{!?_without_x11:BuildRequires:		XFree86-devel}
