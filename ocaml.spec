@@ -241,10 +241,6 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	%{?_without_tk:-notk} \
 	-with-pthread
 
-# this is crude hack (works in addition to ocaml-db3.patch)
-cp config/Makefile config/Makefile.tmp
-sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/Makefile
-
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
 %{__make} -C camlp4 optp4
 %{__make} -C tools objinfo
