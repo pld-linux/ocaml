@@ -258,7 +258,7 @@ Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
 
 %description examples
-This packages contains sources for Okasaki's Purely Functional 
+This packages contains sources for Okasaki's Purely Functional
 Datastructures in OCaml, along with some contributions.
 
 %description examples -l pl
