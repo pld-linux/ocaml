@@ -56,15 +56,15 @@ Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode oraz
 zoptymalizowany natywny kompilator), interaktywny g³ówny system,
 narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 
-%package doc-ps
+%package doc
 Summary:	PostScript documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie PostSript
 Group:		Development/Tools
 
-%description doc-ps
+%description doc
 PostScript documentation for OCaml.
 
-%description doc-ps -l pl
+%description doc -l pl
 Dokumentacja dla OCamla w formacie PostSript.
 
 %package emacs
@@ -380,6 +380,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/emacs/site-lisp/*.el
 %endif
 
-%files doc-ps
+%files doc
 %defattr(644,root,root,755)
 %doc docs/*.ps.gz
