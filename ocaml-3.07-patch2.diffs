@@ -24,15 +24,6 @@ Index: csl/bytecomp/translmod.ml
 diff -u csl/bytecomp/translmod.ml:1.44 csl/bytecomp/translmod.ml:1.45
 --- csl/bytecomp/translmod.ml:1.44	Mon Jul  7 15:42:49 2003
 +++ csl/bytecomp/translmod.ml	Fri Oct  3 16:36:00 2003
-@@ -10,7 +10,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- (* Translation from typed abstract syntax to lambda terms,
-    for the module language *)
 @@ -310,11 +310,12 @@
             transl_module Tcoerce_none (field_path rootpath id) modl,
             transl_structure (id :: fields) cc rootpath rem)
@@ -51,15 +42,6 @@ Index: csl/camlp4/camlp4/ast2pt.ml
 diff -u csl/camlp4/camlp4/ast2pt.ml:1.25 csl/camlp4/camlp4/ast2pt.ml:1.26
 --- csl/camlp4/camlp4/ast2pt.ml:1.25	Wed Jul 16 20:59:12 2003
 +++ csl/camlp4/camlp4/ast2pt.ml	Tue Sep 30 16:39:26 2003
-@@ -10,7 +10,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- open Stdpp;
- open MLast;
 @@ -177,10 +177,10 @@
    | TyObj loc fl v -> mktyp loc (Ptyp_object (meth_list loc fl v))
    | TyCls loc id ->
@@ -78,15 +60,6 @@ Index: csl/camlp4/etc/pa_o.ml
 diff -u csl/camlp4/etc/pa_o.ml:1.52 csl/camlp4/etc/pa_o.ml:1.54
 --- csl/camlp4/etc/pa_o.ml:1.52	Thu Sep 25 14:05:05 2003
 +++ csl/camlp4/etc/pa_o.ml	Tue Sep 30 16:39:38 2003
-@@ -10,7 +10,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- open Stdpp;
- open Pcaml;
 @@ -1148,16 +1148,16 @@
        | i = LIDENT -> [i] ] ]
    ;
@@ -114,15 +87,6 @@ Index: csl/camlp4/meta/pa_r.ml
 diff -u csl/camlp4/meta/pa_r.ml:1.53 csl/camlp4/meta/pa_r.ml:1.55
 --- csl/camlp4/meta/pa_r.ml:1.53	Thu Sep 25 14:05:06 2003
 +++ csl/camlp4/meta/pa_r.ml	Thu Oct  2 14:33:43 2003
-@@ -10,7 +10,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- open Stdpp;
- open Pcaml;
 @@ -542,6 +542,11 @@
            <:ctyp< ! $list:pl$ . $t$ >> ]
      | "arrow" RIGHTA
@@ -154,15 +118,6 @@ Index: csl/camlp4/meta/q_MLast.ml
 diff -u csl/camlp4/meta/q_MLast.ml:1.51 csl/camlp4/meta/q_MLast.ml:1.53
 --- csl/camlp4/meta/q_MLast.ml:1.51	Wed Jul 16 14:50:08 2003
 +++ csl/camlp4/meta/q_MLast.ml	Thu Oct  2 14:33:43 2003
-@@ -10,7 +10,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- value gram = Grammar.gcreate (Plexer.gmake ());
- 
 @@ -127,7 +127,9 @@
  value a_STRING = Grammar.Entry.create gram "a_STRING";
  value a_CHAR = Grammar.Entry.create gram "a_CHAR";
@@ -577,12 +532,6 @@ Index: csl/emacs/Makefile
 diff -u csl/emacs/Makefile:1.15 csl/emacs/Makefile:1.16
 --- csl/emacs/Makefile:1.15	Fri Aug 29 17:38:28 2003
 +++ csl/emacs/Makefile	Fri Oct 10 15:25:38 2003
-@@ -1,4 +1,4 @@
--# $Id$
-+# $Id$
- 
- include ../config/Makefile
- 
 @@ -24,6 +24,7 @@
                (byte-compile-file "caml.el") \
                (byte-compile-file "inf-caml.el") \
@@ -608,15 +557,6 @@ Index: csl/emacs/caml-types.el
 diff -u csl/emacs/caml-types.el:1.24 csl/emacs/caml-types.el:1.26
 --- csl/emacs/caml-types.el:1.24	Fri Sep  5 20:01:46 2003
 +++ csl/emacs/caml-types.el	Sat Oct 11 02:00:14 2003
-@@ -10,7 +10,7 @@
- ;(*                                                                     *)
- ;(***********************************************************************)
- 
--;(* $Id$ *)
-+;(* $Id$ *)
- 
- ; An emacs-lisp complement to the "-dtypes" option of ocamlc and ocamlopt.
- 
 @@ -21,6 +21,8 @@
        (require 'caml-xemacs)
      (require 'caml-emacs)))
@@ -823,15 +763,6 @@ Index: csl/otherlibs/threads/scheduler.c
 diff -u csl/otherlibs/threads/scheduler.c:1.56 csl/otherlibs/threads/scheduler.c:1.57
 --- csl/otherlibs/threads/scheduler.c:1.56	Thu Mar 20 17:23:03 2003
 +++ csl/otherlibs/threads/scheduler.c	Fri Oct 10 15:13:21 2003
-@@ -11,7 +11,7 @@
- /*                                                                     */
- /***********************************************************************/
- 
--/* $Id$ */
-+/* $Id$ */
- 
- /* The thread scheduler */
- 
 @@ -72,10 +72,10 @@
  
  /* The thread descriptors */
@@ -977,15 +908,6 @@ Index: csl/stdlib/pervasives.mli
 diff -u csl/stdlib/pervasives.mli:1.93 csl/stdlib/pervasives.mli:1.94
 --- csl/stdlib/pervasives.mli:1.93	Thu Sep  4 14:44:48 2003
 +++ csl/stdlib/pervasives.mli	Wed Oct  8 15:13:33 2003
-@@ -11,7 +11,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- (** The initially opened module.
- 
 @@ -800,7 +800,7 @@
  
  external string_of_format :
@@ -999,15 +921,6 @@ Index: csl/stdlib/sys.ml
 diff -u csl/stdlib/sys.ml:1.78 csl/stdlib/sys.ml:1.80
 --- csl/stdlib/sys.ml:1.78	Fri Sep 12 09:46:23 2003
 +++ csl/stdlib/sys.ml	Mon Oct 13 09:39:46 2003
-@@ -11,7 +11,7 @@
- (*                                                                     *)
- (***********************************************************************)
- 
--(* $Id$ *)
-+(* $Id$ *)
- 
- (* System interface *)
- 
 @@ -78,4 +78,4 @@
  
  (* OCaml version string, must be in the format described in sys.mli. *)
