@@ -1,10 +1,10 @@
 #
 # Conditional build:
 
-%bcond_without emacs	# emacs subpackage
-%bcond_without x	# without X11 support 
-%bcond_without tk	# tk support
-%bcond_with db3		# use db3 instead of db 4.x
+%bcond_without	emacs	# without emacs subpackage
+%bcond_without	x	# without X11 support 
+%bcond_without	tk	# without Tcl/Tk support
+%bcond_with	db3	# use db3 instead of db 4.x
 
 # --without x11 implies --without tk
 %{!?with_x:%undefine	with_tk}
@@ -15,7 +15,8 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	3
+Release:	9
+Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -43,6 +44,7 @@ Patch2:		%{name}-objinfo.patch
 Patch3:		%{name}-mano.patch
 Patch4:		%{name}-unused-var-warning.patch
 Patch5:		%{name}-3.07-patch2.diffs
+#Patch6:		%{name}-emacs_batch_mode.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:		XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -52,6 +54,7 @@ URL:		http://caml.inria.fr/
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
+
 %endif
 Requires:	ocaml-runtime = %{version}-%{release}
 Provides:	ocaml-ocamldoc
@@ -219,6 +222,7 @@ Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	ocaml-devel
+Provides:	ocaml-devel
 
 %description compiler-objects
 This package contains *.cmi and *.cmo files being parts of OCaml
@@ -290,8 +294,10 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+#%patch6 -p1
 
 %build
+cp /usr/share/automake/config.sub config/gnu
 ./configure \
         -cc "%{__cc} %{rpmcflags}" \
 	-bindir %{_bindir} \
@@ -299,7 +305,8 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	-mandir %{_mandir}/man1 \
 	-host %{_host} \
 	%{!?with_tk:-no-tk} \
-	-with-pthread
+	-with-pthread \
+	-x11lib /usr/X11R6/%{_lib}
 
 %{__make} world bootstrap opt.opt
 %{__make} -C tools objinfo
@@ -445,7 +452,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
 %endif
 
-%if %{with x11}
+%if %{with x}
 %files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*.cm*
