@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	10
+Release:	11
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
@@ -56,7 +56,7 @@ BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
 
 %endif
-Requires:	ocaml-runtime = %{version}-%{release}
+Requires:	ocaml-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-ocamldoc
 Obsoletes:	ocaml-ocamldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
