@@ -183,14 +183,14 @@ cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
 
 # this is crude hack (works in addition to ocaml-db3.patch)
 cp config/Makefile config/Makefile.tmp
-sed -e 's|-ldb1|-ldb|; s|-I/usr/include/db1||' < config/Makefile.tmp > config/Makefile
+sed -e 's|-ldb1|-ldb|; s|-I%{_includedir}/db1||' < config/Makefile.tmp > config/Makefile
 
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
 
 # hack info pages to contain dir entry
 cat <<EOF >infoman/ocaml.info
 INFO-DIR-SECTION Programming Languages:
-START-INFO-DIR-ENTRY	
+START-INFO-DIR-ENTRY
 * Ocaml: (ocaml).                             The Ocaml language
 END-INFO-DIR-ENTRY
 EOF
@@ -213,7 +213,7 @@ install -d $RPM_BUILD_ROOT%{_infodir}
 
 cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}
-		
+
 mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlc $RPM_BUILD_ROOT%{_bindir}/ocamlc.byte
 ln -sf %{_bindir}/ocamlc.opt $RPM_BUILD_ROOT%{_bindir}/ocamlc
 mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlopt $RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
