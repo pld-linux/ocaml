@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	2
+Release:	3
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -42,7 +42,7 @@ Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
 Patch3:		%{name}-mano.patch
 Patch4:		%{name}-unused-var-warning.patch
-Patch5:		%{name}-camlp4-labl-fix.patch
+Patch5:		%{name}-3.07-patch2.diffs
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:		XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -289,7 +289,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p0
+%patch5 -p1
 
 %build
 ./configure \
