@@ -9,7 +9,7 @@ Group:		Development/Languages
 Group(de):	Entwicklung/Sprachen
 Group(pl):	Programowanie/Jêzyki
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
+Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.info.tar.gz
 URL:		http://pauillac.inria.fr/caml/
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
@@ -88,17 +88,28 @@ mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlopt $RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
 mv -f $RPM_BUILD_ROOT%{_bindir}/ocamlopt.opt $RPM_BUILD_ROOT%{_bindir}/ocamlopt
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
 
+install -d $RPM_BUILD_ROOT%{_infodir}
+install infoman/*info* $RPM_BUILD_ROOT%{_infodir}
+
 gzip -9nf LICENSE Changes README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+%postun
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+
 %files
 %defattr(644,root,root,755)
-%doc htmlman *.gz
+%doc *.gz
 %attr(755, root, root) %{_bindir}/*
 %{_libdir}/%{name}
 %{_mandir}/man*/*
+%{_infodir}/*
 
 %files emacs
 %defattr(644,root,root,755)
