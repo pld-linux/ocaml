@@ -31,11 +31,11 @@ URL:		http://caml.inria.fr/
 BuildRequires:	db3-devel
 %{!?_without_tk:BuildRequires:		tk-devel}
 %{!?_without_x11:BuildRequires:		XFree86-devel}
+%{!?_without_emacs:BuildRequires:	xemacs}
 %{!?_without_emacs:BuildRequires:	xemacs-common}
 %{!?_without_emacs:BuildRequires:	xemacs-fsf-compat-pkg}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		no_install_post_strip	1
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -221,7 +221,7 @@ install -d $RPM_BUILD_ROOT%{_infodir}
 cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}
 
-for f in ocamlc ocamlopt camlp4o camlp4r; do
+for f in ocamlc ocamlopt; do
 	if test -f $RPM_BUILD_ROOT%{_bindir}/$f.opt; then
 		mv -f $RPM_BUILD_ROOT%{_bindir}/$f \
 			$RPM_BUILD_ROOT%{_bindir}/$f.byte
@@ -260,6 +260,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/condition.*
 %{_libdir}/%{name}/dbm.*
 %{_libdir}/%{name}/digest.*
+%{_libdir}/%{name}/dynlink.*
 %attr(755,root,root) %{_libdir}/%{name}/dll[bmnstu]*.so
 %{_libdir}/%{name}/g[ce]*.*
 %{_libdir}/%{name}/l*.cm*
