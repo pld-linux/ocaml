@@ -11,7 +11,7 @@ Patch0:		ocaml-ext_prof.patch
 Patch1:		ocaml-opt.patch
 Copyright:	Distributable
 Group:		Development/Languages
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -42,7 +42,6 @@ Emacs mode files for Objective Caml language
 
 %description -l pl emacs
 Pliki trybu Emacsa dla jêzyka Objektowego Caml
-
 
 %prep
 %setup -q -T -b 0
