@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	6
+Release:	7
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -221,6 +221,7 @@ Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	ocaml-devel
+Provides:	ocaml-devel
 
 %description compiler-objects
 This package contains *.cmi and *.cmo files being parts of OCaml
