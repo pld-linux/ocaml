@@ -14,13 +14,13 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.08.0
+Version:	3.08.1
 Release:	1	
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.gz
-# Source0-md5:	c6ef478362295c150101cdd2efcd38e0
+# Source0-md5:	8a32dd665d0d8fc08a027e1b8f68a001
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
 # Source1-md5:	0daee5643db6960682c1a7d84467885f
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
