@@ -303,6 +303,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_includedir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
 
 %{__make} install \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
@@ -332,7 +333,6 @@ for f in ocamlc ocamlopt ocamldoc ocamllex; do
 done
 
 # move includes to the proper place
-install -d $RPM_BUILD_ROOT%{_includedir}
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
 ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
@@ -345,13 +345,8 @@ done
 
 # this isn't installed by default, but is useful
 install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
-
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 # shutup checkfiles
