@@ -9,8 +9,8 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.04
-Release:	9
+Version:	3.05
+Release:	1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -28,6 +28,7 @@ Patch3:		%{name}-db3.patch
 Patch4:		%{name}-powerpcfix.patch
 Patch5:		%{name}-objinfo.patch
 Patch6:		%{name}-opt-symbols.patch
+Patch7:		%{name}-mano.patch
 URL:		http://caml.inria.fr/
 Requires:	ocaml-runtime = %{version}-%{release}
 BuildRequires:	db3-devel
@@ -56,16 +57,17 @@ Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode oraz
 zoptymalizowany natywny kompilator), interaktywny g³ówny system,
 narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 
-%package doc
+%package doc-ps
 Summary:	PostScript documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie PostSript
 Group:		Development/Tools
 
-%description doc
-PostScript documentation for OCaml.
+%description doc-ps
+PostScript documentation for OCaml. HTML documentation is in main package.
 
-%description doc -l pl
-Dokumentacja dla OCamla w formacie PostSript.
+%description doc-ps -l pl
+Dokumentacja dla OCamla w formacie PostSript. Dokumentacja HTML jest
+w g³ównym pakiecie.
 
 %package emacs
 Summary:	Emacs mode for OCaml
@@ -206,6 +208,33 @@ compiler. They are needed to compile some programs.
 Pakiet ten zawiera pliki *.cmi oraz *.cmo bêd±ce cze¶ciami kompilatora
 OCamla. S± one wymagane do kompilacji niektórych programów.
 
+%package ocamldoc-devel
+Summary:	Files needed to develop programs using ocamldoc
+Summary(pl):	Pliki potrzebne do tworzenia programów u¿ywaj±cych ocamldoc
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+
+%description ocamldoc-devel
+You need this package if you are going to write ocamldoc front end or
+something like that.
+
+%description ocamldoc-devel -l pl
+Bêdziesz potrzebowaæ tego pakietu, je¶li zamierzasza pisaæ front end
+dla ocamldoc lub co¶ podobnego.
+
+%package lib-source
+Summary:	Sources of OCaml standard library
+Summary(pl):	¬ród³a biblioteki standardowej OCamla
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+
+%description lib-source
+This sources come helpful during debugging of user programs with ocamldebug.
+
+%description lib-source -l pl
+¬ród³a te co¶ przydatne przy odpluskwianiu programów u¿ytkownika
+z u¿yciem ocamldebug.
+
 %prep
 %setup -q -T -b 0
 %setup -q -T -D -a 1
@@ -220,16 +249,13 @@ cp %{SOURCE4} docs/camlp4.ps.gz
 %setup -q -T -D -a 5
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
 cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
-
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%ifarch ppc
-%patch4 -p1
-%endif
 %patch5 -p1
-%patch6 -p1
+#%patch6 -p1
+%patch7 -p1
 
 %build
 ./configure \
@@ -241,24 +267,32 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	%{?_without_tk:-notk} \
 	-with-pthread
 
-%{__make} world bootstrap opt ocamlc.opt ocamlopt.opt
-%{__make} -C camlp4 optp4
+%{__make} world bootstrap opt.opt
 %{__make} -C tools objinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
+	LIBDIR=$RPM_BUILD_ROOT%{_libdir}/%{name} \
+	MANDIR=$RPM_BUILD_ROOT%{_mandir}
+
+cat > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf <<EOF
+%{_libdir}/%{name}/stublibs
+%{_libdir}/%{name}
+EOF
 
 %if %{!?_without_emacs:1}%{?_without_emacs:0}
 %{__make} -C emacs DESTDIR=$RPM_BUILD_ROOT install \
 	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
 	        else echo xemacs; fi`" \
-	EMACSDIR="%{_libdir}/emacs/site-lisp"
+	EMACSDIR="$RPM_BUILD_ROOT%{_libdir}/emacs/site-lisp"
 %endif
 
 # symlink .opt versions of compilers (if present)
-for f in ocamlc ocamlopt; do
+# warning: don't do that with camlp4 (can't load extensions then)
+for f in ocamlc ocamlopt ocamldoc ocamllex; do
 	if test -f $RPM_BUILD_ROOT%{_bindir}/$f.opt; then
 		mv -f $RPM_BUILD_ROOT%{_bindir}/$f \
 			$RPM_BUILD_ROOT%{_bindir}/$f.byte
@@ -266,7 +300,7 @@ for f in ocamlc ocamlopt; do
 	fi
 done
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*.ml{,i}
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*.mli
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.ml{,i}
 
 # move includes to the proper place
@@ -284,16 +318,14 @@ done
 # this isn't installed by default, but is useful
 install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
 
-# instead of adding new directories to ld.conf, we use single dirctory
-# for dlls comming from other packages, they should be symlinked here
-echo %{_libdir}/%{name} > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf
-
-%{!?_without_tk:(cd $RPM_BUILD_ROOT%{_libdir}/%{name} && ln -s labltk/dll*.so .)}
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}
-mv otherlibs/labltk/example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
+cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
+
+# shutup checkfiles
+#rm -f $RPM_BUILD_ROOT%{_mandir}/man3
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -301,36 +333,46 @@ rm -rf $RPM_BUILD_ROOT
 %files runtime
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ocamlrun
-%attr(755,root,root) %{_libdir}/%{name}/dll[bmnstu]*.so
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/stublibs
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
+%exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
+%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
+%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
 %doc docs/html/ocaml
-%attr(755,root,root) %{_bindir}/ocaml
-%attr(755,root,root) %{_bindir}/ocaml[cmdlopy]*
+%attr(755,root,root) %{_bindir}/ocaml*
+%exclude %{_bindir}/ocamlbrowser
+%exclude %{_bindir}/ocamlrun
 %attr(755,root,root) %{_bindir}/*labels
 %{_includedir}/caml
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/threads
-%{_libdir}/%{name}/[abefhimnopqrstuw]*.*
-%{_libdir}/%{name}/callback.*
-%{_libdir}/%{name}/char.*
-%{_libdir}/%{name}/dbm.*
-%{_libdir}/%{name}/digest.*
-%{_libdir}/%{name}/dynlink.*
-%{_libdir}/%{name}/g[ce]*.*
-%{_libdir}/%{name}/l*.cm*
-%{_libdir}/%{name}/lib[abc]*.a
-%{_libdir}/%{name}/libmldbm.a
-%{_libdir}/%{name}/lib[nstu]*.a
+%{_libdir}/%{name}/*.a
+%{_libdir}/%{name}/*.o
+%{_libdir}/%{name}/*.cm*
+%exclude %{_libdir}/%{name}/*graphics*
 %{_libdir}/%{name}/ld.conf
-%attr(755,root,root) %{_libdir}/%{name}/expunge
-%attr(755,root,root) %{_libdir}/%{name}/extract_crc
 %{_libdir}/%{name}/camlheader
 %{_libdir}/%{name}/camlheader_ur
+%dir %{_libdir}/%{name}/ocamldoc
+%{_libdir}/%{name}/ocamldoc/*.sty
+%{_libdir}/%{name}/ocamldoc/*.hva
+%attr(755,root,root) %{_libdir}/%{name}/expunge
+%attr(755,root,root) %{_libdir}/%{name}/extract_crc
 %attr(755,root,root) %{_libdir}/%{name}/*labels
-%{_mandir}/man*/*ocaml*
+%{_mandir}/man1/*ocaml*
+
+%files lib-source
+%defattr(644,root,root,755)
+%{_libdir}/%{name}/*.ml
+
+# they are poor, html is much better
+#%files manpages
+#%{_mandir}/man3/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -341,7 +383,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/html/camlp4*
 %attr(755,root,root) %{_bindir}/*camlp4*
 %attr(755,root,root) %{_bindir}/ocpp
-%attr(755,root,root) %{_bindir}/odyl
+# Not installed since 3.05, is is needed?
+#%attr(755,root,root) %{_bindir}/odyl
 %{_libdir}/%{name}/camlp4
 %{_mandir}/man*/*camlp4*
 %{_mandir}/man*/*ocpp*
@@ -359,27 +402,32 @@ rm -rf $RPM_BUILD_ROOT
 
 %files labltk
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/labltk/dlllabltk*
-%{_libdir}/%{name}/dlllabltk*
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlllabltk.so
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
 %endif
 
 %if %{!?_without_x11:1}%{?_without_x11:0}
 %files x11graphics-devel
 %defattr(644,root,root,755)
-%{_libdir}/%{name}/graphics*
+%{_libdir}/%{name}/graphics*.cm*
 %{_libdir}/%{name}/libgraphics.a
 
 %files x11graphics
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/dllgraphics.so
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllgraphics.so
 %endif
 
 %if %{!?_without_emacs:1}%{?_without_emacs:0}
 %files emacs
 %defattr(644,root,root,755)
-%{_libdir}/emacs/site-lisp/*.el
+%{_libdir}/emacs/site-lisp/*.el*
 %endif
 
-%files doc
+%files ocamldoc-devel
+%defattr(644,root,root,755)
+%{_libdir}/%{name}/ocamldoc/*.cm*
+%{_libdir}/%{name}/ocamldoc/*.a
+
+%files doc-ps
 %defattr(644,root,root,755)
 %doc docs/*.ps.gz
