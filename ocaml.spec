@@ -11,7 +11,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.06
-Release:	2
+Release:	3
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -199,17 +199,17 @@ Camlp4 umie ³adnie formatowaæ ¼ród³a zarówno w oryginalnej jak i
 poprawionej sk³adni OCamla. Potrafi tak¿e t³umaczyæ programy z jednej
 sk³adni na drug±.
 
-%package devel
+%package compiler-objects
 Summary:	Compiled parts of OCaml compiler
 Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{version}-%{release}
 
-%description devel
+%description compiler-objects
 This package contains *.cmi and *.cmo files being parts of OCaml
 compiler. They are needed to compile some programs.
 
-%description devel -l pl
+%description compiler-objects -l pl
 Pakiet ten zawiera pliki *.cmi oraz *.cmo bêd±ce cze¶ciami kompilatora
 OCamla. S± one wymagane do kompilacji niektórych programów.
 
@@ -400,7 +400,7 @@ rm -rf $RPM_BUILD_ROOT
 #%files manpages
 #%{_mandir}/man3/*
 
-%files devel
+%files compiler-objects
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/compiler
 
