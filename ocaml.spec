@@ -253,24 +253,22 @@ Pakiet ten zawiera ¼ród³a Czysto-Funkcjonalnych Struktur Danych
 Okasaki'ego, prze³o¿one na OCamla, wraz z dodatkami.
 
 %prep
+set -x
 %setup -q -T -b 0
 %setup -q -T -D -a 1
+%setup -q -T -D -c -n %{name}-%{version}/examples -a 7
+%setup -q -T -D -c -n %{name}-%{version}/examples -a 8
+%setup -q -T -D -n %{name}-%{version} -a 3
+%setup -q -T -D -n %{name}-%{version} -a 5
 # order mess with docs somewhat
 mkdir docs
 mkdir docs/html
 mv htmlman docs/html/ocaml
 cp %{SOURCE2} docs/ocaml.ps.gz
-%setup -q -T -D -a 3
 mv camlp4-%{version}-manual.html docs/html/camlp4
 cp %{SOURCE4} docs/camlp4.ps.gz
-%setup -q -T -D -a 5
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
 cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
-mkdir examples
-cd examples
-%setup -q -T -D -a 6
-%setup -q -T -D -a 7
-cd ..
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
