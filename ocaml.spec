@@ -10,7 +10,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.06
-Release:	1
+Release:	2
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -21,6 +21,8 @@ Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manu
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-manual.dvi.gz
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.html.tar.gz
 Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{version}-tutorial.dvi.gz
+Source7:	http://www.oefai.at/~markus/ocaml_sources/pure-fun-1.0.4.tar.bz2
+Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-manlinks.patch
 Patch2:		%{name}-db3.patch
@@ -235,6 +237,21 @@ This sources come helpful during debugging of user programs with ocamldebug.
 ¬ród³a te co¶ przydatne przy odpluskwianiu programów u¿ytkownika
 z u¿yciem ocamldebug.
 
+# maybe we'll want to add some more stuff here?
+%package examples
+Summary:	Example source code for OCaml
+Summary(pl):	Przyk³adowe kody ¼ród³owe w OCamlu
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+
+%description examples
+This packages contains sources for Okasaki's Purely Functional 
+Datastructures in OCaml, along with some contributions.
+
+%description examples -l pl
+Pakiet ten zawiera ¼ród³a Czysto-Funkcjonalnych Struktur Danych 
+Okasaki'ego, prze³o¿one na OCamla, wraz z dodatkami.
+
 %prep
 %setup -q -T -b 0
 %setup -q -T -D -a 1
@@ -249,6 +266,11 @@ cp %{SOURCE4} docs/camlp4.ps.gz
 %setup -q -T -D -a 5
 mv camlp4-%{version}-tutorial.html docs/html/camlp4-tutorial
 cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
+mkdir examples
+cd examples
+%setup -q -T -D -a 6
+%setup -q -T -D -a 7
+cd ..
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -317,6 +339,9 @@ done
 # this isn't installed by default, but is useful
 install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
 
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 
@@ -368,6 +393,9 @@ rm -rf $RPM_BUILD_ROOT
 %files lib-source
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/*.ml
+
+%files examples
+%{_examplesdir}/%{name}-%{version}
 
 # they are poor, html is much better
 #%files manpages
