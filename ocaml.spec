@@ -14,21 +14,6 @@ Release:	3
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Group(cs):	Vıvojové prostøedky/Programovací jazyky
-Group(da):	Udvikling/Sprog
-Group(de):	Entwicklung/Sprachen
-Group(es):	Desarrollo/Lenguajes
-Group(fr):	Development/Langues
-Group(is):	Şróunartól/Forritunarmál
-Group(it):	Sviluppo/Linguaggi
-Group(ja):	³«È¯/¸À¸ì
-Group(no):	Utvikling/Programmeringsspråk
-Group(pl):	Programowanie/Jêzyki
-Group(pt):	Desenvolvimento/Linguagens
-Group(ru):	òÁÚÒÁÂÏÔËÁ/ñÚÙËÉ
-Group(sl):	Razvoj/Jeziki
-Group(sv):	Utveckling/Språk
-Group(uk):	òÏÚÒÏÂËÁ/íÏ×É
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.info.tar.gz
 Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
@@ -70,21 +55,6 @@ narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 Summary:	PostScript documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie PostSript
 Group:		Development/Tools
-Group(cs):	Vıvojové prostøedky/Nástroje
-Group(da):	Udvikling/Værktøj
-Group(de):	Entwicklung/Tools
-Group(es):	Desarrollo/Herramientas
-Group(fr):	Development/Outils
-Group(is):	Şróunartól/Tól
-Group(it):	Sviluppo/Tool
-Group(ja):	³«È¯/¥Ä¡¼¥ë
-Group(no):	Utvikling/Verktøy
-Group(pl):	Programowanie/Narzêdzia
-Group(pt):	Desenvolvimento/Ferramentas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/éÎÓÔÒÕÍÅÎÔÙ
-Group(sl):	Razvoj/Orodja
-Group(sv):	Utveckling/Verktyg
-Group(uk):	òÏÚÒÏÂËÁ/¶ÎÓÔÒÕÍÅÎÔÉ
 Requires:	%{name} = %{version}
 
 %description doc-ps
@@ -97,21 +67,6 @@ Dokumentacja dla OCaml-a w formacie PostSript
 Summary:	HTML documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie HTML
 Group:		Development/Tools
-Group(cs):	Vıvojové prostøedky/Nástroje
-Group(da):	Udvikling/Værktøj
-Group(de):	Entwicklung/Tools
-Group(es):	Desarrollo/Herramientas
-Group(fr):	Development/Outils
-Group(is):	Şróunartól/Tól
-Group(it):	Sviluppo/Tool
-Group(ja):	³«È¯/¥Ä¡¼¥ë
-Group(no):	Utvikling/Verktøy
-Group(pl):	Programowanie/Narzêdzia
-Group(pt):	Desenvolvimento/Ferramentas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/éÎÓÔÒÕÍÅÎÔÙ
-Group(sl):	Razvoj/Orodja
-Group(sv):	Utveckling/Verktyg
-Group(uk):	òÏÚÒÏÂËÁ/¶ÎÓÔÒÕÍÅÎÔÉ
 Requires:	%{name} = %{version}
 
 %description doc-html
@@ -124,21 +79,6 @@ Dokumentacja dla OCaml-a w formacie HTML
 Summary:	Emacs mode for OCaml
 Summary(pl):	Tryb Emacsa dla OCaml
 Group:		Development/Tools
-Group(cs):	Vıvojové prostøedky/Nástroje
-Group(da):	Udvikling/Værktøj
-Group(de):	Entwicklung/Tools
-Group(es):	Desarrollo/Herramientas
-Group(fr):	Development/Outils
-Group(is):	Şróunartól/Tól
-Group(it):	Sviluppo/Tool
-Group(ja):	³«È¯/¥Ä¡¼¥ë
-Group(no):	Utvikling/Verktøy
-Group(pl):	Programowanie/Narzêdzia
-Group(pt):	Desenvolvimento/Ferramentas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/éÎÓÔÒÕÍÅÎÔÙ
-Group(sl):	Razvoj/Orodja
-Group(sv):	Utveckling/Verktyg
-Group(uk):	òÏÚÒÏÂËÁ/¶ÎÓÔÒÕÍÅÎÔÉ
 Requires:	%{name} = %{version}
 
 %description emacs
@@ -151,22 +91,6 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 Summary:	LabelTk library for OCaml
 Summary(pl):	Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
-Group(cs):	Vıvojové prostøedky/Knihovny
-Group(da):	Udvikling/Biblioteker
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(is):	Şróunartól/Ağgerğasöfn
-Group(it):	Sviluppo/Librerie
-Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
-Group(no):	Utvikling/Bibliotek
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(pt):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(sl):	Razvoj/Knji¾nice
-Group(sv):	Utveckling/Bibliotek
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description labltk
@@ -180,22 +104,6 @@ Tcl/Tk.
 Summary:	X11 graphic output for OCaml
 Summary(pl):	Iksowe wyj¶cie graficzne dla OCamla
 Group:		Development/Libraries
-Group(cs):	Vıvojové prostøedky/Knihovny
-Group(da):	Udvikling/Biblioteker
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(is):	Şróunartól/Ağgerğasöfn
-Group(it):	Sviluppo/Librerie
-Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
-Group(no):	Utvikling/Bibliotek
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(pt):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(sl):	Razvoj/Knji¾nice
-Group(sv):	Utveckling/Bibliotek
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description x11graphics
@@ -209,21 +117,6 @@ oknach X11.
 Summary:	Objective Caml Preprocessor
 Summary(pl):	Preprocesor Ocamla
 Group:		Development/Languages
-Group(cs):	Vıvojové prostøedky/Programovací jazyky
-Group(da):	Udvikling/Sprog
-Group(de):	Entwicklung/Sprachen
-Group(es):	Desarrollo/Lenguajes
-Group(fr):	Development/Langues
-Group(is):	Şróunartól/Forritunarmál
-Group(it):	Sviluppo/Linguaggi
-Group(ja):	³«È¯/¸À¸ì
-Group(no):	Utvikling/Programmeringsspråk
-Group(pl):	Programowanie/Jêzyki
-Group(pt):	Desenvolvimento/Linguagens
-Group(ru):	òÁÚÒÁÂÏÔËÁ/ñÚÙËÉ
-Group(sl):	Razvoj/Jeziki
-Group(sv):	Utveckling/Språk
-Group(uk):	òÏÚÒÏÂËÁ/íÏ×É
 Requires:	%{name} = %{version}
 Provides:	camlp4 = %{version}
 Obsoletes:	camlp4
