@@ -66,6 +66,16 @@ Pliki trybu Emacsa dla jêzyka Objektowego Caml
 %{__make} world bootstrap opt ocamlc.opt ocamlopt.opt \
 	BYTECCCOMPOPTS="%{rpmcflags}"
 
+# hack info pages to contain dir entry
+cat <<EOF >infoman/ocaml.info
+INFO-DIR-SECTION Programming Languages:
+START-INFO-DIR-ENTRY	
+* Ocaml: (ocaml).                             The Ocaml language
+END-INFO-DIR-ENTRY
+EOF
+zcat infoman/ocaml.info.gz >> infoman/ocaml.info
+gzip -9nf infoman/ocaml.info
+
 %install
 rm -rf $RPM_BUILD_ROOT
 umask 022
