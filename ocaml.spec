@@ -1,0 +1,100 @@
+Summary:	The Objective Caml compiler and programming environment
+Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
+Name:		ocaml
+Version:	2.02
+Release:	1
+URL:		http://pauillac.inria.fr/caml/
+Vendor:		Group of implementors <caml-light@inria.fr>
+Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
+Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
+Patch0:		ocaml-ext_prof.patch
+Patch1:		ocaml-opt.patch
+Copyright:	Distributable
+Group:		Development/Languages
+BuildRoot:	/tmp/%{name}-%{version}-root
+
+%description
+Objective Caml is a high-level, strongly-typed, functional and
+object-oriented programming language from the ML family of languages.
+
+This package comprises two batch compilers (a fast bytecode compiler
+and an optimizing native-code compiler), an interactive toplevel system,
+Lex&Yacc tools, a replay debugger, and a comprehensive library.
+
+%description -l pl
+Objektowy Caml jest funkcjonalnym, objektowo zorientowanym jêzykiem
+wysokiego poziomuz rodziny jêzyków ML.
+
+Ten pakiet zawiera dwa kompilatory (szybki kompilator bytecode
+oraz zoptymalizowany natywny kompilator), interaktywny g³ówny system,
+narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
+
+%package emacs
+Group:		Development/Tools
+Summary:	Emacs mode for OCaml
+Summary(pl):	Tryb Emacsa dla OCaml
+Requires:	%{name} = %{version}
+# xemacs doesn't have Provide emacs ?
+#BuildRequires:	emacs
+
+%description emacs
+Emacs mode files for Objective Caml language
+
+%description -l pl emacs
+Pliki trybu Emacsa dla jêzyka Objektowego Caml
+
+
+%prep
+%setup -q -T -b 0
+%setup -q -T -D -a 1
+%patch0 -p0
+%patch1 -p1
+
+%build
+./configure \
+	-cc "cc $RPM_OPT_FLAGS" \
+	-bindir %{_bindir} \
+	-libdir %{_libdir}/%{name} \
+	-mandir %{_mandir}/man1 \
+	-host %{_host_alias} \
+	-with-pthread
+
+make world bootstrap opt ocamlc.opt ocamlopt.opt
+
+%install
+umask 022
+rm -rf $RPM_BUILD_ROOT
+echo	BINDIR=$RPM_BUILD_ROOT%{_bindir} >> config/Makefile
+echo	LIBDIR=$RPM_BUILD_ROOT%{_libdir}/%{name} >> config/Makefile
+echo	MANDIR=$RPM_BUILD_ROOT%{_mandir}/man1 >> config/Makefile
+make	install 
+make -C emacs install \
+	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
+	        else echo xemacs; fi`" \
+	EMACSDIR="$RPM_BUILD_ROOT%{_libdir}/emacs/site-lisp"
+cp -p {parsing/{location,longident,parsetree},typing/typecore}.{cm,ml}i \
+	$RPM_BUILD_ROOT%{_libdir}/%{name}
+			
+gzip -9nf LICENSE Changes README $RPM_BUILD_ROOT%{_mandir}/man*/*
+
+cd $RPM_BUILD_ROOT%{_bindir}
+mv -f ocamlc		$RPM_BUILD_ROOT%{_bindir}/ocamlc.byte
+mv -f ocamlc.opt	$RPM_BUILD_ROOT%{_bindir}/ocamlc
+mv -f ocamlopt		$RPM_BUILD_ROOT%{_bindir}/ocamlopt.byte
+mv -f ocamlopt.opt	$RPM_BUILD_ROOT%{_bindir}/ocamlopt
+rm -f			$RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
+
+strip			$RPM_BUILD_ROOT%{_bindir}/* || :
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+%doc htmlman *.gz
+%attr(755, root, root) %{_bindir}/*
+%{_libdir}/%{name}
+%{_mandir}/man*/*
+
+%files emacs
+%defattr(644,root,root,755)
+%{_libdir}/emacs/site-lisp/*.el
