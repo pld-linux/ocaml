@@ -54,7 +54,7 @@ BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
 %endif
-Requires:	ocaml-runtime = %{epoch}:%{version}-%{release}
+Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-ocamldoc
 Obsoletes:	ocaml-ocamldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
