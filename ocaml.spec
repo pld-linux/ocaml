@@ -113,7 +113,7 @@ ocamlrun bytecode interpreter, and basic dynamic link libraries.
 %description runtime -l pl
 Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
 OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun) oraz
-podstawowe bibliotki linkowane dynamicznie.
+podstawowe biblioteki linkowane dynamicznie.
 
 %package labltk-devel
 Summary:	LablTk library for OCaml
@@ -227,7 +227,7 @@ This package contains *.cmi and *.cmo files being parts of OCaml
 compiler. They are needed to compile some programs.
 
 %description compiler-objects -l pl
-Pakiet ten zawiera pliki *.cmi oraz *.cmo bêd±ce cze¶ciami kompilatora
+Pakiet ten zawiera pliki *.cmi oraz *.cmo bêd±ce czê¶ciami kompilatora
 OCamla. S± one wymagane do kompilacji niektórych programów.
 
 %package ocamldoc-devel
