@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	5
+Release:	6
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -295,6 +295,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 #%patch6 -p1
 
 %build
+cp /usr/share/automake/config.sub config/gnu
 ./configure \
         -cc "%{__cc} %{rpmcflags}" \
 	-bindir %{_bindir} \
@@ -302,7 +303,8 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 	-mandir %{_mandir}/man1 \
 	-host %{_host} \
 	%{!?with_tk:-no-tk} \
-	-with-pthread
+	-with-pthread \
+	-x11lib /usr/X11R6/%{_lib}
 
 %{__make} world bootstrap opt.opt
 %{__make} -C tools objinfo
