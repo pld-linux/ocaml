@@ -1,0 +1,24 @@
+diff -ur ocaml-3.04--/camlp4/man/Makefile ocaml-3.04/camlp4/man/Makefile
+--- ocaml-3.04--/camlp4/man/Makefile	Wed Sep 26 16:32:50 2001
++++ ocaml-3.04/camlp4/man/Makefile	Sat Feb  2 01:48:21 2002
+@@ -14,14 +14,11 @@
+ get_promote:
+ 
+ install:
+-	-$(MKDIR) $(MANDIR)
+-	-cp $(TARGET) $(MANDIR)/.
+-	-cd $(MANDIR); rm -f camlp4o.1; ln -s $(TARGET) camlp4o.1
+-	-cd $(MANDIR); rm -f camlp4r.1; ln -s $(TARGET) camlp4r.1
+-	-cd $(MANDIR); rm -f mkcamlp4.1; ln -s $(TARGET) mkcamlp4.1
+-	-cd $(MANDIR); rm -f ocpp.1; ln -s $(TARGET) ocpp.1
+-	-cd $(MANDIR); rm -f camlp4o.opt.1; ln -s $(TARGET) camlp4o.opt.1
+-	-cd $(MANDIR); rm -f camlp4r.opt.1; ln -s $(TARGET) camlp4r.opt.1
++	-$(MKDIR) $(DESTDIR)$(MANDIR)
++	cp $(TARGET) $(DESTDIR)$(MANDIR)/.
++	for f in camlp4o camlp4r mkcamlp4 ocpp camlp4o.opt camlp4r.opt ; do \
++		echo ".so man1/$(TARGET)" > $(DESTDIR)$(MANDIR)/$$f.1 ; \
++	done
+ 
+ camlp4.1: camlp4.1.tpl
+ 	sed -e "s'LIBDIR'$(LIBDIR)'g" camlp4.1.tpl > camlp4.1
+
