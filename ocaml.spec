@@ -13,7 +13,8 @@ Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.info.tar.g
 URL:		http://pauillac.inria.fr/caml/
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
-BuildRequires:	xemacs
+BuildRequires:	xemacs-common
+BuildRequires:	xemacs-fsf-compat-pkg
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
