@@ -2,13 +2,15 @@
 # conditional build:
 # --without emacs
 # --without tk
-# --without x11  (use only with --without tk)
+# --without x11  (implies --without tk)
+
+%{?_without_x11:%define	_without_tk	1}
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Caml oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	2
+Release:	3
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -41,9 +43,8 @@ Patch2:		%{name}-manlinks.patch
 Patch3:		%{name}-db3.patch
 URL:		http://caml.inria.fr/
 BuildRequires:	db3-devel
-%{!?_without_tk:BuildRequires:	tcl-devel}
-%{!?_without_tk:BuildRequires:	tk-devel}
-%{!?_without_x:BuildRequires:	XFree86-devel}
+%{!?_without_tk:BuildRequires:		tk-devel}
+%{!?_without_x11:BuildRequires:		XFree86-devel}
 %{!?_without_emacs:BuildRequires:	xemacs-common}
 %{!?_without_emacs:BuildRequires:	xemacs-fsf-compat-pkg}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
