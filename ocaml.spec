@@ -1,10 +1,10 @@
 #
 # Conditional build:
 
-%bcond_without emacs	# emacs subpackage
-%bcond_without x	# without X11 support 
-%bcond_without tk	# tk support
-%bcond_with db3		# use db3 instead of db 4.x
+%bcond_without	emacs	# without emacs subpackage
+%bcond_without	x	# without X11 support 
+%bcond_without	tk	# without Tcl/Tk support
+%bcond_with	db3	# use db3 instead of db 4.x
 
 # --without x11 implies --without tk
 %{!?with_x:%undefine	with_tk}
@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	7
+Release:	8
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -451,7 +451,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
 %endif
 
-%if %{with x11}
+%if %{with x}
 %files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*.cm*
