@@ -10,7 +10,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator Objektowego Camla oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.04
-Release:	8
+Release:	9
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
@@ -326,8 +326,6 @@ ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 install infoman/*info* $RPM_BUILD_ROOT%{_infodir}
 
-gzip -9nf LICENSE Changes README Upgrading
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -345,7 +343,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc LICENSE Changes README Upgrading
 %attr(755,root,root) %{_bindir}/ocaml
 %attr(755,root,root) %{_bindir}/ocaml[cmdlopy]*
 %attr(755,root,root) %{_bindir}/*labels
