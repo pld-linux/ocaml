@@ -302,7 +302,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.ml{,i}
 install -d $RPM_BUILD_ROOT%{_includedir}
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
-ln -s ../../include/ocaml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
+ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
 
 # compiled sourec of compiler, needed by some programs
 install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler
