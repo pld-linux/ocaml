@@ -1,0 +1,152 @@
+diff -urN ocaml-2.02.org/asmrun/Makefile ocaml-2.02/asmrun/Makefile
+--- ocaml-2.02.org/asmrun/Makefile	Fri Mar 24 16:57:06 2000
++++ ocaml-2.02/asmrun/Makefile	Fri Mar 24 17:02:22 2000
+@@ -2,9 +2,9 @@
+ 
+ CC=$(NATIVECC)
+ FLAGS=-I../byterun -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) 
+-CFLAGS=$(FLAGS) -O $(NATIVECCCOMPOPTS)
++CFLAGS=$(FLAGS) $(NATIVECCCOMPOPTS)
+ DFLAGS=$(FLAGS) -g -DDEBUG $(NATIVECCCOMPOPTS)
+-PFLAGS=$(FLAGS) -pg -O -DPROFILING $(NATIVECCCOMPOPTS)
++PFLAGS=$(FLAGS) -pg -DPROFILING $(NATIVECCCOMPOPTS)
+ 
+ COBJS=startup.o main.o fail.o roots.o signals.o \
+   misc.o freelist.o major_gc.o minor_gc.o memory.o alloc.o compare.o ints.o \
+diff -urN ocaml-2.02.org/byterun/Makefile ocaml-2.02/byterun/Makefile
+--- ocaml-2.02.org/byterun/Makefile	Fri Mar 24 16:57:06 2000
++++ ocaml-2.02/byterun/Makefile	Fri Mar 24 17:02:37 2000
+@@ -1,7 +1,7 @@
+ include ../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-O $(BYTECCCOMPOPTS)
++CFLAGS=$(BYTECCCOMPOPTS)
+ DFLAGS=-g -DDEBUG $(BYTECCCOMPOPTS)
+ 
+ OBJS=interp.o misc.o stacks.o fix_code.o startup.o main.o \
+diff -urN ocaml-2.02.org/configure ocaml-2.02/configure
+--- ocaml-2.02.org/configure	Fri Mar 24 16:57:05 2000
++++ ocaml-2.02/configure	Fri Mar 24 16:59:09 2000
+@@ -410,7 +410,7 @@
+ 
+ # For the terminfo module
+ 
+-for libs in "" "-lcurses" "-ltermcap" "-lcurses -ltermcap"; do
++for libs in "" "-ltinfo" "-lcurses" "-ltermcap" "-lcurses -ltermcap"; do
+   if sh ./hasgot $libs tgetent tgetstr tgetnum tputs; then
+     echo "termcap functions found (with libraries '$libs')"
+     echo "#define HAS_TERMCAP" >> s.h
+diff -urN ocaml-2.02.org/otherlibs/db/Makefile ocaml-2.02/otherlibs/db/Makefile
+--- ocaml-2.02.org/otherlibs/db/Makefile	Fri Mar 24 16:57:10 2000
++++ ocaml-2.02/otherlibs/db/Makefile	Fri Mar 24 17:03:03 2000
+@@ -3,10 +3,10 @@
+ include ../../config/Makefile
+ 
+ # Compilation optiosn
+-CC=$(BYTECC) -g
++CC=$(BYTECC)
+ CAMLC=../../boot/ocamlrun ../../boot/ocamlc -I ../../stdlib
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS)
++CFLAGS=-I../../byterun $(BYTECCCOMPOPTS)
+ COBJS=dbstubs.o
+ 
+ all: libmldb.a db.cmi db.cma
+diff -urN ocaml-2.02.org/otherlibs/dbm/Makefile ocaml-2.02/otherlibs/dbm/Makefile
+--- ocaml-2.02.org/otherlibs/dbm/Makefile	Fri Mar 24 16:57:10 2000
++++ ocaml-2.02/otherlibs/dbm/Makefile	Fri Mar 24 17:03:13 2000
+@@ -3,10 +3,10 @@
+ include ../../config/Makefile
+ 
+ # Compilation optiosn
+-CC=$(BYTECC) -g
++CC=$(BYTECC)
+ CAMLC=../../boot/ocamlrun ../../boot/ocamlc -I ../../stdlib
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS)
++CFLAGS=-I../../byterun $(BYTECCCOMPOPTS)
+ COBJS=cldbm.o
+ 
+ all: libmldbm.a dbm.cmi dbm.cma
+diff -urN ocaml-2.02.org/otherlibs/num/Makefile ocaml-2.02/otherlibs/num/Makefile
+--- ocaml-2.02.org/otherlibs/num/Makefile	Fri Mar 24 16:57:10 2000
++++ ocaml-2.02/otherlibs/num/Makefile	Fri Mar 24 17:03:41 2000
+@@ -15,7 +15,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-O -I./bignum/h -I../../byterun $(BYTECCCOMPOPTS)
++CFLAGS=-I./bignum/h -I../../byterun $(BYTECCCOMPOPTS)
+ CAMLC=../../boot/ocamlrun ../../boot/ocamlc -I ../../stdlib -w s
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib -w s
+ 
+diff -urN ocaml-2.02.org/otherlibs/str/Makefile ocaml-2.02/otherlibs/str/Makefile
+--- ocaml-2.02.org/otherlibs/str/Makefile	Fri Mar 24 16:57:11 2000
++++ ocaml-2.02/otherlibs/str/Makefile	Fri Mar 24 17:04:04 2000
+@@ -4,7 +4,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-O -I$(REGEXLIB) -I../../byterun $(BYTECCCOMPOPTS)
++CFLAGS=-I$(REGEXLIB) -I../../byterun $(BYTECCCOMPOPTS)
+ CAMLC=../../boot/ocamlrun ../../boot/ocamlc -I ../../stdlib
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+ REGEXLIB=regex-0.12
+diff -urN ocaml-2.02.org/otherlibs/systhreads/Makefile ocaml-2.02/otherlibs/systhreads/Makefile
+--- ocaml-2.02.org/otherlibs/systhreads/Makefile	Fri Mar 24 16:57:11 2000
++++ ocaml-2.02/otherlibs/systhreads/Makefile	Fri Mar 24 17:04:28 2000
+@@ -19,7 +19,7 @@
+ 	ar rc libthreads.a $(BYTECODE_C_OBJS)
+ 
+ posix_b.o: posix.c
+-	$(BYTECC) -O -I../../byterun $(BYTECCCOMPOPTS) -c posix.c
++	$(BYTECC) -I../../byterun $(BYTECCCOMPOPTS) -c posix.c
+ 	mv posix.o posix_b.o
+ 
+ libthreadsnat.a: $(NATIVECODE_C_OBJS)
+@@ -27,7 +27,7 @@
+ 	ar rc libthreadsnat.a $(NATIVECODE_C_OBJS)
+ 
+ posix_n.o: posix.c
+-	$(NATIVECC) -O -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c posix.c
++	$(NATIVECC) -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c posix.c
+ 	mv posix.o posix_n.o
+ 
+ threads.cma: $(THREAD_OBJS)
+diff -urN ocaml-2.02.org/otherlibs/threads/Makefile ocaml-2.02/otherlibs/threads/Makefile
+--- ocaml-2.02.org/otherlibs/threads/Makefile	Fri Mar 24 16:57:11 2000
++++ ocaml-2.02/otherlibs/threads/Makefile	Fri Mar 24 17:04:43 2000
+@@ -1,7 +1,7 @@
+ include ../../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS)
++CFLAGS=-I../../byterun $(BYTECCCOMPOPTS)
+ CAMLC=../../boot/ocamlrun ../../boot/ocamlc -I ../../stdlib -I ../unix
+ 
+ C_OBJS=scheduler.o
+diff -urN ocaml-2.02.org/otherlibs/unix/Makefile ocaml-2.02/otherlibs/unix/Makefile
+--- ocaml-2.02.org/otherlibs/unix/Makefile	Fri Mar 24 16:57:11 2000
++++ ocaml-2.02/otherlibs/unix/Makefile	Fri Mar 24 17:04:53 2000
+@@ -4,7 +4,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS)
++CFLAGS=-I../../byterun $(BYTECCCOMPOPTS)
+ CAMLC=../../boot/ocamlrun ../../boot/ocamlc -I ../../stdlib
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+ 
+diff -urN ocaml-2.02.org/yacc/Makefile ocaml-2.02/yacc/Makefile
+--- ocaml-2.02.org/yacc/Makefile	Fri Mar 24 16:57:13 2000
++++ ocaml-2.02/yacc/Makefile	Fri Mar 24 17:05:12 2000
+@@ -3,7 +3,7 @@
+ include ../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-O -DNDEBUG $(BYTECCCOMPOPTS)
++CFLAGS=-DNDEBUG $(BYTECCCOMPOPTS)
+ 
+ OBJS= closure.o error.o lalr.o lr0.o main.o mkpar.o output.o reader.o \
+   skeleton.o symtab.o verbose.o warshall.o
