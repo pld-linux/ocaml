@@ -12,8 +12,21 @@ Release:	2
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
+Group(cs):	Vývojové prostøedky/Programovací jazyky
+Group(da):	Udvikling/Sprog
 Group(de):	Entwicklung/Sprachen
+Group(es):	Desarrollo/Lenguajes
+Group(fr):	Development/Langues
+Group(is):	Þróunartól/Forritunarmál
+Group(it):	Sviluppo/Linguaggi
+Group(ja):	³«È¯/¸À¸ì
+Group(no):	Utvikling/Programmeringsspråk
 Group(pl):	Programowanie/Jêzyki
+Group(pt):	Desenvolvimento/Linguagens
+Group(ru):	òÁÚÒÁÂÏÔËÁ/ñÚÙËÉ
+Group(sl):	Razvoj/Jeziki
+Group(sv):	Utveckling/Språk
+Group(uk):	òÏÚÒÏÂËÁ/íÏ×É
 Source0:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.info.tar.gz
 Source2:	ftp://ftp.inria.fr/lang/caml-light/%{name}-%{version}-refman.html.tar.gz
@@ -56,6 +69,21 @@ narzêdzia Lex&Yacc, odpluskwiacz i biblioteki.
 Summary:	PostScript documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie PostSript
 Group:		Development/Tools
+Group(cs):	Vývojové prostøedky/Nástroje
+Group(da):	Udvikling/Værktøj
+Group(de):	Entwicklung/Tools
+Group(es):	Desarrollo/Herramientas
+Group(fr):	Development/Outils
+Group(is):	Þróunartól/Tól
+Group(it):	Sviluppo/Tool
+Group(ja):	³«È¯/¥Ä¡¼¥ë
+Group(no):	Utvikling/Verktøy
+Group(pl):	Programowanie/Narzêdzia
+Group(pt):	Desenvolvimento/Ferramentas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/éÎÓÔÒÕÍÅÎÔÙ
+Group(sl):	Razvoj/Orodja
+Group(sv):	Utveckling/Verktyg
+Group(uk):	òÏÚÒÏÂËÁ/¶ÎÓÔÒÕÍÅÎÔÉ
 Requires:	%{name} = %{version}
 
 %description doc-ps
@@ -68,6 +96,21 @@ Dokumentacja dla OCaml-a w formacie PostSript
 Summary:	HTML documentation for OCaml
 Summary(pl):	Dokumentacja dla OCaml-a w formacie HTML
 Group:		Development/Tools
+Group(cs):	Vývojové prostøedky/Nástroje
+Group(da):	Udvikling/Værktøj
+Group(de):	Entwicklung/Tools
+Group(es):	Desarrollo/Herramientas
+Group(fr):	Development/Outils
+Group(is):	Þróunartól/Tól
+Group(it):	Sviluppo/Tool
+Group(ja):	³«È¯/¥Ä¡¼¥ë
+Group(no):	Utvikling/Verktøy
+Group(pl):	Programowanie/Narzêdzia
+Group(pt):	Desenvolvimento/Ferramentas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/éÎÓÔÒÕÍÅÎÔÙ
+Group(sl):	Razvoj/Orodja
+Group(sv):	Utveckling/Verktyg
+Group(uk):	òÏÚÒÏÂËÁ/¶ÎÓÔÒÕÍÅÎÔÉ
 Requires:	%{name} = %{version}
 
 %description doc-html
@@ -80,40 +123,84 @@ Dokumentacja dla OCaml-a w formacie HTML
 Summary:	Emacs mode for OCaml
 Summary(pl):	Tryb Emacsa dla OCaml
 Group:		Development/Tools
-Group(de):	Entwicklung/Werkzeuge
+Group(cs):	Vývojové prostøedky/Nástroje
+Group(da):	Udvikling/Værktøj
+Group(de):	Entwicklung/Tools
+Group(es):	Desarrollo/Herramientas
 Group(fr):	Development/Outils
+Group(is):	Þróunartól/Tól
+Group(it):	Sviluppo/Tool
+Group(ja):	³«È¯/¥Ä¡¼¥ë
+Group(no):	Utvikling/Verktøy
 Group(pl):	Programowanie/Narzêdzia
+Group(pt):	Desenvolvimento/Ferramentas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/éÎÓÔÒÕÍÅÎÔÙ
+Group(sl):	Razvoj/Orodja
+Group(sv):	Utveckling/Verktyg
+Group(uk):	òÏÚÒÏÂËÁ/¶ÎÓÔÒÕÍÅÎÔÉ
 Requires:	%{name} = %{version}
 
 %description emacs
 Emacs mode files for Objective Caml language
 
-%description -l pl emacs
+%description emacs -l pl
 Pliki trybu Emacsa dla jêzyka Objektowego Caml
 
 %package labltk
 Summary:	LabelTk library for OCaml
 Summary(pl):	Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
+Group(cs):	Vývojové prostøedky/Knihovny
+Group(da):	Udvikling/Biblioteker
+Group(de):	Entwicklung/Bibliotheken
+Group(es):	Desarrollo/Bibliotecas
+Group(fr):	Development/Librairies
+Group(is):	Þróunartól/Aðgerðasöfn
+Group(it):	Sviluppo/Librerie
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	Utvikling/Bibliotek
+Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	Razvoj/Knji¾nice
+Group(sv):	Utveckling/Bibliotek
+Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description labltk
 LablTk gives OCaml program access to Tcl/Tk GUI widgets.
 
-%description -l pl labltk
-Biblioteka LablTk daje programom napisanym w OCamlu dostêp do
-widgetów Tcl/Tk.
+%description labltk -l pl
+Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
+Tcl/Tk.
 
 %package x11graphics
 Summary:	X11 graphic output for OCaml
 Summary(pl):	Iksowe wyj¶cie graficzne dla OCamla
 Group:		Development/Libraries
+Group(cs):	Vývojové prostøedky/Knihovny
+Group(da):	Udvikling/Biblioteker
+Group(de):	Entwicklung/Bibliotheken
+Group(es):	Desarrollo/Bibliotecas
+Group(fr):	Development/Librairies
+Group(is):	Þróunartól/Aðgerðasöfn
+Group(it):	Sviluppo/Librerie
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	Utvikling/Bibliotek
+Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	Razvoj/Knji¾nice
+Group(sv):	Utveckling/Bibliotek
+Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description x11graphics
 This package gives OCaml program access to drawing in X11 windows.
 
-%description -l pl x11graphics
+%description x11graphics -l pl
 Ten pakiet daje programom napisanym w OCamlu dostêp do rysowania po
 oknach X11.
 
@@ -121,6 +208,21 @@ oknach X11.
 Summary:	Objective Caml Preprocessor
 Summary(pl):	Preprocesor Ocamla
 Group:		Development/Languages
+Group(cs):	Vývojové prostøedky/Programovací jazyky
+Group(da):	Udvikling/Sprog
+Group(de):	Entwicklung/Sprachen
+Group(es):	Desarrollo/Lenguajes
+Group(fr):	Development/Langues
+Group(is):	Þróunartól/Forritunarmál
+Group(it):	Sviluppo/Linguaggi
+Group(ja):	³«È¯/¸À¸ì
+Group(no):	Utvikling/Programmeringsspråk
+Group(pl):	Programowanie/Jêzyki
+Group(pt):	Desenvolvimento/Linguagens
+Group(ru):	òÁÚÒÁÂÏÔËÁ/ñÚÙËÉ
+Group(sl):	Razvoj/Jeziki
+Group(sv):	Utveckling/Språk
+Group(uk):	òÏÚÒÏÂËÁ/íÏ×É
 Requires:	%{name} = %{version}
 Provides:	camlp4 = %{version}
 Obsoletes:	camlp4
@@ -140,19 +242,19 @@ revised one. It is therefore always possible to have a version of your
 sources compilable by the compiler Objective Caml without
 preprocessing.
 
-%description -l pl camlp4
-Camlp4 jest preprocesorem dla Ocamla. Oferuje narzêdzia do sk³adni (gramatyki)
-oraz umiejêtno¶æ modyfikowania konkretnej sk³adni jêzyka (cytowania,
-rozszerzenia).
+%description camlp4 -l pl
+Camlp4 jest preprocesorem dla Ocamla. Oferuje narzêdzia do sk³adni
+(gramatyki) oraz umiejêtno¶æ modyfikowania konkretnej sk³adni jêzyka
+(cytowania, rozszerzenia).
 
-Camlp4 mo¿e sparsowaæ normaln± sk³adniê Ocamla lub inn± dowoln± definiowaln±
-przez u¿ytkownika. Jako przyk³ad jest podana alternatywna sk³adnia, nazwana
-"poprawiona", poniewa¿ próbuje poprawiæ drobne problemy ze zwyk³± sk³adni±.
+Camlp4 mo¿e sparsowaæ normaln± sk³adniê Ocamla lub inn± dowoln±
+definiowaln± przez u¿ytkownika. Jako przyk³ad jest podana alternatywna
+sk³adnia, nazwana "poprawiona", poniewa¿ próbuje poprawiæ drobne
+problemy ze zwyk³± sk³adni±.
 
-Camlp4 umie ³adnie wypisaæ normaln± sk³adniê Camla lub "poprawion±". Dziêki
-temu jest mo¿liwe posiadanie wersji swoich ¼róde³ kompilowalnych przez
-kompilatora Ocamla bez preprocesingu.
-
+Camlp4 umie ³adnie wypisaæ normaln± sk³adniê Camla lub "poprawion±".
+Dziêki temu jest mo¿liwe posiadanie wersji swoich ¼róde³
+kompilowalnych przez kompilatora Ocamla bez preprocesingu.
 
 %prep
 %setup -q -T -b 0
@@ -199,12 +301,14 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 EOF
 zcat infoman/ocaml.info.gz >> infoman/ocaml.info
+
 gzip -9nf infoman/ocaml.info
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_infodir}
 
-make install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 %if %{!?_without_emacs:1}%{?_without_emacs:0}
 %{__make} -C emacs DESTDIR=$RPM_BUILD_ROOT install \
@@ -224,7 +328,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/%{_name}/*.ml
 
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
-install -d $RPM_BUILD_ROOT%{_infodir}
 install infoman/*info* $RPM_BUILD_ROOT%{_infodir}
 
 gzip -9nf LICENSE Changes README Upgrading
@@ -242,9 +345,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-%attr(755, root, root) %{_bindir}/ocaml
-%attr(755, root, root) %{_bindir}/ocaml[cmdlopry]*
-%attr(755, root, root) %{_bindir}/*labels
+%attr(755,root,root) %{_bindir}/ocaml
+%attr(755,root,root) %{_bindir}/ocaml[cmdlopry]*
+%attr(755,root,root) %{_bindir}/*labels
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/threads
 %{_libdir}/%{name}/[abefhimnopqrstuw]*.*
@@ -271,9 +374,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files camlp4
 %defattr(644,root,root,755)
-%attr(755, root, root) %{_bindir}/*camlp4*
-%attr(755, root, root) %{_bindir}/ocpp
-%attr(755, root, root) %{_bindir}/odyl
+%attr(755,root,root) %{_bindir}/*camlp4*
+%attr(755,root,root) %{_bindir}/ocpp
+%attr(755,root,root) %{_bindir}/odyl
 %{_libdir}/%{name}/camlp4
 %{_mandir}/man*/*camlp4*
 %{_mandir}/man*/*ocpp*
@@ -281,15 +384,15 @@ rm -rf $RPM_BUILD_ROOT
 %if %{!?_without_tk:1}%{?_without_tk:0}
 %files labltk
 %defattr(644,root,root,755)
-%attr(755, root, root) %{_bindir}/labltk
-%attr(755, root, root) %{_bindir}/ocamlbrowser
+%attr(755,root,root) %{_bindir}/labltk
+%attr(755,root,root) %{_bindir}/ocamlbrowser
 %dir %{_libdir}/%{name}/labltk
 %{_libdir}/%{name}/labltk/*.cm*
 %{_libdir}/%{name}/labltk/*.a
 %{_libdir}/%{name}/labltk/*.mli
-%attr(755, root, root) %{_libdir}/%{name}/labltk/*.so
-%attr(755, root, root) %{_libdir}/%{name}/labltk/labltktop
-%attr(755, root, root) %{_libdir}/%{name}/labltk/tkcompiler
+%attr(755,root,root) %{_libdir}/%{name}/labltk/*.so
+%attr(755,root,root) %{_libdir}/%{name}/labltk/labltktop
+%attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
 %endif
 
 %if %{!?_without_x11:1}%{?_without_x11:0}
@@ -297,7 +400,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*
 %{_libdir}/%{name}/libgraphics.a
-%attr(755, root, root) %{_libdir}/%{name}/dllgraphics.so
+%attr(755,root,root) %{_libdir}/%{name}/dllgraphics.so
 %endif
 
 %if %{!?_without_emacs:1}%{?_without_emacs:0}
@@ -307,7 +410,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %files doc-ps
+%defattr(644,root,root,755)
 %doc docs/*.ps.gz
 
 %files doc-html
+%defattr(644,root,root,755)
 %doc docs/html/*
