@@ -9,23 +9,22 @@
 # --without x11 implies --without tk
 %{!?with_x11:%undefine	with_tk}
 
-%define beta beta2
 %define p4ver 3.06
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.07
-Release:	0.%{beta}.2
+Release:	0.1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/%{name}-%{version}%{beta}/%{name}-%{version}%{beta}.tar.gz
-# Source0-md5:	ecc68d67871aeae91bd807f3a3e388cb
-Source1:	http://caml.inria.fr/distrib/%{name}-%{version}%{beta}/%{name}-%{version}%{beta}-refman.html.tar.gz
-# Source1-md5:	6f92dcb308c6e6923c39f7aac3749f2d
-Source2:	http://caml.inria.fr/distrib/%{name}-%{version}%{beta}/%{name}-%{version}%{beta}-refman.ps.gz
-# Source2-md5:	98b87b91c6ac5fd0ae1be7a732e49094
+Source0:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	2dd038055f5e1350078ad81270411b78
+Source1:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.html.tar.gz
+# Source1-md5:	9ac1f7e9e381b95504f0e7868d9fbf52
+Source2:	http://caml.inria.fr/distrib/%{name}-%{version}/%{name}-%{version}-refman.ps.gz
+# Source2-md5:	09a9ac4bc1ec90ca4d16743ffbe76c78
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
@@ -271,7 +270,7 @@ Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -n %{name}-%{version}%{beta} -a1 -a3 -a5
+%setup -q -a1 -a3 -a5
 mkdir examples
 tar xjf %{SOURCE7} -C examples
 tar xzf %{SOURCE8} -C examples
