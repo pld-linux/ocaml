@@ -2,12 +2,12 @@
 # Conditional build:
 
 %bcond_without emacs	# emacs subpackage
-%bcond_without x11	# without X11 support 
+%bcond_without x	# without X11 support 
 %bcond_without tk	# tk support
 %bcond_with db3		# use db3 instead of db 4.x
 
 # --without x11 implies --without tk
-%{!?with_x11:%undefine	with_tk}
+%{!?with_x:%undefine	with_tk}
 
 %define p4ver 3.06
 
@@ -44,7 +44,7 @@ Patch3:		%{name}-mano.patch
 Patch4:		%{name}-unused-var-warning.patch
 Patch5:		%{name}-camlp4-labl-fix.patch
 URL:		http://caml.inria.fr/
-%{?with_x11:BuildRequires:		XFree86-devel}
+%{?with_x:BuildRequires:		XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
 %{?with_tk:BuildRequires:		tk-devel}
