@@ -17,15 +17,14 @@ diff -ur ocaml-3.07beta2/Makefile ocaml-3.07beta2-/Makefile
    toplevel/genprintval.cmo toplevel/toploop.cmo \
    toplevel/trace.cmo toplevel/topdirs.cmo toplevel/topmain.cmo
  
-diff -ur ocaml-3.07beta2/driver/compile.ml ocaml-3.07beta2-/driver/compile.ml
---- ocaml-3.07beta2/driver/compile.ml	2003-07-25 14:17:18.000000000 +0200
-+++ ocaml-3.07beta2-/driver/compile.ml	2003-08-28 17:29:35.000000000 +0200
+--- ocaml-3.08.0/driver/compile.ml.orig	2004-06-13 14:46:41.000000000 +0200
++++ ocaml-3.08.0/driver/compile.ml	2004-07-21 23:25:27.788583360 +0200
 @@ -99,6 +99,7 @@
      try
        Pparse.file ppf inputfile Parse.implementation ast_impl_magic_number
        ++ print_if ppf Clflags.dump_parsetree Printast.implementation
 +      ++ Warn_unused_variables.doit ppf
-       ++ Typemod.type_implementation sourcefile prefixname modulename env
+       ++ Typemod.type_implementation sourcefile outputprefix modulename env
        ++ Translmod.transl_implementation modulename
        ++ print_if ppf Clflags.dump_rawlambda Printlambda.lambda
 diff -ur ocaml-3.07beta2/driver/main_args.ml ocaml-3.07beta2-/driver/main_args.ml
