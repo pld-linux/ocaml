@@ -304,10 +304,11 @@ mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
 ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
 
-# compiled sourec of compiler, needed by some programs
-install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler
-cp {{asm,byte}comp,parsing,typing,utils}/*.{cmi,cmo,cmx,o} \
-	$RPM_BUILD_ROOT%{_libdir}/%{name}/compiler
+# compiled sources of compiler, needed by some programs
+for f in {asm,byte}comp parsing typing utils ; do
+	install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f
+	cp $f/*.{cmi,cmo,cmx,o} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f
+done
 
 # this isn't installed by default, but is useful
 install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
