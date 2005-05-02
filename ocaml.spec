@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.08.3
-Release:	3
+Release:	4
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
@@ -43,6 +43,8 @@ Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
 # needs update for ocaml 3.08
 #Patch3:		%{name}-unused-var-warning.patch
+Patch4:		%{name}-gcc-pr21291-workaround.patch
+Patch5:		%{name}-tk85support.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:	XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -289,6 +291,8 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config/gnu
