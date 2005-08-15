@@ -14,14 +14,14 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.08.3
-Release:	4
+Version:	3.08.4
+Release:	1
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.gz
-# Source0-md5:	b1fc455aca6980e02e8cce8a3cbb4c81
+# Source0-md5:	105d192896bf945b660c4fb1ee486f57
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
 # Source1-md5:	0daee5643db6960682c1a7d84467885f
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
@@ -34,17 +34,16 @@ Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutori
 # Source5-md5:	96d8eb4ca5abd58c9a280ba59f73b192
 Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.dvi.gz
 # Source6-md5:	fcd87c235109364242a0c9ccf176dff8
-Source7:	http://www.oefai.at/~markus/ocaml_sources/pure-fun-1.0.4.tar.bz2
+Source7:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.4.tar.bz2
 # Source7-md5:	567bc681b4cc1cfcbbfb6fa5f012019b
-Source8:	http://www.oefai.at/~markus/ocaml_sources/ds-contrib.tar.gz
+Source8:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
 # needs update for ocaml 3.08
 #Patch3:		%{name}-unused-var-warning.patch
-Patch4:		%{name}-gcc-pr21291-workaround.patch
-Patch5:		%{name}-tk85support.patch
+Patch4:		%{name}-tk85support.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:	XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -292,7 +291,6 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config/gnu
