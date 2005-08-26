@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.08.4
-Release:	1
+Release:	2
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
@@ -38,6 +38,8 @@ Source7:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.4.tar.bz2
 # Source7-md5:	567bc681b4cc1cfcbbfb6fa5f012019b
 Source8:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
+Source9:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
+# Source9-md5:	49b68ec07ccd7ce45eb6bd3f3fdee140
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
@@ -50,6 +52,7 @@ URL:		http://caml.inria.fr/
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
 %{?with_tk:BuildRequires:	tk-devel}
 %if %{with emacs}
+BuildRequires:	sed >= 4.0
 BuildRequires:	xemacs
 BuildRequires:	xemacs-common
 BuildRequires:	xemacs-fsf-compat-pkg
@@ -77,17 +80,38 @@ oraz optymalizuj±cy kompilator do kodu natywnego), interaktywne ¶rodowisko
 pracy, narzêdzia do tworzenia analizatorów leksykalnych oraz sk³adniowych
 (ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i biblioteki.
 
+%package doc-html
+Summary:	HTML documentation for OCaml
+Summary(pl):	Dokumentacja dla OCamla w formacie HTML
+Group:		Development/Tools
+
+%description doc-html
+HTML documentation for OCaml.
+
+%description doc-html -l pl
+Dokumentacja dla OCamla w formacie HTML.
+
 %package doc-ps
 Summary:	PostScript documentation for OCaml
 Summary(pl):	Dokumentacja dla OCamla w formacie PostScript
 Group:		Development/Tools
 
 %description doc-ps
-PostScript documentation for OCaml. HTML documentation is in main package.
+PostScript documentation for OCaml.
 
 %description doc-ps -l pl
-Dokumentacja dla OCamla w formacie PostScript. Dokumentacja HTML jest
-w g³ównym pakiecie.
+Dokumentacja dla OCamla w formacie PostScript.
+
+%package doc-info
+Summary:	Info documentation for OCaml
+Summary(pl):	Dokumentacja info dla OCamla
+Group:		Development/Tools
+
+%description doc-info
+Info documentation for OCaml.
+
+%description doc-info -l pl
+Dokumentacja info dla OCamla.
 
 %package emacs
 Summary:	Emacs mode for OCaml
@@ -214,6 +238,17 @@ Camlp4 umie ³adnie formatowaæ ¼ród³a zarówno w oryginalnej jak i
 poprawionej sk³adni OCamla. Potrafi tak¿e t³umaczyæ programy z jednej
 sk³adni na drug±.
 
+%package camlp4-doc-html
+Summary:	Objective Caml Preprocessor - HTML documentation 
+Summary(pl):	Preprocesor OCamla - dokumentacja HTML 
+Group:		Development/Languages
+
+%description camlp4-doc-html
+Objective Caml Preprocessor - HTML documentation.
+
+%description camlp4-doc-html -l pl
+Preprocesor OCamla - dokumentacja HTML.
+
 %package compiler-objects
 Summary:	Compiled parts of OCaml compiler
 Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
@@ -277,9 +312,9 @@ autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 mkdir examples
 tar xjf %{SOURCE7} -C examples
 tar xzf %{SOURCE8} -C examples
+tar xzf %{SOURCE9}
 # order mess with docs somewhat
-mkdir docs
-mkdir docs/html
+mkdir -p docs/html
 mv htmlman docs/html/ocaml
 cp %{SOURCE2} docs/ocaml.ps.gz
 mv camlp4-%{p4ver}-manual.html docs/html/camlp4
@@ -292,10 +327,18 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 #%patch3 -p1
 %patch4 -p1
 
-%build
+# allow pass CFLAGS, replace -O, -pg,-DPROFILING with $(CFAGS)
+Makefiles=$(find . -type f -name Makefile\*)
+%{__sed} -i -e 's@^CFLAGS[ \t]*=@override CFLAGS += @' $Makefiles
+%{__sed} -i -e 's@\(^override CFLAGS += .*\)-O \(.*\)@\1\2@' $Makefiles
+%{__sed} -i -e 's@^CCFLAGS[ \t]*=\(.*\)@override CCFLAGS += \1 $(CFLAGS)@' $Makefiles
+%{__sed} -i -e 's@-pg -O -DPROFILING@ $(CFLAGS) @' asmrun/Makefile
+%{__sed} -i -e 's@-O@$(CFLAGS)@' otherlibs/systhreads/Makefile
+
+%build 
 cp -f /usr/share/automake/config.sub config/gnu
 ./configure \
-        -cc "%{__cc} %{rpmcflags}" \
+        -cc "%{__cc}" \
 	-bindir %{_bindir} \
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
@@ -304,12 +347,12 @@ cp -f /usr/share/automake/config.sub config/gnu
 	-with-pthread \
 	-x11lib /usr/X11R6/%{_lib}
 
-%{__make} world bootstrap opt.opt
-%{__make} -C tools objinfo
+%{__make} world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall"
+%{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_includedir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
+install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
 
 %{__make} install \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
@@ -359,8 +402,17 @@ ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 rm -rf $RPM_BUILD_ROOT%{_mandir}/man3
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
+# install info pages
+cp -f infoman/*.gz $RPM_BUILD_ROOT%{_infodir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post doc-info
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+%postun doc-info
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %files runtime
 %defattr(644,root,root,755)
@@ -377,7 +429,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
-%doc docs/html/ocaml
 %attr(755,root,root) %{_bindir}/ocaml*
 %{!?_without_tk:%exclude %{_bindir}/ocamlbrowser}
 %exclude %{_bindir}/ocamlrun
@@ -422,7 +473,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files camlp4
 %defattr(644,root,root,755)
-%doc docs/html/camlp4*
 %attr(755,root,root) %{_bindir}/*camlp4*
 %attr(755,root,root) %{_bindir}/ocpp
 # Not installed since 3.05, is is needed?
@@ -430,6 +480,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/camlp4
 %{_mandir}/man*/*camlp4*
 %{_mandir}/man*/*ocpp*
+
+%files camlp4-doc-html
+%defattr(644,root,root,755)
+%doc docs/html/camlp4*
 
 %if %{with tk}
 %files labltk-devel
@@ -471,6 +525,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/ocamldoc/*.cm*
 %{_libdir}/%{name}/ocamldoc/*.a
 
+%files doc-html
+%defattr(644,root,root,755)
+%doc docs/html/ocaml/*
+
 %files doc-ps
 %defattr(644,root,root,755)
 %doc docs/*.ps.gz
+
+%files doc-info
+%defattr(644,root,root,755)
+%{_infodir}/ocaml.info*
