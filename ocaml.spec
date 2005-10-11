@@ -347,14 +347,14 @@ cp -f /usr/share/automake/config.sub config/gnu
 	-with-pthread \
 	-x11lib /usr/X11R6/%{_lib}
 
-%{__make} world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall"
-%{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall"
+%{__make} -j1 world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall"
+%{__make} -j1 -C tools objinfo CFLAGS="%{rpmcflags} -Wall" -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
 
-%{__make} install \
+%{__make} -j1 install \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
 	LIBDIR=$RPM_BUILD_ROOT%{_libdir}/%{name} \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
@@ -365,7 +365,7 @@ cat > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf <<EOF
 EOF
 
 %if %{with emacs}
-%{__make} -C emacs DESTDIR=$RPM_BUILD_ROOT install \
+%{__make} -j1 -C emacs DESTDIR=$RPM_BUILD_ROOT install \
 	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
 	        else echo xemacs; fi`" \
 	EMACSDIR="$RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp"
