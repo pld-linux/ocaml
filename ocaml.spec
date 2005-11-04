@@ -46,6 +46,7 @@ Patch2:		%{name}-objinfo.patch
 # needs update for ocaml 3.08
 #Patch3:		%{name}-unused-var-warning.patch
 Patch4:		%{name}-tk85support.patch
+Patch5:		%{name}-CFLAGS.patch
 URL:		http://caml.inria.fr/
 %{?with_x:BuildRequires:	XFree86-devel}
 %{?with_db3:BuildRequires:	db3-devel}
@@ -326,14 +327,7 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p1
-
-# allow pass CFLAGS, replace -O, -pg,-DPROFILING with $(CFAGS)
-Makefiles=$(find . -type f -name Makefile\*)
-%{__sed} -i -e 's@^CFLAGS[ \t]*=@override CFLAGS += @' $Makefiles
-%{__sed} -i -e 's@\(^override CFLAGS += .*\)-O \(.*\)@\1\2@' $Makefiles
-%{__sed} -i -e 's@^CCFLAGS[ \t]*=\(.*\)@override CCFLAGS += \1 $(CFLAGS)@' $Makefiles
-%{__sed} -i -e 's@-pg -O -DPROFILING@ $(CFLAGS) @' asmrun/Makefile
-%{__sed} -i -e 's@-O@$(CFLAGS)@' otherlibs/systhreads/Makefile
+%patch5 -p1
 
 %build 
 cp -f /usr/share/automake/config.sub config/gnu

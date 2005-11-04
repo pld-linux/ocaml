@@ -1,0 +1,331 @@
+# allow pass CFLAGS, replace -O, -pg,-DPROFILING with $(CFAGS)
+Makefiles=$(find . -type f -name Makefile\*)
+%{__sed} -i -e 's@^CFLAGS[ \t]*=@override CFLAGS += @' $Makefiles
+%{__sed} -i -e 's@\(^override CFLAGS += .*\)-O \(.*\)@\1\2@' $Makefiles
+%{__sed} -i -e 's@^CCFLAGS[ \t]*=\(.*\)@override CCFLAGS += \1 $(CFLAGS)@' $Makefiles
+%{__sed} -i -e 's@-pg -O -DPROFILING@ $(CFLAGS) @' asmrun/Makefile
+%{__sed} -i -e 's@-O@$(CFLAGS)@' otherlibs/systhreads/Makefile
+
+diff -Nur b.ocaml-3.08.4/asmrun/Makefile n.ocaml-3.08.4/asmrun/Makefile
+--- b.ocaml-3.08.4/asmrun/Makefile	2004-05-09 17:19:16.000000000 +0200
++++ n.ocaml-3.08.4/asmrun/Makefile	2005-11-04 21:26:14.810315536 +0100
+@@ -18,9 +18,9 @@
+ CC=$(NATIVECC)
+ FLAGS=-I../byterun -DCAML_NAME_SPACE -DNATIVE_CODE \
+       -DTARGET_$(ARCH) -DSYS_$(SYSTEM) 
+-CFLAGS=$(FLAGS) -O $(NATIVECCCOMPOPTS)
++override CFLAGS += $(FLAGS) $(NATIVECCCOMPOPTS)
+ DFLAGS=$(FLAGS) -g -DDEBUG $(NATIVECCCOMPOPTS)
+-PFLAGS=$(FLAGS) -pg -O -DPROFILING $(NATIVECCPROFOPTS)
++PFLAGS=$(FLAGS)  $(CFLAGS)  $(NATIVECCPROFOPTS)
+ 
+ COBJS=startup.o main.o fail.o roots.o globroots.o signals.o \
+   misc.o freelist.o major_gc.o minor_gc.o memory.o alloc.o compare.o ints.o \
+diff -Nur b.ocaml-3.08.4/asmrun/Makefile.nt n.ocaml-3.08.4/asmrun/Makefile.nt
+--- b.ocaml-3.08.4/asmrun/Makefile.nt	2002-06-18 18:17:34.000000000 +0200
++++ n.ocaml-3.08.4/asmrun/Makefile.nt	2005-11-04 21:26:14.407376792 +0100
+@@ -16,7 +16,7 @@
+ include ../config/Makefile
+ 
+ CC=$(NATIVECC)
+-CFLAGS=-I../byterun -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) $(NATIVECCCOMPOPTS)
++override CFLAGS += -I../byterun -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) $(NATIVECCCOMPOPTS)
+ 
+ COBJS=startup.$(O) main.$(O) fail.$(O) roots.$(O) signals.$(O) \
+   misc.$(O) freelist.$(O) major_gc.$(O) minor_gc.$(O) memory.$(O) alloc.$(O) \
+diff -Nur b.ocaml-3.08.4/byterun/Makefile n.ocaml-3.08.4/byterun/Makefile
+--- b.ocaml-3.08.4/byterun/Makefile	2004-08-20 17:11:36.000000000 +0200
++++ n.ocaml-3.08.4/byterun/Makefile	2005-11-04 21:26:14.408376640 +0100
+@@ -16,7 +16,7 @@
+ include ../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-DCAML_NAME_SPACE -O $(BYTECCCOMPOPTS)
++override CFLAGS += -DCAML_NAME_SPACE $(BYTECCCOMPOPTS)
+ DFLAGS=-DCAML_NAME_SPACE -g -DDEBUG $(BYTECCCOMPOPTS)
+ 
+ OBJS=interp.o misc.o stacks.o fix_code.o startup.o main.o \
+diff -Nur b.ocaml-3.08.4/byterun/Makefile.nt n.ocaml-3.08.4/byterun/Makefile.nt
+--- b.ocaml-3.08.4/byterun/Makefile.nt	2004-08-20 17:11:36.000000000 +0200
++++ n.ocaml-3.08.4/byterun/Makefile.nt	2005-11-04 21:26:14.410376336 +0100
+@@ -16,7 +16,7 @@
+ include ../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-DIN_OCAMLRUN -DOCAML_STDLIB_DIR='"$(LIBDIR)"'
++override CFLAGS += -DIN_OCAMLRUN -DOCAML_STDLIB_DIR='"$(LIBDIR)"'
+ 
+ COMMONOBJS=interp.o misc.o stacks.o fix_code.o startup.o \
+   fail.o signals.o freelist.o major_gc.o minor_gc.o \
+diff -Nur b.ocaml-3.08.4/otherlibs/bigarray/Makefile n.ocaml-3.08.4/otherlibs/bigarray/Makefile
+--- b.ocaml-3.08.4/otherlibs/bigarray/Makefile	2002-06-27 13:36:00.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/bigarray/Makefile	2005-11-04 21:26:14.722328912 +0100
+@@ -16,7 +16,7 @@
+ include ../../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -g -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
++override CFLAGS += -I../../byterun -g $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
+ CAMLC=../../ocamlcomp.sh -I ../unix
+ CAMLOPT=../../ocamlcompopt.sh -I ../unix
+ MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
+diff -Nur b.ocaml-3.08.4/otherlibs/bigarray/Makefile.nt n.ocaml-3.08.4/otherlibs/bigarray/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/bigarray/Makefile.nt	2003-07-08 16:24:07.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/bigarray/Makefile.nt	2005-11-04 21:26:14.723328760 +0100
+@@ -16,7 +16,7 @@
+ include ../../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -I../win32unix -DIN_OCAML_BIGARRAY
++override CFLAGS += -I../../byterun -I../win32unix -DIN_OCAML_BIGARRAY
+ CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../stdlib -I ../win32unix
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib -I ../win32unix
+ 
+diff -Nur b.ocaml-3.08.4/otherlibs/dbm/Makefile n.ocaml-3.08.4/otherlibs/dbm/Makefile
+--- b.ocaml-3.08.4/otherlibs/dbm/Makefile	2002-06-27 13:36:01.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/dbm/Makefile	2005-11-04 21:26:14.724328608 +0100
+@@ -24,7 +24,7 @@
+ MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
+ COMPFLAGS=-warn-error A
+ 
+-CFLAGS=$(DBM_INCLUDES) -I../../byterun -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
++override CFLAGS += $(DBM_INCLUDES) -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
+ COBJS=cldbm.o
+ 
+ all: libmldbm.a dbm.cmi dbm.cma
+diff -Nur b.ocaml-3.08.4/otherlibs/graph/Makefile n.ocaml-3.08.4/otherlibs/graph/Makefile
+--- b.ocaml-3.08.4/otherlibs/graph/Makefile	2005-06-22 17:47:33.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/graph/Makefile	2005-11-04 21:26:14.727328152 +0100
+@@ -18,7 +18,7 @@
+ include ../../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun $(X11_INCLUDES) -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
++override CFLAGS += -I../../byterun $(X11_INCLUDES) $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
+ CAMLC=../../ocamlcomp.sh
+ CAMLOPT=../../ocamlcompopt.sh
+ MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
+diff -Nur b.ocaml-3.08.4/otherlibs/labltk/browser/Makefile.nt n.ocaml-3.08.4/otherlibs/labltk/browser/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/labltk/browser/Makefile.nt	2005-06-27 09:01:40.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/labltk/browser/Makefile.nt	2005-11-04 21:26:14.730327696 +0100
+@@ -4,7 +4,7 @@
+ OTHERSLIB=-I $(OTHERS)/win32unix -I $(OTHERS)/str -I $(OTHERS)/systhreads
+ OCAMLTOPLIB=-I $(TOPDIR)/parsing -I $(TOPDIR)/utils -I $(TOPDIR)/typing
+ INCLUDES=$(OTHERSLIB) $(LABLTKLIB) $(OCAMLTOPLIB)
+-CCFLAGS=-I../../../byterun $(TK_DEFS)
++override CCFLAGS += -I../../../byterun $(TK_DEFS) $(CFLAGS)
+ 
+ ifeq ($(CCOMPTYPE),cc)
+ WINDOWS_APP=-cclib "-Wl,--subsystem,windows"
+diff -Nur b.ocaml-3.08.4/otherlibs/labltk/support/Makefile n.ocaml-3.08.4/otherlibs/labltk/support/Makefile
+--- b.ocaml-3.08.4/otherlibs/labltk/support/Makefile	2002-06-27 13:36:01.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/labltk/support/Makefile	2005-11-04 21:26:14.772321312 +0100
+@@ -11,7 +11,7 @@
+ COBJS=cltkCaml.o cltkUtf.o cltkEval.o cltkEvent.o cltkFile.o cltkMain.o \
+       cltkMisc.o cltkTimer.o cltkVar.o cltkWait.o cltkImg.o
+ 
+-CCFLAGS=-I../../../byterun $(TK_DEFS) $(SHAREDCCCOMPOPTS)
++override CCFLAGS += -I../../../byterun $(TK_DEFS) $(SHAREDCCCOMPOPTS) $(CFLAGS)
+ 
+ COMPFLAGS=-I $(OTHERS)/unix
+ 
+diff -Nur b.ocaml-3.08.4/otherlibs/labltk/support/Makefile.nt n.ocaml-3.08.4/otherlibs/labltk/support/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/labltk/support/Makefile.nt	2003-07-10 11:18:02.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/labltk/support/Makefile.nt	2005-11-04 21:26:14.774321008 +0100
+@@ -13,7 +13,7 @@
+ DCOBJS=$(COBJS:.o=.$(DO))
+ SCOBJS=$(COBJS:.o=.$(SO))
+ 
+-CCFLAGS=-I../../../byterun -I../../win32unix $(TK_DEFS) -DIN_CAMLTKSUPPORT
++override CCFLAGS += -I../../../byterun -I../../win32unix $(TK_DEFS) -DIN_CAMLTKSUPPORT $(CFLAGS)
+ 
+ COMPFLAGS=-I $(OTHERS)/win32unix
+ 
+diff -Nur b.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile n.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile
+--- b.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile	2004-05-08 18:04:39.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile	2005-11-04 21:26:14.776320704 +0100
+@@ -1,7 +1,7 @@
+ include ../support/Makefile.common
+ 
+ COMPFLAGS=-I ../../../byterun -I ../support -I ../camltk -I ../../unix
+-CCFLAGS=-I../../../byterun -I../support $(TK_DEFS) $(SHAREDCCCOMPOPTS)
++override CCFLAGS += -I../../../byterun -I../support $(TK_DEFS) $(SHAREDCCCOMPOPTS) $(CFLAGS)
+ 
+ all: tkanim.cma libtkanim.a
+ opt: tkanim.cmxa libtkanim.a
+diff -Nur b.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile.nt n.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile.nt	2002-06-27 13:36:01.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/labltk/tkanim/Makefile.nt	2005-11-04 21:26:14.777320552 +0100
+@@ -1,6 +1,6 @@
+ include ../support/Makefile.common.nt
+ 
+-CCFLAGS=-I../support -I../../../byterun $(TK_DEFS)
++override CCFLAGS += -I../support -I../../../byterun $(TK_DEFS) $(CFLAGS)
+ 
+ COMPFLAGS=-I $(OTHERS)/win32unix -I ../support -I ../camltk
+ 
+diff -Nur b.ocaml-3.08.4/otherlibs/num/Makefile n.ocaml-3.08.4/otherlibs/num/Makefile
+--- b.ocaml-3.08.4/otherlibs/num/Makefile	2003-10-24 11:17:31.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/num/Makefile	2005-11-04 21:26:14.778320400 +0100
+@@ -19,7 +19,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
++override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
+           -DBNG_ARCH_$(BNG_ARCH) -DBNG_ASM_LEVEL=$(BNG_ASM_LEVEL)
+ CAMLC=../../ocamlcomp.sh -w s
+ CAMLOPT=../../ocamlcompopt.sh -w s
+diff -Nur b.ocaml-3.08.4/otherlibs/num/Makefile.nt n.ocaml-3.08.4/otherlibs/num/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/num/Makefile.nt	2004-11-29 09:50:23.000000000 +0100
++++ n.ocaml-3.08.4/otherlibs/num/Makefile.nt	2005-11-04 21:26:14.779320248 +0100
+@@ -19,7 +19,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-O -I../../byterun \
++override CFLAGS += -I../../byterun \
+           -DBNG_ARCH_$(BNG_ARCH) -DBNG_ASM_LEVEL=$(BNG_ASM_LEVEL)
+ CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../boot -w s
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib -w s
+diff -Nur b.ocaml-3.08.4/otherlibs/num/test/Makefile n.ocaml-3.08.4/otherlibs/num/test/Makefile
+--- b.ocaml-3.08.4/otherlibs/num/test/Makefile	2003-10-24 11:17:46.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/num/test/Makefile	2005-11-04 21:26:14.781319944 +0100
+@@ -18,7 +18,7 @@
+ CAMLC=../../../boot/ocamlrun ../../../ocamlc -I ../../../stdlib
+ CAMLOPT=../../../boot/ocamlrun ../../../ocamlopt -I ../../../stdlib
+ CC=$(BYTECC)
+-CFLAGS=-I.. $(BYTECCCOMPOPTS)
++override CFLAGS += -I.. $(BYTECCCOMPOPTS)
+ 
+ test: test.byt test.opt
+ 	if $(SUPPORTS_SHARED_LIBRARIES); then ../../../byterun/ocamlrun -I .. ./test.byt; else ./test.byt; fi
+diff -Nur b.ocaml-3.08.4/otherlibs/num/test/Makefile.nt n.ocaml-3.08.4/otherlibs/num/test/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/num/test/Makefile.nt	2004-04-01 15:10:12.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/num/test/Makefile.nt	2005-11-04 21:26:14.782319792 +0100
+@@ -18,7 +18,7 @@
+ CAMLC=../../../boot/ocamlrun ../../../ocamlc -I ../../../stdlib -I ..
+ CAMLOPT=../../../boot/ocamlrun ../../../ocamlopt -I ../../../stdlib -I ..
+ CC=$(BYTECC)
+-CFLAGS=-I.. $(BYTECCCOMPOPTS)
++override CFLAGS += -I.. $(BYTECCCOMPOPTS)
+ 
+ test: test.byt test.opt
+ 	../../../byterun/ocamlrun -I .. ./test.byt
+diff -Nur b.ocaml-3.08.4/otherlibs/str/Makefile n.ocaml-3.08.4/otherlibs/str/Makefile
+--- b.ocaml-3.08.4/otherlibs/str/Makefile	2002-12-09 15:05:18.000000000 +0100
++++ n.ocaml-3.08.4/otherlibs/str/Makefile	2005-11-04 21:26:14.784319488 +0100
+@@ -19,7 +19,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
++override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
+ CAMLC=../../ocamlcomp.sh
+ CAMLOPT=../../ocamlcompopt.sh
+ COMPFLAGS=-warn-error A
+diff -Nur b.ocaml-3.08.4/otherlibs/str/Makefile.nt n.ocaml-3.08.4/otherlibs/str/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/str/Makefile.nt	2002-12-09 15:05:18.000000000 +0100
++++ n.ocaml-3.08.4/otherlibs/str/Makefile.nt	2005-11-04 21:26:14.786319184 +0100
+@@ -19,7 +19,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun
++override CFLAGS += -I../../byterun
+ CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../boot
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+ DCOBJS=strstubs.$(DO)
+diff -Nur b.ocaml-3.08.4/otherlibs/systhreads/Makefile n.ocaml-3.08.4/otherlibs/systhreads/Makefile
+--- b.ocaml-3.08.4/otherlibs/systhreads/Makefile	2003-08-21 15:52:07.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/systhreads/Makefile	2005-11-04 21:26:14.815314776 +0100
+@@ -35,7 +35,7 @@
+ 	$(MKLIB) -o threads $(BYTECODE_C_OBJS)
+ 
+ posix_b.o: posix.c
+-	$(BYTECC) -O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
++	$(BYTECC) $(CFLAGS) -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
+ 	   -c posix.c
+ 	mv posix.o posix_b.o
+ 
+@@ -45,7 +45,7 @@
+ 	$(AR) rc libthreadsnat.a $(NATIVECODE_C_OBJS)
+ 
+ posix_n.o: posix.c
+-	$(NATIVECC) -O -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c posix.c
++	$(NATIVECC) $(CFLAGS) -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c posix.c
+ 	mv posix.o posix_n.o
+ 
+ threads.cma: $(THREAD_OBJS)
+diff -Nur b.ocaml-3.08.4/otherlibs/threads/Makefile n.ocaml-3.08.4/otherlibs/threads/Makefile
+--- b.ocaml-3.08.4/otherlibs/threads/Makefile	2003-07-17 10:38:28.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/threads/Makefile	2005-11-04 21:26:14.790318576 +0100
+@@ -16,7 +16,7 @@
+ include ../../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -g
++override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -g
+ CAMLC=../../ocamlcomp.sh -I ../unix
+ MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
+ COMPFLAGS=-warn-error A
+diff -Nur b.ocaml-3.08.4/otherlibs/unix/Makefile n.ocaml-3.08.4/otherlibs/unix/Makefile
+--- b.ocaml-3.08.4/otherlibs/unix/Makefile	2004-04-09 15:25:20.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/unix/Makefile	2005-11-04 21:26:14.792318272 +0100
+@@ -19,7 +19,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
++override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
+ CAMLC=../../ocamlcomp.sh
+ CAMLOPT=../../ocamlcompopt.sh
+ MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
+diff -Nur b.ocaml-3.08.4/otherlibs/win32graph/Makefile.nt n.ocaml-3.08.4/otherlibs/win32graph/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/win32graph/Makefile.nt	2004-06-21 17:31:58.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/win32graph/Makefile.nt	2005-11-04 21:26:14.793318120 +0100
+@@ -17,7 +17,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun
++override CFLAGS += -I../../byterun
+ CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../stdlib
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+ COMPFLAGS=-warn-error A
+diff -Nur b.ocaml-3.08.4/otherlibs/win32unix/Makefile.nt n.ocaml-3.08.4/otherlibs/win32unix/Makefile.nt
+--- b.ocaml-3.08.4/otherlibs/win32unix/Makefile.nt	2004-05-30 10:17:06.000000000 +0200
++++ n.ocaml-3.08.4/otherlibs/win32unix/Makefile.nt	2005-11-04 21:26:14.794317968 +0100
+@@ -17,7 +17,7 @@
+ 
+ # Compilation options
+ CC=$(BYTECC)
+-CFLAGS=-I../../byterun -I../unix
++override CFLAGS += -I../../byterun -I../unix
+ CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../stdlib
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib
+ COMPFLAGS=-warn-error A
+diff -Nur b.ocaml-3.08.4/win32caml/Makefile n.ocaml-3.08.4/win32caml/Makefile
+--- b.ocaml-3.08.4/win32caml/Makefile	2004-06-17 09:33:44.000000000 +0200
++++ n.ocaml-3.08.4/win32caml/Makefile	2005-11-04 21:26:14.803316600 +0100
+@@ -16,7 +16,7 @@
+ include ../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=$(BYTECCCOMPOPTS)
++override CFLAGS += $(BYTECCCOMPOPTS)
+ 
+ OBJS=startocaml.$(O) ocamlres.$(O) ocaml.$(O) menu.$(O) \
+   history.$(O) editbuffer.$(O)
+diff -Nur b.ocaml-3.08.4/yacc/Makefile n.ocaml-3.08.4/yacc/Makefile
+--- b.ocaml-3.08.4/yacc/Makefile	2000-08-10 11:58:08.000000000 +0200
++++ n.ocaml-3.08.4/yacc/Makefile	2005-11-04 21:26:14.803316600 +0100
+@@ -17,7 +17,7 @@
+ include ../config/Makefile
+ 
+ CC=$(BYTECC)
+-CFLAGS=-O -DNDEBUG $(BYTECCCOMPOPTS)
++override CFLAGS += -DNDEBUG $(BYTECCCOMPOPTS)
+ 
+ OBJS= closure.o error.o lalr.o lr0.o main.o mkpar.o output.o reader.o \
+   skeleton.o symtab.o verbose.o warshall.o
