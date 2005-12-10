@@ -9,23 +9,23 @@
 %{!?with_x:%undefine	with_tk}
 
 %define		p4ver	3.06
-%define		sver	3.08
+%define		sver	3.09
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.08.4
-Release:	2
+Version:	3.09.0
+Release:	1
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.gz
-# Source0-md5:	105d192896bf945b660c4fb1ee486f57
+# Source0-md5:	5445b3fba28291fe789797d10cef3431
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
-# Source1-md5:	0daee5643db6960682c1a7d84467885f
+# Source1-md5:	b25eb211bf91bcaa536b12d12731ceec
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	35a5d4318456c0982e72ee3f33364bf5
+# Source2-md5:	598bb8e86329afe1ae374385b2e177e7
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
@@ -39,7 +39,7 @@ Source7:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.4.tar.bz2
 Source8:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Source9:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source9-md5:	49b68ec07ccd7ce45eb6bd3f3fdee140
+# Source9-md5:	280160b1fc7c8513074c3fda0446de29
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
