@@ -81,6 +81,33 @@ oraz optymalizuj±cy kompilator do kodu natywnego), interaktywne ¶rodowisko
 pracy, narzêdzia do tworzenia analizatorów leksykalnych oraz sk³adniowych
 (ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i biblioteki.
 
+%package runtime
+Summary:	Runtime system for OCaml
+Summary(pl):	¦rodowisko uruchomieniowe dla OCamla
+Group:		Libraries
+
+%description runtime
+This package contains binaries needed to run bytecode OCaml programs:
+ocamlrun bytecode interpreter, and basic dynamic link libraries.
+
+%description runtime -l pl
+Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
+OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun) oraz
+podstawowe biblioteki linkowane dynamicznie.
+
+%package lib-source
+Summary:	Sources of OCaml standard library
+Summary(pl):	¬ród³a biblioteki standardowej OCamla
+Group:		Development/Languages
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description lib-source
+This sources come helpful during debugging of user programs with ocamldebug.
+
+%description lib-source -l pl
+¬ród³a te s± przydatne przy odpluskwianiu programów u¿ytkownika
+z u¿yciem ocamldebug.
+
 %package doc-html
 Summary:	HTML documentation for OCaml
 Summary(pl):	Dokumentacja dla OCamla w formacie HTML
@@ -126,19 +153,20 @@ Emacs mode files for Objective Caml language.
 %description emacs -l pl
 Pliki trybu OCamla dla Emacsa.
 
-%package runtime
-Summary:	Runtime system for OCaml
-Summary(pl):	¦rodowisko uruchomieniowe dla OCamla
+%package labltk
+Summary:	Runtime for LablTk library
+Summary(pl):	¦rodowisko uruchomieniowe dla biblioteki LablTk
 Group:		Libraries
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
-%description runtime
-This package contains binaries needed to run bytecode OCaml programs:
-ocamlrun bytecode interpreter, and basic dynamic link libraries.
+%description labltk
+LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
+contains files needed to run bytecode OCaml programs using LablTk.
 
-%description runtime -l pl
-Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
-OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun) oraz
-podstawowe biblioteki linkowane dynamicznie.
+%description labltk -l pl
+Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
+Tcl/Tk. Pakiet ten zawiera binaria potrzebne do uruchamiania programów
+u¿ywaj±cych LablTk.
 
 %package labltk-devel
 Summary:	LablTk library for OCaml
@@ -155,20 +183,21 @@ Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
 Tcl/Tk. Pakiet ten zawiera pliki niezbêdne do tworzenia programów
 u¿ywaj±cych LablTk.
 
-%package labltk
-Summary:	Runtime for LablTk library
-Summary(pl):	¦rodowisko uruchomieniowe dla biblioteki LablTk
-Group:		Libraries
+%package x11graphics
+Summary:	X11 graphic output for OCaml
+Summary(pl):	Dostêp do X11 dla OCamla
+Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
-%description labltk
-LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to run bytecode OCaml programs using LablTk.
+%description x11graphics
+x11graphics module gives OCaml program access to drawing in X11
+windows. This package contains files needed to run bytecode OCaml
+programs using x11graphics.
 
-%description labltk -l pl
-Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
-Tcl/Tk. Pakiet ten zawiera binaria potrzebne do uruchamiania programów
-u¿ywaj±cych LablTk.
+%description x11graphics -l pl
+Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
+korzystania z interfejsu graficznego X11. Pakiet ten zawiera binaria
+potrzebne do uruchamiania programów u¿ywaj±cych x11graphics.
 
 %package x11graphics-devel
 Summary:	X11 graphic output for OCaml
@@ -185,22 +214,6 @@ using x11graphics.
 Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
 korzystania z interfejsu graficznego X11. Pakiet ten zawiera pliki
 niezbêdne do tworzenia programów u¿ywaj±cych x11graphics.
-
-%package x11graphics
-Summary:	X11 graphic output for OCaml
-Summary(pl):	Dostêp do X11 dla OCamla
-Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description x11graphics
-x11graphics module gives OCaml program access to drawing in X11
-windows. This package contains files needed to run bytecode OCaml
-programs using x11graphics.
-
-%description x11graphics -l pl
-Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
-korzystania z interfejsu graficznego X11. Pakiet ten zawiera binaria
-potrzebne do uruchamiania programów u¿ywaj±cych x11graphics.
 
 %package camlp4
 Summary:	Objective Caml Preprocessor
@@ -279,19 +292,6 @@ something like that.
 %description ocamldoc-devel -l pl
 Bêdziesz potrzebowaæ tego pakietu, je¶li zamierzasz pisaæ front end
 dla ocamldoc lub co¶ podobnego.
-
-%package lib-source
-Summary:	Sources of OCaml standard library
-Summary(pl):	¬ród³a biblioteki standardowej OCamla
-Group:		Development/Languages
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description lib-source
-This sources come helpful during debugging of user programs with ocamldebug.
-
-%description lib-source -l pl
-¬ród³a te s± przydatne przy odpluskwianiu programów u¿ytkownika
-z u¿yciem ocamldebug.
 
 # maybe we'll want to add some more stuff here?
 %package examples
@@ -408,18 +408,6 @@ rm -rf $RPM_BUILD_ROOT
 %postun doc-info
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%files runtime
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ocamlrun
-%dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/stublibs
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
-%exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
-%if %{with tk}
-%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
-%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
-%endif
-
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
@@ -447,77 +435,23 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/*labels
 %{_mandir}/man1/*ocaml*
 
+%files runtime
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ocamlrun
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/stublibs
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
+%exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
+%if %{with tk}
+%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
+%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
+%endif
+
 %files lib-source
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/*.ml
 %{_libdir}/%{name}/*.mli
 %{_libdir}/%{name}/*/*.mli
-
-%files examples
-%defattr(644,root,root,755)
-%{_examplesdir}/%{name}-%{version}
-
-# they are poor, html is much better
-#%files manpages
-#%%{_mandir}/man3/*
-
-%files compiler-objects
-%defattr(644,root,root,755)
-%{_libdir}/%{name}/compiler
-
-%files camlp4
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*camlp4*
-%attr(755,root,root) %{_bindir}/ocpp
-# Not installed since 3.05, is is needed?
-#%attr(755,root,root) %{_bindir}/odyl
-%{_libdir}/%{name}/camlp4
-%{_mandir}/man*/*camlp4*
-%{_mandir}/man*/*ocpp*
-
-%files camlp4-doc-html
-%defattr(644,root,root,755)
-%doc docs/html/camlp4*
-
-%if %{with tk}
-%files labltk-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/labltk
-%attr(755,root,root) %{_bindir}/ocamlbrowser
-%dir %{_libdir}/%{name}/labltk
-%{_libdir}/%{name}/labltk/*.cm*
-%{_libdir}/%{name}/labltk/*.a
-%attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
-%{_examplesdir}/%{name}-labltk-%{version}
-
-%files labltk
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlllabltk.so
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
-%endif
-
-%if %{with x}
-%files x11graphics-devel
-%defattr(644,root,root,755)
-%{_libdir}/%{name}/graphics*.cm*
-%{_libdir}/%{name}/graphics.a
-%{_libdir}/%{name}/libgraphics.a
-
-%files x11graphics
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllgraphics.so
-%endif
-
-%if %{with emacs}
-%files emacs
-%defattr(644,root,root,755)
-%{_datadir}/emacs/site-lisp/*.el*
-%endif
-
-%files ocamldoc-devel
-%defattr(644,root,root,755)
-%{_libdir}/%{name}/ocamldoc/*.cm*
-%{_libdir}/%{name}/ocamldoc/*.a
 
 %files doc-html
 %defattr(644,root,root,755)
@@ -530,3 +464,69 @@ rm -rf $RPM_BUILD_ROOT
 %files doc-info
 %defattr(644,root,root,755)
 %{_infodir}/ocaml.info*
+
+# they are poor, html is much better
+#%files manpages
+#%%{_mandir}/man3/*
+
+%if %{with emacs}
+%files emacs
+%defattr(644,root,root,755)
+%{_datadir}/emacs/site-lisp/*.el*
+%endif
+
+%if %{with tk}
+%files labltk
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlllabltk.so
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
+
+%files labltk-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/labltk
+%attr(755,root,root) %{_bindir}/ocamlbrowser
+%dir %{_libdir}/%{name}/labltk
+%{_libdir}/%{name}/labltk/*.cm*
+%{_libdir}/%{name}/labltk/*.a
+%attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
+%{_examplesdir}/%{name}-labltk-%{version}
+%endif
+
+%if %{with x}
+%files x11graphics
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllgraphics.so
+
+%files x11graphics-devel
+%defattr(644,root,root,755)
+%{_libdir}/%{name}/graphics*.cm*
+%{_libdir}/%{name}/graphics.a
+%{_libdir}/%{name}/libgraphics.a
+%endif
+
+%files camlp4
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/*camlp4*
+%attr(755,root,root) %{_bindir}/ocpp
+# Not installed since 3.05, is it needed?
+#%attr(755,root,root) %{_bindir}/odyl
+%{_libdir}/%{name}/camlp4
+%{_mandir}/man*/*camlp4*
+%{_mandir}/man*/*ocpp*
+
+%files camlp4-doc-html
+%defattr(644,root,root,755)
+%doc docs/html/camlp4*
+
+%files compiler-objects
+%defattr(644,root,root,755)
+%{_libdir}/%{name}/compiler
+
+%files ocamldoc-devel
+%defattr(644,root,root,755)
+%{_libdir}/%{name}/ocamldoc/*.cm*
+%{_libdir}/%{name}/ocamldoc/*.a
+
+%files examples
+%defattr(644,root,root,755)
+%{_examplesdir}/%{name}-%{version}
