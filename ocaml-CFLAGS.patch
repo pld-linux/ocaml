@@ -64,8 +64,8 @@ diff -Nur b.ocaml-3.08.4/otherlibs/bigarray/Makefile n.ocaml-3.08.4/otherlibs/bi
  include ../../config/Makefile
  
  CC=$(BYTECC)
--CFLAGS=-I../../byterun -g -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
-+override CFLAGS += -I../../byterun -g $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
+-CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
++override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS)
  CAMLC=../../ocamlcomp.sh -I ../unix
  CAMLOPT=../../ocamlcompopt.sh -I ../unix
  MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
@@ -195,8 +195,8 @@ diff -Nur b.ocaml-3.08.4/otherlibs/num/test/Makefile n.ocaml-3.08.4/otherlibs/nu
  CAMLC=../../../boot/ocamlrun ../../../ocamlc -I ../../../stdlib
  CAMLOPT=../../../boot/ocamlrun ../../../ocamlopt -I ../../../stdlib
  CC=$(BYTECC)
--CFLAGS=-I.. $(BYTECCCOMPOPTS)
-+override CFLAGS += -I.. $(BYTECCCOMPOPTS)
+-CFLAGS=-I.. -I../../../byterun $(BYTECCCOMPOPTS)
++override CFLAGS += -I.. -I../../../byterun $(BYTECCCOMPOPTS)
  
  test: test.byt test.opt
  	if $(SUPPORTS_SHARED_LIBRARIES); then ../../../byterun/ocamlrun -I .. ./test.byt; else ./test.byt; fi
