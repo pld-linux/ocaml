@@ -15,7 +15,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
 Version:	3.09.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
@@ -48,7 +48,7 @@ Patch2:		%{name}-objinfo.patch
 Patch4:		%{name}-tk85support.patch
 Patch5:		%{name}-CFLAGS.patch
 URL:		http://caml.inria.fr/
-%{?with_x:BuildRequires:	XFree86-devel}
+%{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
 %{?with_tk:BuildRequires:	tk-devel}
@@ -62,6 +62,8 @@ Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-ocamldoc
 Obsoletes:	ocaml-ocamldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		specflags	-fno-strict-aliasing
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -339,7 +341,7 @@ cp -f /usr/share/automake/config.sub config/gnu
 	-host %{_host} \
 	%{!?with_tk:-no-tk} \
 	-with-pthread \
-	-x11lib /usr/X11R6/%{_lib}
+	-x11lib %{_libdir}
 
 %{__make} -j1 world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall"
 %{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall" -j1
