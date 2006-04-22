@@ -14,14 +14,14 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
 Name:		ocaml
-Version:	3.09.1
-Release:	2
+Version:	3.09.2
+Release:	1
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.bz2
-# Source0-md5:	b6b380ae71f6f7bc7ff0989a0f8409e6
+# Source0-md5:	63428ce7e114520e8f529c9ca809a1b0
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
 # Source1-md5:	b25eb211bf91bcaa536b12d12731ceec
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
@@ -48,10 +48,10 @@ Patch2:		%{name}-objinfo.patch
 Patch4:		%{name}-tk85support.patch
 Patch5:		%{name}-CFLAGS.patch
 URL:		http://caml.inria.fr/
-%{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %{?with_db3:BuildRequires:	db3-devel}
 %{!?with_db3:BuildRequires:	db-devel >= 4.1}
 %{?with_tk:BuildRequires:	tk-devel}
+%{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %if %{with emacs}
 BuildRequires:	sed >= 4.0
 BuildRequires:	xemacs
