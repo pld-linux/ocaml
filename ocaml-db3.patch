@@ -1,7 +1,6 @@
-diff -ur ocaml-3.07beta2/configure ocaml-3.07beta2-/configure
---- ocaml-3.07beta2/configure	2003-08-20 17:10:58.000000000 +0200
-+++ ocaml-3.07beta2-/configure	2003-08-26 11:12:29.000000000 +0200
-@@ -1225,51 +1225,12 @@
+--- ocaml-3.09.2/configure.orig	2006-04-19 22:15:48.276544500 +0200
++++ ocaml-3.09.2/configure	2006-04-22 23:49:10.045620750 +0200
+@@ -1238,51 +1238,12 @@
  
  # See if we can compile the dbm library
  
@@ -21,7 +20,7 @@ diff -ur ocaml-3.07beta2/configure ocaml-3.07beta2-/configure
 -    elif sh ./hasgot -lgdbm dbm_open; then
 -      dbm_link="-lgdbm"
 -    elif sh ./hasgot -lgdbm_compat -lgdbm dbm_open; then
--      dbm_link="-lgdbm_compat -lgdbm" 
+-      dbm_link="-lgdbm_compat -lgdbm"
 -    fi
 -    break
 -  fi
@@ -31,7 +30,7 @@ diff -ur ocaml-3.07beta2/configure ocaml-3.07beta2-/configure
 -    if sh ./hasgot -lgdbm_compat -lgdbm dbm_open; then
 -      dbm_link="-lgdbm_compat -lgdbm"
 -    fi
--    break   
+-    break
 -  fi
 -done
 -if test "$dbm_include" = "not found" || test "$dbm_link" = "not found"; then
