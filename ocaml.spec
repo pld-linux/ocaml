@@ -11,7 +11,7 @@
 %define		sver	3.09
 
 Summary:	The Objective Caml compiler and programming environment
-Summary(pl):	Kompilator OCamla (Objective Caml) oraz ¶rodowisko programistyczne
+Summary(pl.UTF-8):   Kompilator OCamla (Objective Caml) oraz Å›rodowisko programistyczne
 Name:		ocaml
 Version:	3.09.3
 Release:	1
@@ -71,90 +71,90 @@ and an optimizing native-code compiler), an interactive toplevel
 system, Lex&Yacc tools, a replay debugger, and a comprehensive
 library.
 
-%description -l pl
-OCaml (Objective Caml) jest funkcyjnym, obiektowo zorientowanym jêzykiem
-wysokiego poziomu z silnym typowaniem. Nale¿y do rodziny jêzyków ML.
+%description -l pl.UTF-8
+OCaml (Objective Caml) jest funkcyjnym, obiektowo zorientowanym jÄ™zykiem
+wysokiego poziomu z silnym typowaniem. NaleÅ¼y do rodziny jÄ™zykÃ³w ML.
 
 Ten pakiet zawiera dwa kompilatory (szybki kompilator do bajtkodu
-oraz optymalizuj±cy kompilator do kodu natywnego), interaktywne ¶rodowisko
-pracy, narzêdzia do tworzenia analizatorów leksykalnych oraz sk³adniowych
+oraz optymalizujÄ…cy kompilator do kodu natywnego), interaktywne Å›rodowisko
+pracy, narzÄ™dzia do tworzenia analizatorÃ³w leksykalnych oraz skÅ‚adniowych
 (ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i biblioteki.
 
 %package runtime
 Summary:	Runtime system for OCaml
-Summary(pl):	¦rodowisko uruchomieniowe dla OCamla
+Summary(pl.UTF-8):   Åšrodowisko uruchomieniowe dla OCamla
 Group:		Libraries
 
 %description runtime
 This package contains binaries needed to run bytecode OCaml programs:
 ocamlrun bytecode interpreter, and basic dynamic link libraries.
 
-%description runtime -l pl
-Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
+%description runtime -l pl.UTF-8
+Pakiet ten zawiera binaria potrzebne do uruchamiania programÃ³w w
 OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun) oraz
 podstawowe biblioteki linkowane dynamicznie.
 
 %package lib-source
 Summary:	Sources of OCaml standard library
-Summary(pl):	¬ród³a biblioteki standardowej OCamla
+Summary(pl.UTF-8):   Å¹rÃ³dÅ‚a biblioteki standardowej OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description lib-source
 This sources come helpful during debugging of user programs with ocamldebug.
 
-%description lib-source -l pl
-¬ród³a te s± przydatne przy odpluskwianiu programów u¿ytkownika
-z u¿yciem ocamldebug.
+%description lib-source -l pl.UTF-8
+Å¹rÃ³dÅ‚a te sÄ… przydatne przy odpluskwianiu programÃ³w uÅ¼ytkownika
+z uÅ¼yciem ocamldebug.
 
 %package doc-html
 Summary:	HTML documentation for OCaml
-Summary(pl):	Dokumentacja dla OCamla w formacie HTML
+Summary(pl.UTF-8):   Dokumentacja dla OCamla w formacie HTML
 Group:		Development/Tools
 
 %description doc-html
 HTML documentation for OCaml.
 
-%description doc-html -l pl
+%description doc-html -l pl.UTF-8
 Dokumentacja dla OCamla w formacie HTML.
 
 %package doc-ps
 Summary:	PostScript documentation for OCaml
-Summary(pl):	Dokumentacja dla OCamla w formacie PostScript
+Summary(pl.UTF-8):   Dokumentacja dla OCamla w formacie PostScript
 Group:		Development/Tools
 
 %description doc-ps
 PostScript documentation for OCaml.
 
-%description doc-ps -l pl
+%description doc-ps -l pl.UTF-8
 Dokumentacja dla OCamla w formacie PostScript.
 
 %package doc-info
 Summary:	Info documentation for OCaml
-Summary(pl):	Dokumentacja info dla OCamla
+Summary(pl.UTF-8):   Dokumentacja info dla OCamla
 Group:		Development/Tools
 
 %description doc-info
 Info documentation for OCaml.
 
-%description doc-info -l pl
+%description doc-info -l pl.UTF-8
 Dokumentacja info dla OCamla.
 
 %package emacs
 Summary:	Emacs mode for OCaml
-Summary(pl):	Tryb OCamla dla Emacsa
+Summary(pl.UTF-8):   Tryb OCamla dla Emacsa
 Group:		Development/Tools
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description emacs
 Emacs mode files for Objective Caml language.
 
-%description emacs -l pl
+%description emacs -l pl.UTF-8
 Pliki trybu OCamla dla Emacsa.
 
 %package labltk
 Summary:	Runtime for LablTk library
-Summary(pl):	¦rodowisko uruchomieniowe dla biblioteki LablTk
+Summary(pl.UTF-8):   Åšrodowisko uruchomieniowe dla biblioteki LablTk
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -162,14 +162,14 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
 contains files needed to run bytecode OCaml programs using LablTk.
 
-%description labltk -l pl
-Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
-Tcl/Tk. Pakiet ten zawiera binaria potrzebne do uruchamiania programów
-u¿ywaj±cych LablTk.
+%description labltk -l pl.UTF-8
+Biblioteka LablTk daje programom napisanym w OCamlu dostÄ™p do widgetÃ³w
+Tcl/Tk. Pakiet ten zawiera binaria potrzebne do uruchamiania programÃ³w
+uÅ¼ywajÄ…cych LablTk.
 
 %package labltk-devel
 Summary:	LablTk library for OCaml
-Summary(pl):	Biblioteka LablTk dla OCamla
+Summary(pl.UTF-8):   Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
 Requires:	%{name}-labltk = %{epoch}:%{version}-%{release}
 
@@ -177,14 +177,14 @@ Requires:	%{name}-labltk = %{epoch}:%{version}-%{release}
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
 contains files needed to develop OCaml programs using LablTk.
 
-%description labltk-devel -l pl
-Biblioteka LablTk daje programom napisanym w OCamlu dostêp do widgetów
-Tcl/Tk. Pakiet ten zawiera pliki niezbêdne do tworzenia programów
-u¿ywaj±cych LablTk.
+%description labltk-devel -l pl.UTF-8
+Biblioteka LablTk daje programom napisanym w OCamlu dostÄ™p do widgetÃ³w
+Tcl/Tk. Pakiet ten zawiera pliki niezbÄ™dne do tworzenia programÃ³w
+uÅ¼ywajÄ…cych LablTk.
 
 %package x11graphics
 Summary:	X11 graphic output for OCaml
-Summary(pl):	Dostêp do X11 dla OCamla
+Summary(pl.UTF-8):   DostÄ™p do X11 dla OCamla
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -193,14 +193,14 @@ x11graphics module gives OCaml program access to drawing in X11
 windows. This package contains files needed to run bytecode OCaml
 programs using x11graphics.
 
-%description x11graphics -l pl
-Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
+%description x11graphics -l pl.UTF-8
+ModuÅ‚ x11graphics daje programom napisanym w OCamlu moÅ¼liwoÅ›Ä‡
 korzystania z interfejsu graficznego X11. Pakiet ten zawiera binaria
-potrzebne do uruchamiania programów u¿ywaj±cych x11graphics.
+potrzebne do uruchamiania programÃ³w uÅ¼ywajÄ…cych x11graphics.
 
 %package x11graphics-devel
 Summary:	X11 graphic output for OCaml
-Summary(pl):	Dostêp do X11 dla OCamla
+Summary(pl.UTF-8):   DostÄ™p do X11 dla OCamla
 Group:		Development/Libraries
 Requires:	%{name}-x11graphics = %{epoch}:%{version}-%{release}
 
@@ -209,14 +209,14 @@ x11graphics module gives OCaml program access to drawing in X11
 windows. This package contains files needed to develop OCaml programs
 using x11graphics.
 
-%description x11graphics-devel -l pl
-Modu³ x11graphics daje programom napisanym w OCamlu mo¿liwo¶æ
+%description x11graphics-devel -l pl.UTF-8
+ModuÅ‚ x11graphics daje programom napisanym w OCamlu moÅ¼liwoÅ›Ä‡
 korzystania z interfejsu graficznego X11. Pakiet ten zawiera pliki
-niezbêdne do tworzenia programów u¿ywaj±cych x11graphics.
+niezbÄ™dne do tworzenia programÃ³w uÅ¼ywajÄ…cych x11graphics.
 
 %package camlp4
 Summary:	Objective Caml Preprocessor
-Summary(pl):	Preprocesor OCamla
+Summary(pl.UTF-8):   Preprocesor OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	camlp4 = %{epoch}:%{version}-%{release}
@@ -237,34 +237,34 @@ revised one. It is therefore always possible to have a version of your
 sources compilable by the Objective Caml compiler without
 preprocessing.
 
-%description camlp4 -l pl
-Camlp4 jest preprocesorem OCamla. Oferuje narzêdzia do manipulowania
-sk³adni± (gramatyki) oraz mo¿liwo¶æ modyfikowania oryginalnej sk³adni
-jêzyka (cytowania, rozszerzenia).
+%description camlp4 -l pl.UTF-8
+Camlp4 jest preprocesorem OCamla. Oferuje narzÄ™dzia do manipulowania
+skÅ‚adniÄ… (gramatyki) oraz moÅ¼liwoÅ›Ä‡ modyfikowania oryginalnej skÅ‚adni
+jÄ™zyka (cytowania, rozszerzenia).
 
-Camlp4 mo¿e sparsowaæ oryginaln± sk³adniê Ocamla lub dowoln± inn±
-definiowaln± przez u¿ytkownika. Jako przyk³ad podana jest alternatywna
-sk³adnia (revised syntax), która próbuje poprawiæ drobne problemy
-wystêpuj±ce w sk³adni oryginalnej.
+Camlp4 moÅ¼e sparsowaÄ‡ oryginalnÄ… skÅ‚adniÄ™ Ocamla lub dowolnÄ… innÄ…
+definiowalnÄ… przez uÅ¼ytkownika. Jako przykÅ‚ad podana jest alternatywna
+skÅ‚adnia (revised syntax), ktÃ³ra prÃ³buje poprawiÄ‡ drobne problemy
+wystÄ™pujÄ…ce w skÅ‚adni oryginalnej.
 
-Camlp4 umie ³adnie formatowaæ ¼ród³a zarówno w oryginalnej jak i
-poprawionej sk³adni OCamla. Potrafi tak¿e t³umaczyæ programy z jednej
-sk³adni na drug±.
+Camlp4 umie Å‚adnie formatowaÄ‡ ÅºrÃ³dÅ‚a zarÃ³wno w oryginalnej jak i
+poprawionej skÅ‚adni OCamla. Potrafi takÅ¼e tÅ‚umaczyÄ‡ programy z jednej
+skÅ‚adni na drugÄ….
 
 %package camlp4-doc-html
 Summary:	Objective Caml Preprocessor - HTML documentation 
-Summary(pl):	Preprocesor OCamla - dokumentacja HTML 
+Summary(pl.UTF-8):   Preprocesor OCamla - dokumentacja HTML 
 Group:		Development/Languages
 
 %description camlp4-doc-html
 Objective Caml Preprocessor - HTML documentation.
 
-%description camlp4-doc-html -l pl
+%description camlp4-doc-html -l pl.UTF-8
 Preprocesor OCamla - dokumentacja HTML.
 
 %package compiler-objects
 Summary:	Compiled parts of OCaml compiler
-Summary(pl):	Skompilowane czê¶ci kompilatora OCamla
+Summary(pl.UTF-8):   Skompilowane czÄ™Å›ci kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	ocaml-devel
@@ -274,13 +274,13 @@ Provides:	ocaml-devel
 This package contains *.cmi and *.cmo files being parts of OCaml
 compiler. They are needed to compile some programs.
 
-%description compiler-objects -l pl
-Pakiet ten zawiera pliki *.cmi oraz *.cmo bêd±ce czê¶ciami kompilatora
-OCamla. S± one wymagane do kompilacji niektórych programów.
+%description compiler-objects -l pl.UTF-8
+Pakiet ten zawiera pliki *.cmi oraz *.cmo bÄ™dÄ…ce czÄ™Å›ciami kompilatora
+OCamla. SÄ… one wymagane do kompilacji niektÃ³rych programÃ³w.
 
 %package ocamldoc-devel
 Summary:	Files needed to develop programs using ocamldoc
-Summary(pl):	Pliki potrzebne do tworzenia programów u¿ywaj±cych ocamldoc
+Summary(pl.UTF-8):   Pliki potrzebne do tworzenia programÃ³w uÅ¼ywajÄ…cych ocamldoc
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -288,14 +288,14 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 You need this package if you are going to write ocamldoc front end or
 something like that.
 
-%description ocamldoc-devel -l pl
-Bêdziesz potrzebowaæ tego pakietu, je¶li zamierzasz pisaæ front end
-dla ocamldoc lub co¶ podobnego.
+%description ocamldoc-devel -l pl.UTF-8
+BÄ™dziesz potrzebowaÄ‡ tego pakietu, jeÅ›li zamierzasz pisaÄ‡ front end
+dla ocamldoc lub coÅ› podobnego.
 
 # maybe we'll want to add some more stuff here?
 %package examples
 Summary:	Example source code for OCaml
-Summary(pl):	Przyk³adowe kody ¼ród³owe w OCamlu
+Summary(pl.UTF-8):   PrzykÅ‚adowe kody ÅºrÃ³dÅ‚owe w OCamlu
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -303,8 +303,8 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 This packages contains sources for Okasaki's Purely Functional
 Datastructures in OCaml, along with some contributions.
 
-%description examples -l pl
-Pakiet ten zawiera ¼ród³a Czysto Funkcyjnych Struktur Danych
+%description examples -l pl.UTF-8
+Pakiet ten zawiera ÅºrÃ³dÅ‚a Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
