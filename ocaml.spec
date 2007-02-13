@@ -11,7 +11,7 @@
 %define		sver	3.09
 
 Summary:	The Objective Caml compiler and programming environment
-Summary(pl.UTF-8):   Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
+Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	3.09.3
 Release:	1
@@ -82,7 +82,7 @@ pracy, narzędzia do tworzenia analizatorów leksykalnych oraz składniowych
 
 %package runtime
 Summary:	Runtime system for OCaml
-Summary(pl.UTF-8):   Środowisko uruchomieniowe dla OCamla
+Summary(pl.UTF-8):	Środowisko uruchomieniowe dla OCamla
 Group:		Libraries
 
 %description runtime
@@ -96,7 +96,7 @@ podstawowe biblioteki linkowane dynamicznie.
 
 %package lib-source
 Summary:	Sources of OCaml standard library
-Summary(pl.UTF-8):   Źródła biblioteki standardowej OCamla
+Summary(pl.UTF-8):	Źródła biblioteki standardowej OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -109,7 +109,7 @@ z użyciem ocamldebug.
 
 %package doc-html
 Summary:	HTML documentation for OCaml
-Summary(pl.UTF-8):   Dokumentacja dla OCamla w formacie HTML
+Summary(pl.UTF-8):	Dokumentacja dla OCamla w formacie HTML
 Group:		Development/Tools
 
 %description doc-html
@@ -120,7 +120,7 @@ Dokumentacja dla OCamla w formacie HTML.
 
 %package doc-ps
 Summary:	PostScript documentation for OCaml
-Summary(pl.UTF-8):   Dokumentacja dla OCamla w formacie PostScript
+Summary(pl.UTF-8):	Dokumentacja dla OCamla w formacie PostScript
 Group:		Development/Tools
 
 %description doc-ps
@@ -131,7 +131,7 @@ Dokumentacja dla OCamla w formacie PostScript.
 
 %package doc-info
 Summary:	Info documentation for OCaml
-Summary(pl.UTF-8):   Dokumentacja info dla OCamla
+Summary(pl.UTF-8):	Dokumentacja info dla OCamla
 Group:		Development/Tools
 
 %description doc-info
@@ -142,7 +142,7 @@ Dokumentacja info dla OCamla.
 
 %package emacs
 Summary:	Emacs mode for OCaml
-Summary(pl.UTF-8):   Tryb OCamla dla Emacsa
+Summary(pl.UTF-8):	Tryb OCamla dla Emacsa
 Group:		Development/Tools
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -154,7 +154,7 @@ Pliki trybu OCamla dla Emacsa.
 
 %package labltk
 Summary:	Runtime for LablTk library
-Summary(pl.UTF-8):   Środowisko uruchomieniowe dla biblioteki LablTk
+Summary(pl.UTF-8):	Środowisko uruchomieniowe dla biblioteki LablTk
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -169,7 +169,7 @@ używających LablTk.
 
 %package labltk-devel
 Summary:	LablTk library for OCaml
-Summary(pl.UTF-8):   Biblioteka LablTk dla OCamla
+Summary(pl.UTF-8):	Biblioteka LablTk dla OCamla
 Group:		Development/Libraries
 Requires:	%{name}-labltk = %{epoch}:%{version}-%{release}
 
@@ -184,7 +184,7 @@ używających LablTk.
 
 %package x11graphics
 Summary:	X11 graphic output for OCaml
-Summary(pl.UTF-8):   Dostęp do X11 dla OCamla
+Summary(pl.UTF-8):	Dostęp do X11 dla OCamla
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -200,7 +200,7 @@ potrzebne do uruchamiania programów używających x11graphics.
 
 %package x11graphics-devel
 Summary:	X11 graphic output for OCaml
-Summary(pl.UTF-8):   Dostęp do X11 dla OCamla
+Summary(pl.UTF-8):	Dostęp do X11 dla OCamla
 Group:		Development/Libraries
 Requires:	%{name}-x11graphics = %{epoch}:%{version}-%{release}
 
@@ -216,7 +216,7 @@ niezbędne do tworzenia programów używających x11graphics.
 
 %package camlp4
 Summary:	Objective Caml Preprocessor
-Summary(pl.UTF-8):   Preprocesor OCamla
+Summary(pl.UTF-8):	Preprocesor OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	camlp4 = %{epoch}:%{version}-%{release}
@@ -253,7 +253,7 @@ składni na drugą.
 
 %package camlp4-doc-html
 Summary:	Objective Caml Preprocessor - HTML documentation 
-Summary(pl.UTF-8):   Preprocesor OCamla - dokumentacja HTML 
+Summary(pl.UTF-8):	Preprocesor OCamla - dokumentacja HTML 
 Group:		Development/Languages
 
 %description camlp4-doc-html
@@ -264,7 +264,7 @@ Preprocesor OCamla - dokumentacja HTML.
 
 %package compiler-objects
 Summary:	Compiled parts of OCaml compiler
-Summary(pl.UTF-8):   Skompilowane części kompilatora OCamla
+Summary(pl.UTF-8):	Skompilowane części kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	ocaml-devel
@@ -280,7 +280,7 @@ OCamla. Są one wymagane do kompilacji niektórych programów.
 
 %package ocamldoc-devel
 Summary:	Files needed to develop programs using ocamldoc
-Summary(pl.UTF-8):   Pliki potrzebne do tworzenia programów używających ocamldoc
+Summary(pl.UTF-8):	Pliki potrzebne do tworzenia programów używających ocamldoc
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -295,7 +295,7 @@ dla ocamldoc lub coś podobnego.
 # maybe we'll want to add some more stuff here?
 %package examples
 Summary:	Example source code for OCaml
-Summary(pl.UTF-8):   Przykładowe kody źródłowe w OCamlu
+Summary(pl.UTF-8):	Przykładowe kody źródłowe w OCamlu
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
