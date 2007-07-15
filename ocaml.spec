@@ -8,23 +8,23 @@
 %{!?with_x:%undefine	with_tk}
 
 %define		p4ver	3.06
-%define		sver	3.09
+%define		sver	3.10
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	3.09.3
+Version:	3.10.0
 Release:	1
 Epoch:		1
 License:	distributable
 Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.bz2
-# Source0-md5:	8b3744efd0d51b82d55b61d0e2bf0e2b
+# Source0-md5:	5b14fe7ef863ab8295c9b7d428d5e93c
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
-# Source1-md5:	b25eb211bf91bcaa536b12d12731ceec
+# Source1-md5:	663b31c8ea364a531aa325a5b06a2763
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	598bb8e86329afe1ae374385b2e177e7
+# Source2-md5:	69c7acc08ee182c97089fe0736c04e37
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
@@ -38,7 +38,7 @@ Source7:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.6.tar.bz2
 Source8:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Source9:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source9-md5:	280160b1fc7c8513074c3fda0446de29
+# Source9-md5:	f80b52b8bc4b10ed557808fc899acf3a
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-db3.patch
 Patch2:		%{name}-objinfo.patch
@@ -346,6 +346,7 @@ cp -f /usr/share/automake/config.sub config/gnu
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
+install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/site-lib
 
 %{__make} install \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
@@ -427,6 +428,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/ld.conf
 %{_libdir}/%{name}/camlheader
 %{_libdir}/%{name}/camlheader_ur
+%{_libdir}/%{name}/ocamlbuild
 %dir %{_libdir}/%{name}/ocamldoc
 %{_libdir}/%{name}/ocamldoc/*.hva
 %attr(755,root,root) %{_libdir}/%{name}/expunge
@@ -438,6 +440,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ocamlrun
 %dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/site-lib
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
@@ -506,12 +509,12 @@ rm -rf $RPM_BUILD_ROOT
 %files camlp4
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*camlp4*
-%attr(755,root,root) %{_bindir}/ocpp
+#%attr(755,root,root) %{_bindir}/ocpp
 # Not installed since 3.05, is it needed?
 #%attr(755,root,root) %{_bindir}/odyl
 %{_libdir}/%{name}/camlp4
-%{_mandir}/man*/*camlp4*
-%{_mandir}/man*/*ocpp*
+#%{_mandir}/man*/*camlp4*
+#%{_mandir}/man*/*ocpp*
 
 %files camlp4-doc-html
 %defattr(644,root,root,755)
