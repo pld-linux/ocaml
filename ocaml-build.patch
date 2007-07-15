@@ -1,27 +1,3 @@
-diff -ur ocaml-3.05/camlp4/meta/Makefile ocaml-3.05-/camlp4/meta/Makefile
---- ocaml-3.05/camlp4/meta/Makefile	Fri Jul 19 16:53:49 2002
-+++ ocaml-3.05-/camlp4/meta/Makefile	Thu Aug  8 13:19:11 2002
-@@ -2,7 +2,7 @@
- 
- include ../config/Makefile
- 
--INCLUDES=-I ../camlp4 -I ../boot -I $(OTOP)/utils
-+INCLUDES=-I ../camlp4 -I ../boot -I $(OTOP)/utils -I $(OTOP)/parsing
- OCAMLCFLAGS=-warn-error A $(INCLUDES)
- OBJS=q_MLast.cmo pa_r.cmo pa_rp.cmo pa_extend.cmo pa_extend_m.cmo pa_ifdef.cmo pr_dump.cmo
- CAMLP4RM=pa_r.cmo pa_rp.cmo pr_dump.cmo
-diff -ur ocaml-3.05/camlp4/ocaml_src/meta/Makefile ocaml-3.05-/camlp4/ocaml_src/meta/Makefile
---- ocaml-3.05/camlp4/ocaml_src/meta/Makefile	Fri Jul 19 16:53:53 2002
-+++ ocaml-3.05-/camlp4/ocaml_src/meta/Makefile	Thu Aug  8 13:19:37 2002
-@@ -2,7 +2,7 @@
- 
- include ../../config/Makefile
- 
--INCLUDES=-I ../camlp4 -I ../../boot -I $(OTOP)/utils
-+INCLUDES=-I ../camlp4 -I ../../boot -I $(OTOP)/utils -I $(OTOP)/parsing
- OCAMLCFLAGS=-warn-error A $(INCLUDES)
- OBJS=q_MLast.cmo pa_r.cmo pa_rp.cmo pa_extend.cmo pa_extend_m.cmo pa_ifdef.cmo pr_dump.cmo
- CAMLP4RM=pa_r.cmo pa_rp.cmo pr_dump.cmo
 --- ocaml-3.08.3/configure.orig	2005-04-29 22:58:18.000000000 +0200
 +++ ocaml-3.08.3/configure	2005-04-29 23:06:30.000000000 +0200
 @@ -1322,6 +1322,7 @@

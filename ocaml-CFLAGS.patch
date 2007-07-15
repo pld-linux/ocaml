@@ -172,10 +172,10 @@ diff -Nur b.ocaml-3.08.4/otherlibs/num/Makefile n.ocaml-3.08.4/otherlibs/num/Mak
  # Compilation options
  CC=$(BYTECC)
 -CFLAGS=-O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
-+override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
++override CFLAGS += -O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
            -DBNG_ARCH_$(BNG_ARCH) -DBNG_ASM_LEVEL=$(BNG_ASM_LEVEL)
- CAMLC=../../ocamlcomp.sh -w s
- CAMLOPT=../../ocamlcompopt.sh -w s
+ CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../boot -w s
+ CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib -w s
 diff -Nur b.ocaml-3.08.4/otherlibs/num/Makefile.nt n.ocaml-3.08.4/otherlibs/num/Makefile.nt
 --- b.ocaml-3.08.4/otherlibs/num/Makefile.nt	2004-11-29 09:50:23.000000000 +0100
 +++ n.ocaml-3.08.4/otherlibs/num/Makefile.nt	2005-11-04 21:26:14.779320248 +0100
@@ -183,7 +183,7 @@ diff -Nur b.ocaml-3.08.4/otherlibs/num/Makefile.nt n.ocaml-3.08.4/otherlibs/num/
  
  # Compilation options
  CC=$(BYTECC)
--CFLAGS=-O -I../../byterun \
+-CFLAGS=-I../../byterun \
 +override CFLAGS += -I../../byterun \
            -DBNG_ARCH_$(BNG_ARCH) -DBNG_ASM_LEVEL=$(BNG_ASM_LEVEL)
  CAMLC=../../boot/ocamlrun ../../ocamlc -I ../../boot -w s
