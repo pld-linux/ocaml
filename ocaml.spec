@@ -343,6 +343,9 @@ cp -f /usr/share/automake/config.sub config/gnu
 %{__make} -j1 world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall"
 %{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall" -j1
 
+# broken build system
+sed -e 's,LIBDIR,%{_libdir},' camlp4/man/camlp4.1.tpl > camlp4/man/camlp4.1
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
@@ -398,6 +401,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
 # install info pages
 cp -f infoman/*.gz $RPM_BUILD_ROOT%{_infodir}
+
+# broken build system
+install camlp4/man/camlp4.1 $RPM_BUILD_ROOT%{_mandir}/man1
+for f in camlp4o.1 camlp4r.1 mkcamlp4.1 camlp4o.opt.1 camlp4r.opt.1 ; do
+	echo '.so camlp4.1' >$RPM_BUILD_ROOT%{_mandir}/man1/$f
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -508,13 +517,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files camlp4
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*camlp4*
-#%attr(755,root,root) %{_bindir}/ocpp
-# Not installed since 3.05, is it needed?
-#%attr(755,root,root) %{_bindir}/odyl
+%attr(755,root,root) %{_bindir}/camlp4*
+%attr(755,root,root) %{_bindir}/mkcamlp4
 %{_libdir}/%{name}/camlp4
-#%{_mandir}/man*/*camlp4*
-#%{_mandir}/man*/*ocpp*
+%{_mandir}/man1/camlp4*.1*
+%{_mandir}/man1/mkcamlp4.1*
 
 %files camlp4-doc-html
 %defattr(644,root,root,755)
