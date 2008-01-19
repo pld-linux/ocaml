@@ -17,7 +17,6 @@ Version:	3.10.1
 Release:	1
 Epoch:		1
 License:	distributable
-Vendor:		Group of implementors <caml-light@inria.fr>
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.bz2
 # Source0-md5:	15a8c603b34d466329881285438349ef
@@ -421,7 +420,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
 %attr(755,root,root) %{_bindir}/ocaml*
-%{!?_without_tk:%exclude %{_bindir}/ocamlbrowser}
+%{?with_tk:%exclude %{_bindir}/ocamlbrowser}
 %exclude %{_bindir}/ocamlrun
 %attr(755,root,root) %{_bindir}/*labels
 %{_includedir}/caml
@@ -434,6 +433,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/*.o
 %{_libdir}/%{name}/*.cm*
 %exclude %{_libdir}/%{name}/*graphics*
+%{_libdir}/%{name}/Makefile.config
 %{_libdir}/%{name}/ld.conf
 %{_libdir}/%{name}/camlheader
 %{_libdir}/%{name}/camlheader_ur
