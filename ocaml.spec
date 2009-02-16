@@ -8,22 +8,22 @@
 %{!?with_x:%undefine	with_tk}
 
 %define		p4ver	3.06
-%define		sver	3.10
+%define		sver	3.11
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	3.10.2
+Version:	3.11.0
 Release:	1
 Epoch:		1
 License:	distributable
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.bz2
-# Source0-md5:	d86f8f8aa4574fa60dd6f89044580307
+# Source0-md5:	6ed1c3ed660a15408362242fa8fa4668
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
-# Source1-md5:	663b31c8ea364a531aa325a5b06a2763
+# Source1-md5:	bfb4ed960974159f4224014a979baf6d
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	69c7acc08ee182c97089fe0736c04e37
+# Source2-md5:	d01adeb1ab5ef0905f8656947f928b03
 Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
@@ -37,13 +37,11 @@ Source7:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.6.tar.bz2
 Source8:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Source9:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source9-md5:	f80b52b8bc4b10ed557808fc899acf3a
-Patch0:		%{name}-build.patch
-Patch1:		%{name}-db3.patch
-Patch2:		%{name}-objinfo.patch
-Patch3:		%{name}-tk85support.patch
-Patch4:		%{name}-CFLAGS.patch
-Patch5:		%{name}-as_needed.patch
+# Source9-md5:	50fc2a3e3a38db78bd03d169379155de
+Patch0:		%{name}-db3.patch
+Patch1:		%{name}-objinfo.patch
+Patch2:		%{name}-CFLAGS.patch
+Patch3:		%{name}-as_needed.patch
 URL:		http://caml.inria.fr/
 BuildRequires:	db-devel >= 4.1
 %{?with_tk:BuildRequires:	tk-devel}
@@ -307,11 +305,10 @@ Pakiet ten zawiera źródła Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -a1 -a3 -a5  
+%setup -q -a1 -a3 -a5 -a9
 mkdir examples
 tar xjf %{SOURCE7} -C examples
 tar xzf %{SOURCE8} -C examples
-tar xzf %{SOURCE9}
 # order mess with docs somewhat
 mkdir -p docs/html
 mv htmlman docs/html/ocaml
@@ -324,8 +321,6 @@ cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build 
 cp -f /usr/share/automake/config.sub config/gnu
@@ -453,6 +448,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
+%attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
 %if %{with tk}
 %exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
 %exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
@@ -499,6 +495,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/labltk
 %{_libdir}/%{name}/labltk/*.cm*
 %{_libdir}/%{name}/labltk/*.a
+%{_libdir}/%{name}/labltk/*.o
 %attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
 %{_examplesdir}/%{name}-labltk-%{version}
 %endif
