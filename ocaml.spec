@@ -8,40 +8,40 @@
 %{!?with_x:%undefine	with_tk}
 
 %define		p4ver	3.06
-%define		sver	3.11
+%define		sver	3.12
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	3.11.0
+Version:	3.12.0
 Release:	1
 Epoch:		1
 License:	distributable
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.bz2
-# Source0-md5:	6ed1c3ed660a15408362242fa8fa4668
+# Source0-md5:	bd92c8970767f412bc1e9a6c625b5ccf
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
-# Source1-md5:	bfb4ed960974159f4224014a979baf6d
+# Source1-md5:	93cd91f525441eb7e94cc49b9b64bab0
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	d01adeb1ab5ef0905f8656947f928b03
-Source3:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
-# Source3-md5:	21370bae4e7f6435b38aeb21db7ce8bb
-Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
-# Source4-md5:	035915d1a530aa7ec9b194d9a7d258eb
-Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.html.tar.gz
-# Source5-md5:	96d8eb4ca5abd58c9a280ba59f73b192
-Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.dvi.gz
-# Source6-md5:	fcd87c235109364242a0c9ccf176dff8
-Source7:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.6.tar.bz2
-# Source7-md5:	94eac3fa1ac51b8ada344b04839cb43c
-Source8:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
-# Source8-md5:	77fa1da7375dea1393cc0b6cd802d7e1
-Source9:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source9-md5:	50fc2a3e3a38db78bd03d169379155de
+# Source2-md5:	a9c17db6ffd400c5ea00c6d51cbf56bf
+Source3:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
+# Source3-md5:	8cf24c4f69c6f9c9f9cc1edb9b18f6cb
+Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
+# Source4-md5:	21370bae4e7f6435b38aeb21db7ce8bb
+Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
+# Source5-md5:	035915d1a530aa7ec9b194d9a7d258eb
+Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.html.tar.gz
+# Source6-md5:	96d8eb4ca5abd58c9a280ba59f73b192
+Source7:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.dvi.gz
+# Source7-md5:	fcd87c235109364242a0c9ccf176dff8
+Source8:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.6.tar.bz2
+# Source8-md5:	94eac3fa1ac51b8ada344b04839cb43c
+Source9:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
+# Source9-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch0:		%{name}-db3.patch
-Patch1:		%{name}-objinfo.patch
-Patch2:		%{name}-CFLAGS.patch
-Patch3:		%{name}-as_needed.patch
+Patch1:		%{name}-CFLAGS.patch
+Patch2:		%{name}-as_needed.patch
+Patch3:		%{name}-gas.patch
 URL:		http://caml.inria.fr/
 BuildRequires:	db-devel >= 4.1
 %{?with_tk:BuildRequires:	tk-devel}
@@ -305,18 +305,18 @@ Pakiet ten zawiera źródła Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -a1 -a3 -a5 -a9
+%setup -q -a1 -a3 -a4 -a6
 mkdir examples
-tar xjf %{SOURCE7} -C examples
-tar xzf %{SOURCE8} -C examples
+tar xjf %{SOURCE8} -C examples
+tar xzf %{SOURCE9} -C examples
 # order mess with docs somewhat
 mkdir -p docs/html
 mv htmlman docs/html/ocaml
 cp %{SOURCE2} docs/ocaml.ps.gz
 mv camlp4-%{p4ver}-manual.html docs/html/camlp4
-cp %{SOURCE4} docs/camlp4.ps.gz
+cp %{SOURCE5} docs/camlp4.ps.gz
 mv camlp4-%{p4ver}-tutorial.html docs/html/camlp4-tutorial
-cp %{SOURCE6} docs/camlp4-tutorial.ps.gz
+cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -390,8 +390,8 @@ cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 # shutup checkfiles
-rm -rf $RPM_BUILD_ROOT%{_mandir}/man3
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
+%{__rm} -r $RPM_BUILD_ROOT%{_mandir}/man3
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
 # install info pages
 cp -f infoman/*.gz $RPM_BUILD_ROOT%{_infodir}
@@ -405,19 +405,20 @@ done
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post doc-info	-p	/sbin/postshell
+%post	doc-info -p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
-%postun doc-info	-p	/sbin/postshell
+%postun	doc-info -p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE Changes README Upgrading
+%attr(755,root,root) %{_bindir}/addlabels
 %attr(755,root,root) %{_bindir}/ocaml*
+%attr(755,root,root) %{_bindir}/scrapelabels
 %{?with_tk:%exclude %{_bindir}/ocamlbrowser}
 %exclude %{_bindir}/ocamlrun
-%attr(755,root,root) %{_bindir}/*labels
 %{_includedir}/caml
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/threads
@@ -437,8 +438,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/ocamldoc/*.hva
 %attr(755,root,root) %{_libdir}/%{name}/expunge
 %attr(755,root,root) %{_libdir}/%{name}/extract_crc
-%attr(755,root,root) %{_libdir}/%{name}/*labels
-%{_mandir}/man1/*ocaml*
+%attr(755,root,root) %{_libdir}/%{name}/objinfo_helper
+%{_mandir}/man1/ocaml*
+%exclude %{_mandir}/man1/ocamlrun.1*
 
 %files runtime
 %defattr(644,root,root,755)
@@ -451,8 +453,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
 %if %{with tk}
 %exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
-%exclude %{_libdir}/%{name}/stublibs/dlltkanim.so
 %endif
+%{_mandir}/man1/ocamlrun.1*
 
 %files lib-source
 %defattr(644,root,root,755)
@@ -486,7 +488,6 @@ rm -rf $RPM_BUILD_ROOT
 %files labltk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dlllabltk.so
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlltkanim.so
 
 %files labltk-devel
 %defattr(644,root,root,755)

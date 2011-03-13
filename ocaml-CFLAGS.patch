@@ -1,4 +1,4 @@
-# allow pass CFLAGS, replace -O, -pg,-DPROFILING with $(CFAGS)
+# allow pass CFLAGS, replace -O, -pg,-DPROFILING with $(CFLAGS)
 Makefiles=$(find . -type f -name Makefile\*)
 %{__sed} -i -e 's@^CFLAGS[ \t]*=@override CFLAGS += @' $Makefiles
 %{__sed} -i -e 's@\(^override CFLAGS += .*\)-O \(.*\)@\1\2@' $Makefiles
@@ -33,16 +33,15 @@ diff -ur ocaml-3.11.0/asmrun/Makefile.nt ocaml-3.11.0.CFLAGS/asmrun/Makefile.nt
  
  COBJS=startup.$(O) main.$(O) fail.$(O) roots.$(O) signals.$(O) signals_asm.$(O) \
    misc.$(O) freelist.$(O) major_gc.$(O) minor_gc.$(O) memory.$(O) alloc.$(O) \
-diff -ur ocaml-3.11.0/byterun/Makefile ocaml-3.11.0.CFLAGS/byterun/Makefile
---- ocaml-3.11.0/byterun/Makefile	2008-11-08 17:29:02.000000000 +0100
-+++ ocaml-3.11.0.CFLAGS/byterun/Makefile	2009-02-16 12:18:01.212550815 +0100
+--- ocaml-3.12.0/byterun/Makefile	2008-11-08 17:29:02.000000000 +0100
++++ ocaml-3.12.0.CFLAGS/byterun/Makefile	2009-02-16 12:18:01.212550815 +0100
 @@ -15,7 +15,7 @@
  
  include Makefile.common
  
 -CFLAGS=-DCAML_NAME_SPACE -O $(BYTECCCOMPOPTS) $(IFLEXDIR)
 +override CFLAGS += -DCAML_NAME_SPACE $(BYTECCCOMPOPTS) $(IFLEXDIR)
- DFLAGS=-DCAML_NAME_SPACE -g -DDEBUG $(BYTECCCOMPOPTS)
+ DFLAGS=-DCAML_NAME_SPACE -g -DDEBUG $(BYTECCCOMPOPTS) $(IFLEXDIR)
  
  OBJS=$(COMMONOBJS) unix.o main.o
 diff -ur ocaml-3.11.0/byterun/Makefile.nt ocaml-3.11.0.CFLAGS/byterun/Makefile.nt
@@ -104,61 +103,24 @@ diff -ur ocaml-3.11.0/otherlibs/labltk/support/Makefile ocaml-3.11.0.CFLAGS/othe
  
  COMPFLAGS=-I $(OTHERS)/win32unix -I $(OTHERS)/unix
  THFLAGS=-I $(OTHERS)/systhreads -I $(OTHERS)/threads
-diff -ur ocaml-3.11.0/otherlibs/labltk/tkanim/Makefile ocaml-3.11.0.CFLAGS/otherlibs/labltk/tkanim/Makefile
---- ocaml-3.11.0/otherlibs/labltk/tkanim/Makefile	2007-12-12 15:09:45.000000000 +0100
-+++ ocaml-3.11.0.CFLAGS/otherlibs/labltk/tkanim/Makefile	2009-02-16 12:18:01.282552384 +0100
-@@ -4,7 +4,7 @@
- include ../support/Makefile.common
- 
- COMPFLAGS=-I ../support -I ../camltk -I ../../unix -I ../../win32unix
--CCFLAGS=-I../../../byterun -I../support $(TK_DEFS) $(SHAREDCCCOMPOPTS)
-+override CCFLAGS += -I../../../byterun -I../support $(TK_DEFS) $(SHAREDCCCOMPOPTS) $(CFLAGS)
- 
- all: tkanim.cma libtkanim.$(A)
- opt: tkanim.cmxa libtkanim.$(A)
-diff -ur ocaml-3.11.0/otherlibs/num/test/Makefile ocaml-3.11.0.CFLAGS/otherlibs/num/test/Makefile
---- ocaml-3.11.0/otherlibs/num/test/Makefile	2008-09-10 18:02:52.000000000 +0200
-+++ ocaml-3.11.0.CFLAGS/otherlibs/num/test/Makefile	2009-02-16 12:18:01.285892127 +0100
-@@ -18,7 +18,7 @@
- CAMLC=../../../boot/ocamlrun ../../../ocamlc -I ../../../stdlib -w A -warn-error A
- CAMLOPT=../../../boot/ocamlrun ../../../ocamlopt -I ../../../stdlib
- CC=$(BYTECC)
--CFLAGS=-I.. -I../../../byterun $(BYTECCCOMPOPTS)
-+override CFLAGS += -I.. -I../../../byterun $(BYTECCCOMPOPTS)
- 
- test: test.byt test.opt test_pi
- 	if $(SUPPORTS_SHARED_LIBRARIES); \
-diff -ur ocaml-3.11.0/otherlibs/num/test/Makefile.nt ocaml-3.11.0.CFLAGS/otherlibs/num/test/Makefile.nt
---- ocaml-3.11.0/otherlibs/num/test/Makefile.nt	2004-04-01 15:10:12.000000000 +0200
-+++ ocaml-3.11.0.CFLAGS/otherlibs/num/test/Makefile.nt	2009-02-16 12:18:01.285892127 +0100
-@@ -18,7 +18,7 @@
- CAMLC=../../../boot/ocamlrun ../../../ocamlc -I ../../../stdlib -I ..
- CAMLOPT=../../../boot/ocamlrun ../../../ocamlopt -I ../../../stdlib -I ..
- CC=$(BYTECC)
--CFLAGS=-I.. $(BYTECCCOMPOPTS)
-+override CFLAGS += -I.. $(BYTECCCOMPOPTS)
- 
- test: test.byt test.opt
- 	../../../byterun/ocamlrun -I .. ./test.byt
-diff -ur ocaml-3.11.0/otherlibs/systhreads/Makefile ocaml-3.11.0.CFLAGS/otherlibs/systhreads/Makefile
---- ocaml-3.11.0/otherlibs/systhreads/Makefile	2008-07-15 17:31:32.000000000 +0200
-+++ ocaml-3.11.0.CFLAGS/otherlibs/systhreads/Makefile	2009-02-16 12:18:13.469214951 +0100
-@@ -35,7 +35,7 @@
+--- ocaml-3.12.0/otherlibs/systhreads/Makefile.orig	2010-04-27 09:55:08.000000000 +0200
++++ ocaml-3.12.0/otherlibs/systhreads/Makefile	2011-03-12 10:40:54.827415456 +0100
+@@ -33,7 +33,7 @@
  	$(MKLIB) -o threads $(BYTECODE_C_OBJS)
  
- posix_b.o: posix.c
+ st_stubs_b.o: st_stubs.c st_posix.h
 -	$(BYTECC) -O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
 +	$(BYTECC) $(CFLAGS) -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
- 	   -c posix.c
- 	mv posix.o posix_b.o
+ 	   -c st_stubs.c
+ 	mv st_stubs.o st_stubs_b.o
  
-@@ -45,7 +45,7 @@
+@@ -43,7 +43,7 @@
  	$(AR) rc libthreadsnat.a $(NATIVECODE_C_OBJS)
  
- posix_n.o: posix.c
--	$(NATIVECC) -O -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c posix.c
-+	$(NATIVECC) $(CFLAGS) -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c posix.c
- 	mv posix.o posix_n.o
+ st_stubs_n.o: st_stubs.c st_posix.h
+-	$(NATIVECC) -O -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c st_stubs.c
++	$(NATIVECC) $(CFLAGS) -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) -DSYS_$(SYSTEM) -c st_stubs.c
+ 	mv st_stubs.o st_stubs_n.o
  
  threads.cma: $(THREAD_OBJS)
 diff -ur ocaml-3.11.0/otherlibs/systhreads/Makefile.nt ocaml-3.11.0.CFLAGS/otherlibs/systhreads/Makefile.nt
