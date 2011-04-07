@@ -14,7 +14,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	3.12.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	distributable
 Group:		Development/Languages
@@ -48,9 +48,8 @@ BuildRequires:	db-devel >= 4.1
 %{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %if %{with emacs}
 BuildRequires:	sed >= 4.0
-BuildRequires:	xemacs
-BuildRequires:	xemacs-common
-BuildRequires:	xemacs-fsf-compat-pkg
+BuildRequires:	emacs
+BuildRequires:	emacs-common
 %endif
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-ocamldoc
@@ -356,10 +355,10 @@ cat > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf <<EOF
 EOF
 
 %if %{with emacs}
-%{__make} -C emacs DESTDIR=$RPM_BUILD_ROOT install \
-	EMACS="`if [ -x %{_bindir}/emacs ]; then echo emacs; \
-	        else echo xemacs; fi`" \
-	EMACSDIR="$RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp"
+%{__make} -C emacs install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	EMACSDIR="$RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp" \
+	EMACS="emacs"
 %endif
 
 # symlink .opt versions of compilers (if present)
