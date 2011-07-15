@@ -3,10 +3,10 @@ be placed in the same section that referred symbols.
 --- ocaml-3.12.0/asmcomp/i386/emit.mlp.orig	2010-01-20 17:26:46.000000000 +0100
 +++ ocaml-3.12.0/asmcomp/i386/emit.mlp	2011-03-12 12:01:23.803419646 +0100
 @@ -906,6 +906,7 @@
+   emit_all true fundecl.fun_body;
    List.iter emit_call_gc !call_gc_sites;
    emit_call_bound_errors ();
-   List.iter emit_float_constant !float_constants;
 +  `	.text\n`;
-   match Config.system with
+   begin match Config.system with
      "linux_elf" | "bsd_elf" | "gnu" ->
        `	.type	{emit_symbol fundecl.fun_name},@function\n`;
