@@ -14,7 +14,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	3.12.1
-Release:	13
+Release:	14
 Epoch:		1
 License:	distributable
 Group:		Development/Languages
