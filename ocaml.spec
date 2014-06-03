@@ -14,7 +14,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	3.12.1
-Release:	20
+Release:	21
 Epoch:		1
 License:	distributable
 Group:		Development/Languages
@@ -42,6 +42,7 @@ Patch0:		%{name}-db3.patch
 Patch1:		%{name}-CFLAGS.patch
 Patch2:		%{name}-as_needed.patch
 Patch3:		%{name}-gas.patch
+Patch4:		%{name}-tcl86.patch
 URL:		http://caml.inria.fr/
 BuildRequires:	db-devel >= 4.1
 %{?with_tk:BuildRequires:	tk-devel}
@@ -320,6 +321,7 @@ cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build 
 cp -f /usr/share/automake/config.sub config/gnu
@@ -333,8 +335,8 @@ cp -f /usr/share/automake/config.sub config/gnu
 	-with-pthread \
 	-x11lib %{_libdir}
 
-%{__make} -j1 world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall"
-%{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall" -j1
+%{__make} -j1 world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT"
+%{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT" -j1
 
 # broken build system
 sed -e 's,LIBDIR,%{_libdir},' camlp4/man/camlp4.1.tpl > camlp4/man/camlp4.1
