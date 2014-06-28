@@ -26,6 +26,7 @@ Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.
 # Source2-md5:	a9c17db6ffd400c5ea00c6d51cbf56bf
 Source3:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
 # Source3-md5:	8cf24c4f69c6f9c9f9cc1edb9b18f6cb
+# following 4 URLs are dead, some version now available at http://pauillac.inria.fr/camlp4/
 Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
 # Source4-md5:	21370bae4e7f6435b38aeb21db7ce8bb
 Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
