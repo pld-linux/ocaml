@@ -2,51 +2,33 @@
 # Conditional build:
 %bcond_without	emacs	# without emacs subpackage
 %bcond_without	x	# without X11 support 
-%bcond_without	tk	# without Tcl/Tk support
-#
-# --without x11 implies --without tk
-%{!?with_x:%undefine	with_tk}
 
-%define		p4ver	3.06
-%define		sver	3.12
+%define		sver	4.02
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	3.12.1
-Release:	21
+Version:	4.02.1
+Release:	1
 Epoch:		1
-License:	distributable
+License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.bz2
-# Source0-md5:	227a3daaedb150bf5037a3db01f5bf42
-Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.html.tar.gz
-# Source1-md5:	93cd91f525441eb7e94cc49b9b64bab0
+Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.xz
+# Source0-md5:	d74ac1b1179af362491e14349dd1958b
+Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman-html.tar.gz
+# Source1-md5:	915a1949f7af7186e16354e9682dc1e5
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	a9c17db6ffd400c5ea00c6d51cbf56bf
+# Source2-md5:	e85016fa23b6525d1d10da06010fd90a
 Source3:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source3-md5:	8cf24c4f69c6f9c9f9cc1edb9b18f6cb
-# following 4 URLs are dead, some version now available at http://pauillac.inria.fr/camlp4/
-Source4:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.html.tar.gz
-# Source4-md5:	21370bae4e7f6435b38aeb21db7ce8bb
-Source5:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-manual.dvi.gz
-# Source5-md5:	035915d1a530aa7ec9b194d9a7d258eb
-Source6:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.html.tar.gz
-# Source6-md5:	96d8eb4ca5abd58c9a280ba59f73b192
-Source7:	ftp://ftp.inria.fr/INRIA/Projects/cristal/camlp4/camlp4-%{p4ver}-tutorial.dvi.gz
-# Source7-md5:	fcd87c235109364242a0c9ccf176dff8
-Source8:	http://www.ocaml.info/ocaml_sources/pure-fun-1.0.6.tar.bz2
-# Source8-md5:	94eac3fa1ac51b8ada344b04839cb43c
-Source9:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
-# Source9-md5:	77fa1da7375dea1393cc0b6cd802d7e1
-Patch0:		%{name}-db3.patch
+# Source3-md5:	265b7db123e925e8b7b70ca2266b4206
+Source4:	https://github.com/mmottl/pure-fun/archive/v1.0.13/pure-fun-1.0.13.tar.gz
+# Source4-md5:	0a6ff033df78d0880fe4883ace025ebe
+# note: dead URL
+Source5:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
+# Source5-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch1:		%{name}-CFLAGS.patch
 Patch2:		%{name}-as_needed.patch
-Patch3:		%{name}-gas.patch
-Patch4:		%{name}-tcl86.patch
 URL:		http://caml.inria.fr/
-BuildRequires:	db-devel >= 4.1
-%{?with_tk:BuildRequires:	tk-devel}
 %{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %if %{with emacs}
 BuildRequires:	sed >= 4.0
@@ -70,13 +52,15 @@ system, Lex&Yacc tools, a replay debugger, and a comprehensive
 library.
 
 %description -l pl.UTF-8
-OCaml (Objective Caml) jest funkcyjnym, obiektowo zorientowanym językiem
-wysokiego poziomu z silnym typowaniem. Należy do rodziny języków ML.
+OCaml (Objective Caml) jest funkcyjnym, obiektowo zorientowanym
+językiem wysokiego poziomu z silnym typowaniem. Należy do rodziny
+języków ML.
 
 Ten pakiet zawiera dwa kompilatory (szybki kompilator do bajtkodu
-oraz optymalizujący kompilator do kodu natywnego), interaktywne środowisko
-pracy, narzędzia do tworzenia analizatorów leksykalnych oraz składniowych
-(ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i biblioteki.
+oraz optymalizujący kompilator do kodu natywnego), interaktywne
+środowisko pracy, narzędzia do tworzenia analizatorów leksykalnych
+oraz składniowych (ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i
+biblioteki.
 
 %package runtime
 Summary:	Runtime system for OCaml
@@ -89,8 +73,8 @@ ocamlrun bytecode interpreter, and basic dynamic link libraries.
 
 %description runtime -l pl.UTF-8
 Pakiet ten zawiera binaria potrzebne do uruchamiania programów w
-OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun) oraz
-podstawowe biblioteki linkowane dynamicznie.
+OCamlu skompilowanych do bajtkodu: interpreter bajtkodu (ocamlrun)
+oraz podstawowe biblioteki linkowane dynamicznie.
 
 %package lib-source
 Summary:	Sources of OCaml standard library
@@ -99,7 +83,8 @@ Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description lib-source
-This sources come helpful during debugging of user programs with ocamldebug.
+This sources come helpful during debugging of user programs with
+ocamldebug.
 
 %description lib-source -l pl.UTF-8
 Źródła te są przydatne przy odpluskwianiu programów użytkownika
@@ -150,36 +135,6 @@ Emacs mode files for Objective Caml language.
 %description emacs -l pl.UTF-8
 Pliki trybu OCamla dla Emacsa.
 
-%package labltk
-Summary:	Runtime for LablTk library
-Summary(pl.UTF-8):	Środowisko uruchomieniowe dla biblioteki LablTk
-Group:		Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description labltk
-LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to run bytecode OCaml programs using LablTk.
-
-%description labltk -l pl.UTF-8
-Biblioteka LablTk daje programom napisanym w OCamlu dostęp do widgetów
-Tcl/Tk. Pakiet ten zawiera binaria potrzebne do uruchamiania programów
-używających LablTk.
-
-%package labltk-devel
-Summary:	LablTk library for OCaml
-Summary(pl.UTF-8):	Biblioteka LablTk dla OCamla
-Group:		Development/Libraries
-Requires:	%{name}-labltk = %{epoch}:%{version}-%{release}
-
-%description labltk-devel
-LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to develop OCaml programs using LablTk.
-
-%description labltk-devel -l pl.UTF-8
-Biblioteka LablTk daje programom napisanym w OCamlu dostęp do widgetów
-Tcl/Tk. Pakiet ten zawiera pliki niezbędne do tworzenia programów
-używających LablTk.
-
 %package x11graphics
 Summary:	X11 graphic output for OCaml
 Summary(pl.UTF-8):	Dostęp do X11 dla OCamla
@@ -211,54 +166,6 @@ using x11graphics.
 Moduł x11graphics daje programom napisanym w OCamlu możliwość
 korzystania z interfejsu graficznego X11. Pakiet ten zawiera pliki
 niezbędne do tworzenia programów używających x11graphics.
-
-%package camlp4
-Summary:	Objective Caml Preprocessor
-Summary(pl.UTF-8):	Preprocesor OCamla
-Group:		Development/Languages
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Provides:	camlp4 = %{epoch}:%{version}-%{release}
-Obsoletes:	camlp4
-
-%description camlp4
-Camlp4 is a Pre-Processor-Pretty-Printer for Objective Caml. It offers
-tools for syntax (grammars) and the ability to modify the concrete
-syntax of the language (quotations, syntax extensions).
-
-Camlp4 can parse normal Ocaml concrete syntax or any other
-user-definable syntax. As an example, an alternative syntax is
-provided, named revised, because it tries to fix some small problems
-of the normal syntax.
-
-Camlp4 can pretty print the normal Ocaml concrete syntax or the
-revised one. It is therefore always possible to have a version of your
-sources compilable by the Objective Caml compiler without
-preprocessing.
-
-%description camlp4 -l pl.UTF-8
-Camlp4 jest preprocesorem OCamla. Oferuje narzędzia do manipulowania
-składnią (gramatyki) oraz możliwość modyfikowania oryginalnej składni
-języka (cytowania, rozszerzenia).
-
-Camlp4 może sparsować oryginalną składnię Ocamla lub dowolną inną
-definiowalną przez użytkownika. Jako przykład podana jest alternatywna
-składnia (revised syntax), która próbuje poprawić drobne problemy
-występujące w składni oryginalnej.
-
-Camlp4 umie ładnie formatować źródła zarówno w oryginalnej jak i
-poprawionej składni OCamla. Potrafi także tłumaczyć programy z jednej
-składni na drugą.
-
-%package camlp4-doc-html
-Summary:	Objective Caml Preprocessor - HTML documentation 
-Summary(pl.UTF-8):	Preprocesor OCamla - dokumentacja HTML 
-Group:		Development/Languages
-
-%description camlp4-doc-html
-Objective Caml Preprocessor - HTML documentation.
-
-%description camlp4-doc-html -l pl.UTF-8
-Preprocesor OCamla - dokumentacja HTML.
 
 %package compiler-objects
 Summary:	Compiled parts of OCaml compiler
@@ -306,23 +213,16 @@ Pakiet ten zawiera źródła Czysto Funkcyjnych Struktur Danych
 autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
-%setup -q -a1 -a3 -a4 -a6
+%setup -q -a1 -a3
 mkdir examples
-tar xjf %{SOURCE8} -C examples
-tar xzf %{SOURCE9} -C examples
+tar xzf %{SOURCE4} -C examples
+tar xzf %{SOURCE5} -C examples
 # order mess with docs somewhat
 mkdir -p docs/html
 mv htmlman docs/html/ocaml
 cp %{SOURCE2} docs/ocaml.ps.gz
-mv camlp4-%{p4ver}-manual.html docs/html/camlp4
-cp %{SOURCE5} docs/camlp4.ps.gz
-mv camlp4-%{p4ver}-tutorial.html docs/html/camlp4-tutorial
-cp %{SOURCE7} docs/camlp4-tutorial.ps.gz
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build 
 cp -f /usr/share/automake/config.sub config/gnu
@@ -332,19 +232,15 @@ cp -f /usr/share/automake/config.sub config/gnu
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
 	-host %{_host} \
-	%{!?with_tk:-no-tk} \
 	-with-pthread \
 	-x11lib %{_libdir}
 
 %{__make} -j1 world bootstrap opt.opt CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT"
 %{__make} -C tools objinfo CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT" -j1
 
-# broken build system
-sed -e 's,LIBDIR,%{_libdir},' camlp4/man/camlp4.1.tpl > camlp4/man/camlp4.1
-
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-{labltk-,}%{version}}
+install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-%{version}}
 install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/site-lib
 
 %{__make} install \
@@ -365,7 +261,6 @@ EOF
 %endif
 
 # symlink .opt versions of compilers (if present)
-# warning: don't do that with camlp4 (can't load extensions then)
 for f in ocamlc ocamlopt ocamldoc ocamllex; do
 	if test -f $RPM_BUILD_ROOT%{_bindir}/$f.opt; then
 		mv -f $RPM_BUILD_ROOT%{_bindir}/$f \
@@ -388,21 +283,13 @@ done
 # this isn't installed by default, but is useful
 install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -r otherlibs/labltk/examples* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-labltk-%{version}
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
 # shutup checkfiles
 %{__rm} -r $RPM_BUILD_ROOT%{_mandir}/man3
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/labltk/{labltktop,pp}
 
 # install info pages
 cp -f infoman/*.gz $RPM_BUILD_ROOT%{_infodir}
-
-# broken build system
-install camlp4/man/camlp4.1 $RPM_BUILD_ROOT%{_mandir}/man1
-for f in camlp4o.1 camlp4r.1 mkcamlp4.1 camlp4o.opt.1 camlp4r.opt.1 ; do
-	echo '.so camlp4.1' >$RPM_BUILD_ROOT%{_mandir}/man1/$f
-done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -415,14 +302,29 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE Changes README Upgrading
+%doc Changes LICENSE README
 %attr(755,root,root) %{_bindir}/addlabels
-%attr(755,root,root) %{_bindir}/ocaml*
+%attr(755,root,root) %{_bindir}/ocaml
+%attr(755,root,root) %{_bindir}/ocamlbuild*
+%attr(755,root,root) %{_bindir}/ocamlc
+%attr(755,root,root) %{_bindir}/ocamlc.*
+%attr(755,root,root) %{_bindir}/ocamlcp
+%attr(755,root,root) %{_bindir}/ocamldebug
+%attr(755,root,root) %{_bindir}/ocamldep*
+%attr(755,root,root) %{_bindir}/ocamldoc*
+%attr(755,root,root) %{_bindir}/ocamllex*
+%attr(755,root,root) %{_bindir}/ocamlmklib
+%attr(755,root,root) %{_bindir}/ocamlmktop
+%attr(755,root,root) %{_bindir}/ocamlobjinfo
+%attr(755,root,root) %{_bindir}/ocamlopt
+%attr(755,root,root) %{_bindir}/ocamlopt.*
+%attr(755,root,root) %{_bindir}/ocamloptp
+%attr(755,root,root) %{_bindir}/ocamlprof
+%attr(755,root,root) %{_bindir}/ocamlyacc
 %attr(755,root,root) %{_bindir}/scrapelabels
-%{?with_tk:%exclude %{_bindir}/ocamlbrowser}
-%exclude %{_bindir}/ocamlrun
 %{_includedir}/caml
 %{_libdir}/%{name}/caml
+%{_libdir}/%{name}/compiler-libs
 %{_libdir}/%{name}/threads
 %dir %{_libdir}/%{name}/vmthreads
 %dir %{_libdir}/%{name}/vmthreads/*.cm*
@@ -453,9 +355,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
 %attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
-%if %{with tk}
-%exclude %{_libdir}/%{name}/stublibs/dlllabltk.so
-%endif
 %{_mandir}/man1/ocamlrun.1*
 
 %files lib-source
@@ -486,23 +385,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/emacs/site-lisp/*.el*
 %endif
 
-%if %{with tk}
-%files labltk
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dlllabltk.so
-
-%files labltk-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/labltk
-%attr(755,root,root) %{_bindir}/ocamlbrowser
-%dir %{_libdir}/%{name}/labltk
-%{_libdir}/%{name}/labltk/*.cm*
-%{_libdir}/%{name}/labltk/*.a
-%{_libdir}/%{name}/labltk/*.o
-%attr(755,root,root) %{_libdir}/%{name}/labltk/tkcompiler
-%{_examplesdir}/%{name}-labltk-%{version}
-%endif
-
 %if %{with x}
 %files x11graphics
 %defattr(644,root,root,755)
@@ -514,18 +396,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/graphics.a
 %{_libdir}/%{name}/libgraphics.a
 %endif
-
-%files camlp4
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/camlp4*
-%attr(755,root,root) %{_bindir}/mkcamlp4
-%{_libdir}/%{name}/camlp4
-%{_mandir}/man1/camlp4*.1*
-%{_mandir}/man1/mkcamlp4.1*
-
-%files camlp4-doc-html
-%defattr(644,root,root,755)
-%doc docs/html/camlp4*
 
 %files compiler-objects
 %defattr(644,root,root,755)

@@ -1,11 +1,11 @@
---- ocaml-3.09.2/configure.orig	2006-11-23 03:30:41.000000000 +0000
-+++ ocaml-3.09.2/configure	2006-11-23 03:31:14.000000000 +0000
-@@ -751,7 +751,7 @@
+--- ocaml-4.02.1/configure.orig	2014-11-07 16:23:50.668651870 +0100
++++ ocaml-4.02.1/configure	2014-11-07 16:33:21.335294590 +0100
+@@ -1022,7 +1022,7 @@
  # For the terminfo module
  
- if test "$withcurses" = "yes"; then
+ if test "$with_curses" = "yes"; then
 -  for libs in "" "-lcurses" "-ltermcap" "-lcurses -ltermcap" "-lncurses"; do
 +  for libs in "" "-ltinfo" "-lcurses" "-ltermcap" "-lcurses -ltermcap" "-lncurses"; do
      if sh ./hasgot $libs tgetent tgetstr tgetnum tputs; then
-       echo "termcap functions found (with libraries '$libs')"
+       inf "termcap functions found (with libraries '$libs')"
        echo "#define HAS_TERMCAP" >> s.h
