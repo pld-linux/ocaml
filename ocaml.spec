@@ -36,8 +36,10 @@ BuildRequires:	emacs
 BuildRequires:	emacs-common
 %endif
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
+Provides:	ocaml-bytes-devel
 Provides:	ocaml-ocamldoc
 Obsoletes:	ocaml-ocamldoc
+Obsoletes:	ocaml-bytes-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
