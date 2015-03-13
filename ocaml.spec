@@ -1,11 +1,13 @@
 #
 # Conditional build:
-%bcond_without	emacs	# without emacs subpackage
-%bcond_without	x	# without X11 support 
-%bcond_without	opt	# don't build native, optimized compiler
+%bcond_without	emacs		# emacs subpackage
+%bcond_without	x		# X11 support 
+%bcond_without	ocaml_opt	# native, optimized compiler
 
-%ifarch x32
-%undefine	with_opt
+# ppc64, sparc64 and x32 variants not supported currently
+# alpha, hppa, ia64, mips removed since 4.00
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9 
+%undefine	with_ocaml_opt
 %endif
 
 %define		sver	4.02
@@ -244,7 +246,7 @@ cp -f /usr/share/automake/config.sub config/gnu
 	-with-pthread \
 	-x11lib %{_libdir}
 
-%{__make} -j1 world bootstrap %{?with_opt:opt.opt} \
+%{__make} -j1 world bootstrap %{?with_ocaml_opt:opt.opt} \
 	CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT"
 
 %{__make} -C tools objinfo \
@@ -290,7 +292,7 @@ ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
 for f in {asm,byte}comp parsing typing utils ; do
 	install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f
 	cp $f/*.{cmi,cmo} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f
-	%{?with_opt:cp $f/*.{cmx,o} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f}
+	%{?with_ocaml_opt:cp $f/*.{cmx,o} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f}
 done
 
 # this isn't installed by default, but is useful
@@ -320,7 +322,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocaml
 %attr(755,root,root) %{_bindir}/ocamlbuild*
 %attr(755,root,root) %{_bindir}/ocamlc
-%{?with_opt:%attr(755,root,root) %{_bindir}/ocamlc.*}
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlc.*}
 %attr(755,root,root) %{_bindir}/ocamlcp
 %attr(755,root,root) %{_bindir}/ocamldebug
 %attr(755,root,root) %{_bindir}/ocamldep*
@@ -329,8 +331,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocamlmklib
 %attr(755,root,root) %{_bindir}/ocamlmktop
 %attr(755,root,root) %{_bindir}/ocamlobjinfo
-%{?with_opt:%attr(755,root,root) %{_bindir}/ocamlopt}
-%{?with_opt:%attr(755,root,root) %{_bindir}/ocamlopt.*}
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlopt}
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlopt.*}
 %attr(755,root,root) %{_bindir}/ocamloptp
 %attr(755,root,root) %{_bindir}/ocamlprof
 %attr(755,root,root) %{_bindir}/ocamlyacc
@@ -343,7 +345,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/vmthreads/*.cm*
 %dir %{_libdir}/%{name}/vmthreads/*.a
 %{_libdir}/%{name}/*.a
-%{?with_opt:%{_libdir}/%{name}/*.o}
+%{?with_ocaml_opt:%{_libdir}/%{name}/*.o}
 %{_libdir}/%{name}/*.cm*
 %exclude %{_libdir}/%{name}/*graphics*
 %{_libdir}/%{name}/Makefile.config
@@ -406,7 +408,7 @@ rm -rf $RPM_BUILD_ROOT
 %files x11graphics-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/graphics*.cm*
-%{?with_opt:%{_libdir}/%{name}/graphics.a}
+%{?with_ocaml_opt:%{_libdir}/%{name}/graphics.a}
 %{_libdir}/%{name}/libgraphics.a
 %endif
 
@@ -417,7 +419,7 @@ rm -rf $RPM_BUILD_ROOT
 %files ocamldoc-devel
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/ocamldoc/*.cm*
-%{?with_opt:%{_libdir}/%{name}/ocamldoc/*.a}
+%{?with_ocaml_opt:%{_libdir}/%{name}/ocamldoc/*.a}
 
 %files examples
 %defattr(644,root,root,755)
