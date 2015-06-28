@@ -15,13 +15,13 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	4.02.1
-Release:	5
+Version:	4.02.2
+Release:	1
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.xz
-# Source0-md5:	d74ac1b1179af362491e14349dd1958b
+# Source0-md5:	a453ab62931776a78ba761112db9e00b
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman-html.tar.gz
 # Source1-md5:	915a1949f7af7186e16354e9682dc1e5
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
@@ -182,8 +182,8 @@ Summary:	Compiled parts of OCaml compiler
 Summary(pl.UTF-8):	Skompilowane części kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Obsoletes:	ocaml-devel
 Provides:	ocaml-devel
+Obsoletes:	ocaml-devel
 
 %description compiler-objects
 This package contains *.cmi and *.cmo files being parts of OCaml
@@ -365,10 +365,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ocamlrun
 %dir %{_libdir}/%{name}
+%{_libdir}/%{name}/VERSION
 %dir %{_libdir}/%{name}/site-lib
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
+%attr(755,root,root) %{_libdir}/%{name}/libasmrun_shared.so
 %attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
 %{_mandir}/man1/ocamlrun.1*
 

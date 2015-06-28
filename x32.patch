@@ -14,8 +14,9 @@ As you can see, the main problem is the current code confusing x32 for
 sometimes amd64 sometimes i386.  I guess adding native optimized support
 wouldn't be hard (copying parts of i386 and parts of amd64...), but, not
 knowing anything about ocaml or the compiler, I preferred to keep it safe.
-</pre><pre>--- ocaml-4.02.1.orig/byterun/signals_machdep.h
-+++ ocaml-4.02.1/byterun/signals_machdep.h
+</pre><pre>
+--- ocaml-4.02.1.orig/byterun/caml/signals_machdep.h
++++ ocaml-4.02.1/byterun/caml/signals_machdep.h
 @@ -25,10 +25,19 @@
  
  #elif defined(__GNUC__) && defined(__x86_64__)

@@ -6,18 +6,19 @@ Makefiles=$(find . -type f -name Makefile\*)
 %{__sed} -i -e 's@-pg -O -DPROFILING@ $(CFLAGS) @' asmrun/Makefile
 %{__sed} -i -e 's@-O@$(CFLAGS)@' otherlibs/systhreads/Makefile
 
-diff -ur ocaml-3.11.0/asmrun/Makefile ocaml-3.11.0.CFLAGS/asmrun/Makefile
---- ocaml-3.11.0/asmrun/Makefile	2007-11-15 14:21:15.000000000 +0100
-+++ ocaml-3.11.0.CFLAGS/asmrun/Makefile	2009-02-16 12:18:06.599221049 +0100
-@@ -18,9 +18,9 @@
+--- ocaml-4.02.2/asmrun/Makefile.orig	2015-06-28 13:45:16.203456490 +0200
++++ ocaml-4.02.2/asmrun/Makefile	2015-06-28 15:07:59.556581531 +0200
+@@ -16,10 +16,10 @@
  CC=$(NATIVECC)
  FLAGS=-I../byterun -DCAML_NAME_SPACE -DNATIVE_CODE \
        -DTARGET_$(ARCH) -DSYS_$(SYSTEM) $(IFLEXDIR)
--CFLAGS=$(FLAGS) -O $(NATIVECCCOMPOPTS)
+-CFLAGS=$(FLAGS) $(NATIVECCCOMPOPTS)
 +override CFLAGS += $(FLAGS) $(NATIVECCCOMPOPTS)
  DFLAGS=$(FLAGS) -g -DDEBUG $(NATIVECCCOMPOPTS)
 -PFLAGS=$(FLAGS) -pg -O -DPROFILING $(NATIVECCPROFOPTS)
-+PFLAGS=$(FLAGS)  $(CFLAGS)  $(NATIVECCPROFOPTS)
+-PICFLAGS=$(FLAGS) -O $(SHAREDCCCOMPOPTS) $(NATIVECCCOMPOPTS)
++PFLAGS=$(FLAGS) $(CFLAGS) $(NATIVECCPROFOPTS)
++PICFLAGS=$(FLAGS) $(CFLAGS) $(SHAREDCCCOMPOPTS) $(NATIVECCCOMPOPTS)
  
  COBJS=startup.o main.o fail.o roots.o globroots.o signals.o signals_asm.o \
    misc.o freelist.o major_gc.o minor_gc.o memory.o alloc.o compare.o ints.o \
@@ -32,17 +33,17 @@ diff -ur ocaml-3.11.0/asmrun/Makefile ocaml-3.11.0.CFLAGS/asmrun/Makefile
         $(NATIVECCCOMPOPTS)
  
  COBJS=startup.$(O) main.$(O) fail.$(O) roots.$(O) signals.$(O) signals_asm.$(O)\
---- ocaml-3.12.0/byterun/Makefile	2008-11-08 17:29:02.000000000 +0100
-+++ ocaml-3.12.0.CFLAGS/byterun/Makefile	2009-02-16 12:18:01.212550815 +0100
-@@ -15,7 +15,7 @@
+--- ocaml-4.02.2/byterun/Makefile.orig	2015-06-28 13:45:16.206789823 +0200
++++ ocaml-4.02.2/byterun/Makefile	2015-06-28 15:08:35.076580040 +0200
+@@ -13,7 +13,7 @@
  
  include Makefile.common
  
--CFLAGS=-DCAML_NAME_SPACE -O $(BYTECCCOMPOPTS) $(IFLEXDIR)
+-CFLAGS=-DCAML_NAME_SPACE $(BYTECCCOMPOPTS) $(IFLEXDIR)
 +override CFLAGS += -DCAML_NAME_SPACE $(BYTECCCOMPOPTS) $(IFLEXDIR)
  DFLAGS=-DCAML_NAME_SPACE -g -DDEBUG $(BYTECCCOMPOPTS) $(IFLEXDIR)
  
- OBJS=$(COMMONOBJS) unix.o main.o
+ OBJS=$(COMMONOBJS) $(UNIX_OR_WIN32).o main.o
 diff -ur ocaml-3.11.0/byterun/Makefile.nt ocaml-3.11.0.CFLAGS/byterun/Makefile.nt
 --- ocaml-3.11.0/byterun/Makefile.nt	2008-11-26 14:26:53.000000000 +0100
 +++ ocaml-3.11.0.CFLAGS/byterun/Makefile.nt	2009-02-16 12:18:01.215883365 +0100
@@ -55,68 +56,66 @@ diff -ur ocaml-3.11.0/byterun/Makefile.nt ocaml-3.11.0.CFLAGS/byterun/Makefile.n
  
  DBGO=d.$(O)
  OBJS=$(COMMONOBJS:.o=.$(O)) win32.$(O) main.$(O)
---- ocaml-4.02.1/otherlibs/Makefile.orig	2014-11-06 21:32:19.361500999 +0100
-+++ ocaml-4.02.1/otherlibs/Makefile	2014-11-07 16:20:23.921993882 +0100
+--- ocaml-4.02.2/otherlibs/Makefile.orig	2015-06-28 13:45:16.210123156 +0200
++++ ocaml-4.02.2/otherlibs/Makefile	2015-06-28 15:09:02.573245553 +0200
 @@ -16,7 +16,7 @@
- CAMLC=$(ROOTDIR)/boot/ocamlrun $(ROOTDIR)/ocamlc -nostdlib -I $(ROOTDIR)/stdlib
- CAMLOPT=$(ROOTDIR)/boot/ocamlrun $(ROOTDIR)/ocamlopt -nostdlib \
+ CAMLC=$(CAMLRUN) $(ROOTDIR)/ocamlc -nostdlib -I $(ROOTDIR)/stdlib
+ CAMLOPT=$(CAMLRUN) $(ROOTDIR)/ocamlopt -nostdlib \
          -I $(ROOTDIR)/stdlib
--CFLAGS=-I$(ROOTDIR)/byterun -O $(SHAREDCCCOMPOPTS) $(EXTRACFLAGS)
-+override CFLAGS += -I$(ROOTDIR)/byterun -O $(SHAREDCCCOMPOPTS) $(EXTRACFLAGS)
+-CFLAGS=-I$(ROOTDIR)/byterun $(SHAREDCCCOMPOPTS) $(EXTRACFLAGS)
++override CFLAGS += -I$(ROOTDIR)/byterun $(SHAREDCCCOMPOPTS) $(EXTRACFLAGS)
  
  include ../Makefile.shared
  # Note .. is the current directory (this makefile is included from
---- ocaml-4.02.1/otherlibs/systhreads/Makefile.orig	2014-10-03 14:25:00.000000000 +0200
-+++ ocaml-4.02.1/otherlibs/systhreads/Makefile	2014-11-07 16:21:22.471991426 +0100
-@@ -34,7 +34,7 @@
+--- ocaml-4.02.2/otherlibs/systhreads/Makefile.orig	2015-06-28 13:45:16.213456489 +0200
++++ ocaml-4.02.2/otherlibs/systhreads/Makefile	2015-06-28 15:09:59.356576505 +0200
+@@ -36,7 +36,7 @@
  	$(MKLIB) -o threads $(BYTECODE_C_OBJS) $(PTHREAD_LINK)
  
  st_stubs_b.o: st_stubs.c st_posix.h
--	$(BYTECC) -O -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
+-	$(BYTECC) -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
 +	$(BYTECC) $(CFLAGS) -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) \
  	   -c st_stubs.c
  	mv st_stubs.o st_stubs_b.o
  
-@@ -44,7 +44,7 @@
+@@ -46,7 +46,7 @@
  	$(AR) rc libthreadsnat.a $(NATIVECODE_C_OBJS)
  
  st_stubs_n.o: st_stubs.c st_posix.h
--	$(NATIVECC) -O -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) \
+-	$(NATIVECC) -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) \
 +	$(NATIVECC) $(CFLAGS) -I../../asmrun -I../../byterun $(NATIVECCCOMPOPTS) \
  	            $(SHAREDCCCOMPOPTS) -DNATIVE_CODE -DTARGET_$(ARCH) \
  	            -DSYS_$(SYSTEM) -c st_stubs.c
  	mv st_stubs.o st_stubs_n.o
-diff -ur ocaml-3.11.0/otherlibs/systhreads/Makefile.nt ocaml-3.11.0.CFLAGS/otherlibs/systhreads/Makefile.nt
---- ocaml-3.11.0/otherlibs/systhreads/Makefile.nt	2007-11-06 16:16:56.000000000 +0100
-+++ ocaml-3.11.0.CFLAGS/otherlibs/systhreads/Makefile.nt	2009-02-16 12:18:01.285892127 +0100
+--- ocaml-4.02.2/otherlibs/systhreads/Makefile.nt.orig	2015-06-28 13:45:16.216789823 +0200
++++ ocaml-4.02.2/otherlibs/systhreads/Makefile.nt	2015-06-28 15:10:34.866575013 +0200
 @@ -20,7 +20,7 @@
- CAMLOPT=../../boot/ocamlrun ../../ocamlopt -I ../../stdlib -I ../win32unix
- COMPFLAGS=-warn-error A -g
- MKLIB=../../boot/ocamlrun ../../tools/ocamlmklib
+ CAMLOPT=$(CAMLRUN) ../../ocamlopt -I ../../stdlib -I ../win32unix
+ COMPFLAGS=-w +33 -warn-error A -g
+ MKLIB=$(CAMLRUN) ../../tools/ocamlmklib
 -CFLAGS=-I../../byterun $(EXTRACFLAGS)
 +override CFLAGS += -I../../byterun $(EXTRACFLAGS)
  
  CAMLOBJS=thread.cmo mutex.cmo condition.cmo event.cmo threadUnix.cmo
  CMIFILES=$(CAMLOBJS:.cmo=.cmi)
---- ocaml-4.02.1/otherlibs/threads/Makefile.orig	2014-11-06 21:32:19.381500998 +0100
-+++ ocaml-4.02.1/otherlibs/threads/Makefile	2014-11-07 16:21:47.581990371 +0100
-@@ -14,7 +14,7 @@
- include ../../config/Makefile
+--- ocaml-4.02.2/otherlibs/threads/Makefile.orig	2015-06-28 13:45:16.220123156 +0200
++++ ocaml-4.02.2/otherlibs/threads/Makefile	2015-06-28 15:11:03.843240464 +0200
+@@ -18,7 +18,7 @@
+ CAMLYACC ?= ../../boot/ocamlyacc
  
  CC=$(BYTECC)
--CFLAGS=-I../../byterun -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -g
-+override CFLAGS += -I../../byterun -O $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -g
+-CFLAGS=-I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -g
++override CFLAGS += -I../../byterun $(BYTECCCOMPOPTS) $(SHAREDCCCOMPOPTS) -g
  ROOTDIR=../..
- CAMLC=$(ROOTDIR)/boot/ocamlrun $(ROOTDIR)/ocamlc -nostdlib \
+ CAMLC=$(CAMLRUN) $(ROOTDIR)/ocamlc -nostdlib \
        -I $(ROOTDIR)/stdlib -I $(ROOTDIR)/otherlibs/unix
-diff -ur ocaml-3.11.0/yacc/Makefile ocaml-3.11.0.CFLAGS/yacc/Makefile
---- ocaml-3.11.0/yacc/Makefile	2007-02-07 15:49:42.000000000 +0100
-+++ ocaml-3.11.0.CFLAGS/yacc/Makefile	2009-02-16 12:18:01.289259949 +0100
-@@ -17,7 +17,7 @@
+--- ocaml-4.02.2/yacc/Makefile.orig	2015-06-28 13:45:16.220123156 +0200
++++ ocaml-4.02.2/yacc/Makefile	2015-06-28 15:11:25.473239557 +0200
+@@ -15,7 +15,7 @@
  include ../config/Makefile
  
  CC=$(BYTECC)
--CFLAGS=-O -DNDEBUG $(BYTECCCOMPOPTS)
+-CFLAGS=-DNDEBUG $(BYTECCCOMPOPTS)
 +override CFLAGS += -DNDEBUG $(BYTECCCOMPOPTS)
  
  OBJS= closure.o error.o lalr.o lr0.o main.o mkpar.o output.o reader.o \
