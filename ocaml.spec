@@ -16,7 +16,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	4.02.2
-Release:	1
+Release:	2
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
@@ -370,7 +370,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/stublibs
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
-%attr(755,root,root) %{_libdir}/%{name}/libasmrun_shared.so
+%{?with_ocaml_opt:%attr(755,root,root) %{_libdir}/%{name}/libasmrun_shared.so}
 %attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
 %{_mandir}/man1/ocamlrun.1*
 
