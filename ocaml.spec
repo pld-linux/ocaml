@@ -1,12 +1,12 @@
 #
 # Conditional build:
 %bcond_without	emacs		# emacs subpackage
-%bcond_without	x		# X11 support 
+%bcond_without	x		# X11 support
 %bcond_without	ocaml_opt	# native, optimized compiler
 
 # ppc64, sparc64 and x32 variants not supported currently
 # alpha, hppa, ia64, mips removed since 4.00
-%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9 
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
 %undefine	with_ocaml_opt
 %endif
 
@@ -235,11 +235,11 @@ cp %{SOURCE2} docs/ocaml.ps.gz
 %patch2 -p1
 %patch3 -p1
 
-%build 
+%build
 cp -f /usr/share/automake/config.sub config/gnu
 ./configure \
 	-host %{_target_platform} \
-        -cc "%{__cc}" \
+	-cc "%{__cc}" \
 	-bindir %{_bindir} \
 	-libdir %{_libdir}/%{name} \
 	-mandir %{_mandir}/man1 \
