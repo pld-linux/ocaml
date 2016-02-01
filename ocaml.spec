@@ -15,13 +15,13 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	4.02.2
-Release:	3
+Version:	4.02.3
+Release:	1
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.xz
-# Source0-md5:	a453ab62931776a78ba761112db9e00b
+# Source0-md5:	9115706e30dad644f8dec9dfb459a9ab
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman-html.tar.gz
 # Source1-md5:	915a1949f7af7186e16354e9682dc1e5
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
