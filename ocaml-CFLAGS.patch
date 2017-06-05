@@ -8,20 +8,21 @@ Makefiles=$(find . -type f -name Makefile\*)
 
 --- ocaml-4.02.2/asmrun/Makefile.orig	2015-06-28 13:45:16.203456490 +0200
 +++ ocaml-4.02.2/asmrun/Makefile	2015-06-28 15:07:59.556581531 +0200
-@@ -16,10 +16,10 @@
- CC=$(NATIVECC)
- FLAGS=-I../byterun -DCAML_NAME_SPACE -DNATIVE_CODE \
-       -DTARGET_$(ARCH) -DSYS_$(SYSTEM) $(IFLEXDIR)
--CFLAGS=$(FLAGS) $(NATIVECCCOMPOPTS)
+@@ -16,11 +16,11 @@
+       -DTARGET_$(ARCH) -DMODEL_$(MODEL) -DSYS_$(SYSTEM) $(IFLEXDIR) \
+       $(LIBUNWIND_INCLUDE_FLAGS)
+ #CFLAGS=$(FLAGS) -g -O0
+-CFLAGS=$(FLAGS) -g -O0 $(NATIVECCCOMPOPTS)
 +override CFLAGS += $(FLAGS) $(NATIVECCCOMPOPTS)
  DFLAGS=$(FLAGS) -g -DDEBUG $(NATIVECCCOMPOPTS)
--PFLAGS=$(FLAGS) -pg -O -DPROFILING $(NATIVECCPROFOPTS)
--PICFLAGS=$(FLAGS) -O $(SHAREDCCCOMPOPTS) $(NATIVECCCOMPOPTS)
-+PFLAGS=$(FLAGS) $(CFLAGS) $(NATIVECCPROFOPTS)
+ IFLAGS=$(FLAGS) -DCAML_INSTR
+-PFLAGS=$(FLAGS) -pg -DPROFILING $(NATIVECCPROFOPTS) $(NATIVECCCOMPOPTS)
+-PICFLAGS=$(FLAGS) $(SHAREDCCCOMPOPTS) $(NATIVECCCOMPOPTS)
++PFLAGS=$(FLAGS) -pg -DPROFILING $(CFLAGS) $(NATIVECCPROFOPTS) $(NATIVECCCOMPOPTS)
 +PICFLAGS=$(FLAGS) $(CFLAGS) $(SHAREDCCCOMPOPTS) $(NATIVECCCOMPOPTS)
  
- COBJS=startup.o main.o fail.o roots.o globroots.o signals.o signals_asm.o \
-   misc.o freelist.o major_gc.o minor_gc.o memory.o alloc.o compare.o ints.o \
+ COBJS=startup_aux.o startup.o \
+   main.o fail.o roots.o globroots.o signals.o signals_asm.o \
 --- ocaml-4.02.1/asmrun/Makefile.nt.orig	2014-11-06 21:32:19.358167666 +0100
 +++ ocaml-4.02.1/asmrun/Makefile.nt	2014-11-07 16:19:43.681995569 +0100
 @@ -14,7 +14,7 @@
@@ -53,9 +54,9 @@ diff -ur ocaml-3.11.0/byterun/Makefile.nt ocaml-3.11.0.CFLAGS/byterun/Makefile.n
  
 -CFLAGS=-DOCAML_STDLIB_DIR='"$(LIBDIR)"' $(IFLEXDIR)
 +override CFLAGS += -DOCAML_STDLIB_DIR='"$(LIBDIR)"' $(IFLEXDIR)
+ DFLAGS=$(CFLAGS) -DDEBUG
  
  DBGO=d.$(O)
- OBJS=$(COMMONOBJS:.o=.$(O)) win32.$(O) main.$(O)
 --- ocaml-4.02.2/otherlibs/Makefile.orig	2015-06-28 13:45:16.210123156 +0200
 +++ ocaml-4.02.2/otherlibs/Makefile	2015-06-28 15:09:02.573245553 +0200
 @@ -16,7 +16,7 @@

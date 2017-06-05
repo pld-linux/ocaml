@@ -91,14 +91,3 @@ knowing anything about ocaml or the compiler, I preferred to keep it safe.
  }
  
  #define BNG_SETUP_OPS bng_ia32_setup_ops()
---- ocaml-4.02.1.orig/testsuite/makefiles/Makefile.common
-+++ ocaml-4.02.1/testsuite/makefiles/Makefile.common
-@@ -68,7 +68,7 @@ OCAMLMKLIB=$(OCAMLRUN) $(OTOPDIR)/tools/
- OCAMLYACC=$(TOPDIR)/yacc/ocamlyacc$(EXE)
- OCAMLBUILD=$(TOPDIR)/_build/ocamlbuild/ocamlbuild.native
- DUMPOBJ=$(OCAMLRUN) $(OTOPDIR)/tool/dumpobj
--BYTECODE_ONLY=[ "$(ARCH)" = "none" -o "$(ASM)" = "none" ]
-+BYTECODE_ONLY=[ "$(ARCH)" = "none" -o "$(ARCH)" = "x32" -o "$(ASM)" = "none" ]
- 
- #FORTRAN_COMPILER=
- #FORTRAN_LIBRARY=

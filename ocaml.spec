@@ -10,24 +10,24 @@
 %undefine	with_ocaml_opt
 %endif
 
-%define		sver	4.02
+%define		sver	4.04
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	4.02.3
-Release:	5
+Version:	4.04.1
+Release:	1
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
 Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.xz
-# Source0-md5:	9115706e30dad644f8dec9dfb459a9ab
+# Source0-md5:	092139f2a256d1f3d2571f64ab475aa9
 Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman-html.tar.gz
-# Source1-md5:	915a1949f7af7186e16354e9682dc1e5
+# Source1-md5:	5c58a4fce99b20e02c3208ad956bcb9d
 Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	e85016fa23b6525d1d10da06010fd90a
+# Source2-md5:	a408f706789b9b84b0eb68da3db05f15
 Source3:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source3-md5:	265b7db123e925e8b7b70ca2266b4206
+# Source3-md5:	8c9df1da0e36a69817f43115fa87360c
 Source4:	https://github.com/mmottl/pure-fun/archive/v1.0.13/pure-fun-1.0.13.tar.gz
 # Source4-md5:	0a6ff033df78d0880fe4883ace025ebe
 # note: dead URL
@@ -249,9 +249,6 @@ cp -f /usr/share/automake/config.sub config/gnu
 %{__make} -j1 world bootstrap %{?with_ocaml_opt:opt.opt} \
 	CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT"
 
-%{__make} -C tools objinfo \
-	CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT" -j1
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-%{version}}
@@ -296,7 +293,7 @@ for f in {asm,byte}comp parsing typing utils ; do
 done
 
 # this isn't installed by default, but is useful
-install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
+#install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
@@ -317,24 +314,32 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Changes LICENSE README
+%doc Changes LICENSE README.adoc
 %attr(755,root,root) %{_bindir}/addlabels
 %attr(755,root,root) %{_bindir}/ocaml
-%attr(755,root,root) %{_bindir}/ocamlbuild*
 %attr(755,root,root) %{_bindir}/ocamlc
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlc.*}
 %attr(755,root,root) %{_bindir}/ocamlcp
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlcp.*}
 %attr(755,root,root) %{_bindir}/ocamldebug
-%attr(755,root,root) %{_bindir}/ocamldep*
-%attr(755,root,root) %{_bindir}/ocamldoc*
-%attr(755,root,root) %{_bindir}/ocamllex*
+%attr(755,root,root) %{_bindir}/ocamldep
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldep.*}
+%attr(755,root,root) %{_bindir}/ocamldoc
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldoc.*}
+%attr(755,root,root) %{_bindir}/ocamllex
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamllex.*}
 %attr(755,root,root) %{_bindir}/ocamlmklib
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlmklib.*}
 %attr(755,root,root) %{_bindir}/ocamlmktop
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlmktop.*}
 %attr(755,root,root) %{_bindir}/ocamlobjinfo
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlobjinfo.*}
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlopt}
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlopt.*}
 %attr(755,root,root) %{_bindir}/ocamloptp
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamloptp.*}
 %attr(755,root,root) %{_bindir}/ocamlprof
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlprof.*}
 %attr(755,root,root) %{_bindir}/ocamlyacc
 %attr(755,root,root) %{_bindir}/scrapelabels
 %{_includedir}/caml
@@ -352,7 +357,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/ld.conf
 %{_libdir}/%{name}/camlheader
 %{_libdir}/%{name}/camlheader_ur
-%{_libdir}/%{name}/ocamlbuild
 %dir %{_libdir}/%{name}/ocamldoc
 %{_libdir}/%{name}/ocamldoc/*.hva
 %attr(755,root,root) %{_libdir}/%{name}/expunge
