@@ -16,7 +16,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	4.04.1
-Release:	3
+Release:	4
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
@@ -271,17 +271,18 @@ EOF
 	EMACS="emacs"
 %endif
 
-# symlink .opt versions of compilers (if present)
-for f in ocamlc ocamlopt ocamldoc ocamllex; do
-	if test -f $RPM_BUILD_ROOT%{_bindir}/$f.opt; then
-		mv -f $RPM_BUILD_ROOT%{_bindir}/$f \
-			$RPM_BUILD_ROOT%{_bindir}/$f.byte
-		ln -sf %{_bindir}/$f.opt $RPM_BUILD_ROOT%{_bindir}/$f
+# symlink .opt version of executable (if present)
+for f in ocamldoc ; do
+	if test -f $RPM_BUILD_ROOT%{_bindir}/${f}.opt; then
+		[ ! -f $RPM_BUILD_ROOT%{_bindir}/${f}.byte ] || exit 1 # drop rename if .opt/.byte already handled upstream
+		%{__mv} $RPM_BUILD_ROOT%{_bindir}/$f \
+			$RPM_BUILD_ROOT%{_bindir}/${f}.byte
+		ln -sf ${f}.opt $RPM_BUILD_ROOT%{_bindir}/$f
 	fi
 done
 
 # move includes to the proper place
-mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
 ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
 
@@ -292,8 +293,6 @@ for f in {asm,byte}comp parsing typing utils ; do
 	%{?with_ocaml_opt:cp $f/*.{cmx,o} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f}
 done
 
-# this isn't installed by default, but is useful
-#install tools/objinfo $RPM_BUILD_ROOT%{_bindir}/ocamlobjinfo
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 
@@ -328,6 +327,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocamldep.byte
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldep.opt}
 %attr(755,root,root) %{_bindir}/ocamldoc
+%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldoc.byte}
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldoc.opt}
 %attr(755,root,root) %{_bindir}/ocamllex
 %attr(755,root,root) %{_bindir}/ocamllex.byte
