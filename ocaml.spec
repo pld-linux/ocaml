@@ -1,7 +1,5 @@
 #
 # Conditional build:
-%bcond_without	emacs		# emacs subpackage
-%bcond_without	x		# X11 support
 %bcond_without	ocaml_opt	# native, optimized compiler
 
 # ppc64, sparc64 and x32 variants not supported currently
@@ -10,44 +8,37 @@
 %undefine	with_ocaml_opt
 %endif
 
-%define		sver	4.04
+%define		sver	4.12
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	4.04.1
-Release:	10
+Version:	4.12.0
+Release:	0.1
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{version}.tar.xz
-# Source0-md5:	092139f2a256d1f3d2571f64ab475aa9
-Source1:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman-html.tar.gz
-# Source1-md5:	5c58a4fce99b20e02c3208ad956bcb9d
-Source2:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.ps.gz
-# Source2-md5:	a408f706789b9b84b0eb68da3db05f15
-Source3:	http://caml.inria.fr/distrib/%{name}-%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source3-md5:	8c9df1da0e36a69817f43115fa87360c
+Source0:	http://caml.inria.fr/distrib/ocaml-%{sver}/%{name}-%{version}.tar.xz
+# Source0-md5:	7343cd398d477001db2c3f2ac92e12ea
+Source1:	http://caml.inria.fr/distrib/ocaml-%{sver}/%{name}-%{sver}-refman-html.tar.gz
+# Source1-md5:	1bda3d0a46328a985c817d551423e2c6
+Source3:	http://caml.inria.fr/distrib/ocaml-%{sver}/%{name}-%{sver}-refman.info.tar.gz
+# Source3-md5:	c808dbbe35a6cc5d14da6c3b2f175d2c
 Source4:	https://github.com/mmottl/pure-fun/archive/v1.0.13/pure-fun-1.0.13.tar.gz
 # Source4-md5:	0a6ff033df78d0880fe4883ace025ebe
 # note: dead URL
 Source5:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source5-md5:	77fa1da7375dea1393cc0b6cd802d7e1
-Patch1:		%{name}-CFLAGS.patch
-Patch2:		%{name}-as_needed.patch
-Patch3:		x32.patch
-URL:		http://caml.inria.fr/
-%{?with_x:BuildRequires:	xorg-lib-libX11-devel}
-%if %{with emacs}
-BuildRequires:	sed >= 4.0
-BuildRequires:	emacs
-BuildRequires:	emacs-common
-%endif
+URL:		https://www.ocaml.org/
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-bytes-devel
 Provides:	ocaml-ocamldoc
-Obsoletes:	ocaml-ocamldoc
 Obsoletes:	ocaml-bytes-devel
+Obsoletes:	ocaml-doc-ps < 4.12
+Obsoletes:	ocaml-emacs < 4.12
+Obsoletes:	ocaml-ocamldoc
+Obsoletes:	ocaml-x11graphics < 4.12
+Obsoletes:	ocaml-x11graphics-devel < 4.12
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
@@ -66,10 +57,10 @@ OCaml (Objective Caml) jest funkcyjnym, obiektowo zorientowanym
 językiem wysokiego poziomu z silnym typowaniem. Należy do rodziny
 języków ML.
 
-Ten pakiet zawiera dwa kompilatory (szybki kompilator do bajtkodu
-oraz optymalizujący kompilator do kodu natywnego), interaktywne
-środowisko pracy, narzędzia do tworzenia analizatorów leksykalnych
-oraz składniowych (ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i
+Ten pakiet zawiera dwa kompilatory (szybki kompilator do bajtkodu oraz
+optymalizujący kompilator do kodu natywnego), interaktywne środowisko
+pracy, narzędzia do tworzenia analizatorów leksykalnych oraz
+składniowych (ocamllex, ocamlyacc), odpluskwiacz (ocamldebug) i
 biblioteki.
 
 %package runtime
@@ -97,8 +88,8 @@ This sources come helpful during debugging of user programs with
 ocamldebug.
 
 %description lib-source -l pl.UTF-8
-Źródła te są przydatne przy odpluskwianiu programów użytkownika
-z użyciem ocamldebug.
+Źródła te są przydatne przy odpluskwianiu programów użytkownika z
+użyciem ocamldebug.
 
 %package doc-html
 Summary:	HTML documentation for OCaml
@@ -111,17 +102,6 @@ HTML documentation for OCaml.
 %description doc-html -l pl.UTF-8
 Dokumentacja dla OCamla w formacie HTML.
 
-%package doc-ps
-Summary:	PostScript documentation for OCaml
-Summary(pl.UTF-8):	Dokumentacja dla OCamla w formacie PostScript
-Group:		Development/Tools
-
-%description doc-ps
-PostScript documentation for OCaml.
-
-%description doc-ps -l pl.UTF-8
-Dokumentacja dla OCamla w formacie PostScript.
-
 %package doc-info
 Summary:	Info documentation for OCaml
 Summary(pl.UTF-8):	Dokumentacja info dla OCamla
@@ -132,50 +112,6 @@ Info documentation for OCaml.
 
 %description doc-info -l pl.UTF-8
 Dokumentacja info dla OCamla.
-
-%package emacs
-Summary:	Emacs mode for OCaml
-Summary(pl.UTF-8):	Tryb OCamla dla Emacsa
-Group:		Development/Tools
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description emacs
-Emacs mode files for Objective Caml language.
-
-%description emacs -l pl.UTF-8
-Pliki trybu OCamla dla Emacsa.
-
-%package x11graphics
-Summary:	X11 graphic output for OCaml
-Summary(pl.UTF-8):	Dostęp do X11 dla OCamla
-Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description x11graphics
-x11graphics module gives OCaml program access to drawing in X11
-windows. This package contains files needed to run bytecode OCaml
-programs using x11graphics.
-
-%description x11graphics -l pl.UTF-8
-Moduł x11graphics daje programom napisanym w OCamlu możliwość
-korzystania z interfejsu graficznego X11. Pakiet ten zawiera binaria
-potrzebne do uruchamiania programów używających x11graphics.
-
-%package x11graphics-devel
-Summary:	X11 graphic output for OCaml
-Summary(pl.UTF-8):	Dostęp do X11 dla OCamla
-Group:		Development/Libraries
-Requires:	%{name}-x11graphics = %{epoch}:%{version}-%{release}
-
-%description x11graphics-devel
-x11graphics module gives OCaml program access to drawing in X11
-windows. This package contains files needed to develop OCaml programs
-using x11graphics.
-
-%description x11graphics-devel -l pl.UTF-8
-Moduł x11graphics daje programom napisanym w OCamlu możliwość
-korzystania z interfejsu graficznego X11. Pakiet ten zawiera pliki
-niezbędne do tworzenia programów używających x11graphics.
 
 %package compiler-objects
 Summary:	Compiled parts of OCaml compiler
@@ -219,8 +155,8 @@ This packages contains sources for Okasaki's Purely Functional
 Datastructures in OCaml, along with some contributions.
 
 %description examples -l pl.UTF-8
-Pakiet ten zawiera źródła Czysto Funkcyjnych Struktur Danych
-autorstwa Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
+Pakiet ten zawiera źródła Czysto Funkcyjnych Struktur Danych autorstwa
+Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
 %setup -q -a1 -a3
@@ -230,24 +166,14 @@ tar xzf %{SOURCE5} -C examples
 # order mess with docs somewhat
 mkdir -p docs/html
 mv htmlman docs/html/ocaml
-cp %{SOURCE2} docs/ocaml.ps.gz
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-cp -f /usr/share/automake/config.sub config/gnu
-./configure \
-	-host %{_target_platform} \
-	-cc "%{__cc}" \
-	-bindir %{_bindir} \
-	-libdir %{_libdir}/%{name} \
-	-mandir %{_mandir}/man1 \
-	-with-pthread \
-	-x11lib %{_libdir}
+%configure \
+	AS=%{__as} \
+	ASPP="%{__cc} -c" \
+	--libdir=%{_libdir}/ocaml
 
-%{__make} -j1 world bootstrap %{?with_ocaml_opt:opt.opt} \
-	CFLAGS="%{rpmcflags} -Wall -DUSE_INTERP_RESULT"
+%{__make} -j1 world bootstrap %{?with_ocaml_opt:opt.opt}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -255,36 +181,17 @@ install -d $RPM_BUILD_ROOT{%{_includedir},%{_infodir},%{_examplesdir}/%{name}-%{
 install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/site-lib
 
 %{__make} install \
-	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
-	LIBDIR=$RPM_BUILD_ROOT%{_libdir}/%{name} \
-	MANDIR=$RPM_BUILD_ROOT%{_mandir}
+	DESTDIR=$RPM_BUILD_ROOT
 
 cat > $RPM_BUILD_ROOT%{_libdir}/%{name}/ld.conf <<EOF
 %{_libdir}/%{name}/stublibs
 %{_libdir}/%{name}
 EOF
 
-%if %{with emacs}
-%{__make} -C emacs install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	EMACSDIR="$RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp" \
-	EMACS="emacs"
-%endif
-
-# symlink .opt version of executable (if present)
-for f in ocamldoc ; do
-	if test -f $RPM_BUILD_ROOT%{_bindir}/${f}.opt; then
-		[ ! -f $RPM_BUILD_ROOT%{_bindir}/${f}.byte ] || exit 1 # drop rename if .opt/.byte already handled upstream
-		%{__mv} $RPM_BUILD_ROOT%{_bindir}/$f \
-			$RPM_BUILD_ROOT%{_bindir}/${f}.byte
-		ln -sf ${f}.opt $RPM_BUILD_ROOT%{_bindir}/$f
-	fi
-done
-
 # move includes to the proper place
-%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/caml $RPM_BUILD_ROOT%{_includedir}/caml
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/ocaml/caml $RPM_BUILD_ROOT%{_includedir}/caml
 # but leave compatibility symlink
-ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/%{name}/caml
+ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 
 # compiled sources of compiler, needed by some programs
 for f in {asm,byte}comp parsing typing utils ; do
@@ -319,6 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocamlc
 %attr(755,root,root) %{_bindir}/ocamlc.byte
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlc.opt}
+%attr(755,root,root) %{_bindir}/ocamlcmt
 %attr(755,root,root) %{_bindir}/ocamlcp
 %attr(755,root,root) %{_bindir}/ocamlcp.byte
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamlcp.opt}
@@ -327,7 +235,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocamldep.byte
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldep.opt}
 %attr(755,root,root) %{_bindir}/ocamldoc
-%{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldoc.byte}
 %{?with_ocaml_opt:%attr(755,root,root) %{_bindir}/ocamldoc.opt}
 %attr(755,root,root) %{_bindir}/ocamllex
 %attr(755,root,root) %{_bindir}/ocamllex.byte
@@ -356,34 +263,32 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/caml
 %{_libdir}/%{name}/compiler-libs
 %{_libdir}/%{name}/threads
-%dir %{_libdir}/%{name}/vmthreads
-%dir %{_libdir}/%{name}/vmthreads/*.cm*
-%dir %{_libdir}/%{name}/vmthreads/*.a
 %{_libdir}/%{name}/*.a
 %{?with_ocaml_opt:%{_libdir}/%{name}/*.o}
 %{_libdir}/%{name}/*.cm*
-%exclude %{_libdir}/%{name}/*graphics*
 %{_libdir}/%{name}/Makefile.config
 %{_libdir}/%{name}/ld.conf
 %{_libdir}/%{name}/camlheader
+%{_libdir}/%{name}/camlheaderd
+%{_libdir}/%{name}/camlheaderi
 %{_libdir}/%{name}/camlheader_ur
 %dir %{_libdir}/%{name}/ocamldoc
 %{_libdir}/%{name}/ocamldoc/*.hva
 %attr(755,root,root) %{_libdir}/%{name}/expunge
 %attr(755,root,root) %{_libdir}/%{name}/extract_crc
-%attr(755,root,root) %{_libdir}/%{name}/objinfo_helper
 %{_mandir}/man1/ocaml*
 %exclude %{_mandir}/man1/ocamlrun.1*
 
 %files runtime
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ocamlrun
+%attr(755,root,root) %{_bindir}/ocamlrund
+%attr(755,root,root) %{_bindir}/ocamlruni
 %dir %{_libdir}/%{name}
-%{_libdir}/%{name}/VERSION
 %dir %{_libdir}/%{name}/site-lib
 %dir %{_libdir}/%{name}/stublibs
+%{_libdir}/%{name}/eventlog_metadata
 %attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
-%exclude %{_libdir}/%{name}/stublibs/dllgraphics.so
 %{?with_ocaml_opt:%attr(755,root,root) %{_libdir}/%{name}/libasmrun_shared.so}
 %attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
 %{_mandir}/man1/ocamlrun.1*
@@ -398,35 +303,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc docs/html/ocaml/*
 
-%files doc-ps
-%defattr(644,root,root,755)
-%doc docs/*.ps.gz
-
 %files doc-info
 %defattr(644,root,root,755)
 %{_infodir}/ocaml.info*
-
-# they are poor, html is much better
-#%files manpages
-#%%{_mandir}/man3/*
-
-%if %{with emacs}
-%files emacs
-%defattr(644,root,root,755)
-%{_datadir}/emacs/site-lisp/*.el*
-%endif
-
-%if %{with x}
-%files x11graphics
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllgraphics.so
-
-%files x11graphics-devel
-%defattr(644,root,root,755)
-%{_libdir}/%{name}/graphics*.cm*
-%{?with_ocaml_opt:%{_libdir}/%{name}/graphics.a}
-%{_libdir}/%{name}/libgraphics.a
-%endif
 
 %files compiler-objects
 %defattr(644,root,root,755)
