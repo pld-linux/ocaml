@@ -171,9 +171,14 @@ mv htmlman docs/html/ocaml
 %configure \
 	AS=%{__as} \
 	ASPP="%{__cc} -c" \
-	--libdir=%{_libdir}/ocaml
+	--libdir=%{_libdir}/ocaml \
+	%{!?with_ocaml_opt:--disable-native-compiler}
 
-%{__make} -j1 world bootstrap %{?with_ocaml_opt:opt.opt}
+%{__make} world
+%{__make} bootstrap
+%if %{with ocaml_opt}
+%{__make} opt opt.opt
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -194,7 +199,7 @@ EOF
 ln -s ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 
 # compiled sources of compiler, needed by some programs
-for f in {asm,byte}comp parsing typing utils ; do
+for f in %{?with_ocaml_opt:asmcomp} bytecomp parsing typing utils ; do
 	install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f
 	cp $f/*.{cmi,cmo} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f
 	%{?with_ocaml_opt:cp $f/*.{cmx,o} $RPM_BUILD_ROOT%{_libdir}/%{name}/compiler/$f}
