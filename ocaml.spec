@@ -14,7 +14,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	4.12.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
@@ -42,6 +42,10 @@ Obsoletes:	ocaml-x11graphics-devel < 4.12
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
+
+%if %{without ocaml_opt}
+%define		_noautoreq	Backend_intf Inlining_decision_intf Simplify_boxed_integer_ops_intf
+%endif
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
