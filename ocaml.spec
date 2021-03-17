@@ -177,7 +177,8 @@ mv htmlman docs/html/ocaml
 %{__make} world
 %{__make} bootstrap
 %if %{with ocaml_opt}
-%{__make} opt opt.opt
+%{__make} opt
+%{__make} opt.opt
 %endif
 
 %install
