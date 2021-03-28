@@ -14,7 +14,7 @@ Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
 Version:	4.12.0
-Release:	4
+Release:	5
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
@@ -34,11 +34,11 @@ Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-bytes-devel
 Provides:	ocaml-ocamldoc
 Obsoletes:	ocaml-bytes-devel
-Obsoletes:	ocaml-doc-ps < 4.12
-Obsoletes:	ocaml-emacs < 4.12
+Obsoletes:	ocaml-doc-ps < 1:4.12
+Obsoletes:	ocaml-emacs < 1:4.12
 Obsoletes:	ocaml-ocamldoc
-Obsoletes:	ocaml-x11graphics < 4.12
-Obsoletes:	ocaml-x11graphics-devel < 4.12
+Obsoletes:	ocaml-x11graphics < 1:4.12
+Obsoletes:	ocaml-x11graphics-devel < 1:4.12
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
