@@ -35,10 +35,10 @@ URL:		https://www.ocaml.org/
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-bytes-devel
 Provides:	ocaml-ocamldoc
-Obsoletes:	ocaml-bytes-devel
+Obsoletes:	ocaml-bytes-devel < 1.4
 Obsoletes:	ocaml-doc-ps < 1:4.12
 Obsoletes:	ocaml-emacs < 1:4.12
-Obsoletes:	ocaml-ocamldoc
+Obsoletes:	ocaml-ocamldoc <= pre4
 Obsoletes:	ocaml-x11graphics < 1:4.12
 Obsoletes:	ocaml-x11graphics-devel < 1:4.12
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -125,7 +125,7 @@ Summary(pl.UTF-8):	Skompilowane części kompilatora OCamla
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	ocaml-devel
-Obsoletes:	ocaml-devel
+Obsoletes:	ocaml-devel < 3.06-3
 
 %description compiler-objects
 This package contains *.cmi and *.cmo files being parts of OCaml
@@ -277,8 +277,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/scrapelabels
 %{_includedir}/caml
 %{_libdir}/%{name}/caml
-%{_libdir}/%{name}/compiler-libs
-%{_libdir}/%{name}/threads
+%dir %{_libdir}/%{name}/compiler-libs
+%{_libdir}/%{name}/compiler-libs/*.cm*
+%{_libdir}/%{name}/compiler-libs/ocaml*.a
+%{?with_ocaml_opt:%{_libdir}/%{name}/compiler-libs/*.o}
+%dir %{_libdir}/%{name}/ocamldoc
+%{_libdir}/%{name}/ocamldoc/*.hva
+%dir %{_libdir}/%{name}/threads
+%{_libdir}/%{name}/threads/*.cm*
+%{_libdir}/%{name}/threads/threads.a
 %{_libdir}/%{name}/*.a
 %{?with_ocaml_opt:%{_libdir}/%{name}/*.o}
 %{_libdir}/%{name}/*.cm*
@@ -288,12 +295,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/camlheaderd
 %{_libdir}/%{name}/camlheaderi
 %{_libdir}/%{name}/camlheader_ur
-%dir %{_libdir}/%{name}/ocamldoc
-%{_libdir}/%{name}/ocamldoc/*.hva
 %attr(755,root,root) %{_libdir}/%{name}/expunge
 %attr(755,root,root) %{_libdir}/%{name}/extract_crc
-%{_mandir}/man1/ocaml*
-%exclude %{_mandir}/man1/ocamlrun.1*
+%{_mandir}/man1/ocaml.1*
+%{_mandir}/man1/ocamlc.1*
+%{?with_ocaml_opt:%{_mandir}/man1/ocamlc.opt.1*}
+%{_mandir}/man1/ocamlcp.1*
+%{_mandir}/man1/ocamldebug.1*
+%{_mandir}/man1/ocamldep.1*
+%{_mandir}/man1/ocamldoc.1*
+%{_mandir}/man1/ocamllex.1*
+%{_mandir}/man1/ocamlmktop.1*
+%{?with_ocaml_opt:%{_mandir}/man1/ocamlopt.1*}
+%{?with_ocaml_opt:%{_mandir}/man1/ocamlopt.opt.1*}
+%{_mandir}/man1/ocamloptp.1*
+%{_mandir}/man1/ocamlprof.1*
+%{_mandir}/man1/ocamlyacc.1*
 
 %files runtime
 %defattr(644,root,root,755)
@@ -301,10 +318,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocamlrund
 %attr(755,root,root) %{_bindir}/ocamlruni
 %dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/stublibs
 %{_libdir}/%{name}/eventlog_metadata
-%attr(755,root,root) %{_libdir}/%{name}/stublibs/dll*.so
 %{?with_ocaml_opt:%attr(755,root,root) %{_libdir}/%{name}/libasmrun_shared.so}
+%dir %{_libdir}/%{name}/stublibs
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllcamlstr.so
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllthreads.so
+%attr(755,root,root) %{_libdir}/%{name}/stublibs/dllunix.so
 %attr(755,root,root) %{_libdir}/%{name}/libcamlrun_shared.so
 %{_mandir}/man1/ocamlrun.1*
 
@@ -312,7 +331,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/%{name}/*.ml
 %{_libdir}/%{name}/*.mli
-%{_libdir}/%{name}/*/*.mli
+%{_libdir}/%{name}/compiler-libs/*.mli
+%{_libdir}/%{name}/ocamldoc/*.mli
+%{_libdir}/%{name}/threads/*.mli
 
 %files doc-html
 %defattr(644,root,root,755)
