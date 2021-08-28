@@ -4,7 +4,7 @@
 
 # ppc64, sparc64 and x32 variants not supported currently
 # alpha, hppa, ia64, mips removed since 4.00
-%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%ifnarch %{ix86} %{x8664} %{arm} aarch64 ppc sparc sparcv9
 %undefine	with_ocaml_opt
 %endif
 
