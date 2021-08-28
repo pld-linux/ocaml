@@ -29,6 +29,7 @@ Source4:	https://github.com/mmottl/pure-fun/archive/v1.0.13/pure-fun-1.0.13.tar.
 # note: dead URL
 Source5:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source5-md5:	77fa1da7375dea1393cc0b6cd802d7e1
+Patch0:		%{name}-10266.patch
 URL:		https://www.ocaml.org/
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
 Provides:	ocaml-bytes-devel
@@ -164,12 +165,14 @@ Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
 %setup -q -a1 -a3
+%patch0 -p1
+
 mkdir examples
 tar xzf %{SOURCE4} -C examples
 tar xzf %{SOURCE5} -C examples
 # order mess with docs somewhat
 mkdir -p docs/html
-mv htmlman docs/html/ocaml
+%{__mv} htmlman docs/html/ocaml
 
 %build
 %configure \
@@ -216,7 +219,7 @@ ln -sf %{_libdir}/%{name}/{scrape,add}labels $RPM_BUILD_ROOT%{_bindir}
 %{__rm} -r $RPM_BUILD_ROOT%{_mandir}/man3
 
 # install info pages
-cp -f infoman/*.gz $RPM_BUILD_ROOT%{_infodir}
+cp -p infoman/ocaml.info{,.body-*}.gz $RPM_BUILD_ROOT%{_infodir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
