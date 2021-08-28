@@ -1,0 +1,11 @@
+--- ocaml-4.12.0/infoman/ocaml.info.orig	2021-08-28 12:25:48.769734956 +0200
++++ ocaml-4.12.0/infoman/ocaml.info	2021-08-28 12:26:25.549535702 +0200
+@@ -1,6 +1,6 @@
+-INFO-DIR-SECTION OCaml Programming Language 
++INFO-DIR-SECTION Programming Languages:
+ START-INFO-DIR-ENTRY
+-* ocaml: (ocaml). OCaml Reference Manual
++* ocaml: (ocaml).			OCaml Reference Manual
+ END-INFO-DIR-ENTRY
+ This file has been translated from LaTeX by HeVeA.
+ 
