@@ -39,8 +39,6 @@ Obsoletes:	ocaml-bytes-devel < 1.4
 Obsoletes:	ocaml-doc-ps < 1:4.12
 Obsoletes:	ocaml-emacs < 1:4.12
 Obsoletes:	ocaml-ocamldoc <= pre4
-Obsoletes:	ocaml-x11graphics < 1:4.12
-Obsoletes:	ocaml-x11graphics-devel < 1:4.12
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
