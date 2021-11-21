@@ -277,13 +277,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/caml
 %dir %{_libdir}/%{name}/compiler-libs
 %{_libdir}/%{name}/compiler-libs/*.cm*
-%{_libdir}/%{name}/compiler-libs/ocaml*.a
+%{?with_ocaml_opt:%{_libdir}/%{name}/compiler-libs/ocaml*.a}
 %{?with_ocaml_opt:%{_libdir}/%{name}/compiler-libs/*.o}
 %dir %{_libdir}/%{name}/ocamldoc
 %{_libdir}/%{name}/ocamldoc/*.hva
 %dir %{_libdir}/%{name}/threads
 %{_libdir}/%{name}/threads/*.cm*
-%{_libdir}/%{name}/threads/threads.a
+%{?with_ocaml_opt:%{_libdir}/%{name}/threads/threads.a}
 %{_libdir}/%{name}/*.a
 %{?with_ocaml_opt:%{_libdir}/%{name}/*.o}
 %{_libdir}/%{name}/*.cm*
