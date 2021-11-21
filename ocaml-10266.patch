@@ -18,11 +18,25 @@ Fixes: #10250.
  runtime/signals_nat.c  | 25 ++++++++++++++-----------
  3 files changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/runtime/caml/signals.h b/runtime/caml/signals.h
-index 3ff152c2693..285dbd7febd 100644
---- a/runtime/caml/signals.h
-+++ b/runtime/caml/signals.h
-@@ -87,7 +87,7 @@ value caml_do_pending_actions_exn (void);
+diff -urNp -x '*.orig' ocaml-4.12.0.org/Changes ocaml-4.12.0/Changes
+--- ocaml-4.12.0.org/Changes	2021-02-24 14:49:29.000000000 +0100
++++ ocaml-4.12.0/Changes	2021-11-21 10:33:11.184661387 +0100
+@@ -276,6 +276,11 @@ OCaml 4.12.0 (24 February 2021)
+ - #10062: set ARCH_INT64_PRINTF_FORMAT correctly for both modes of mingw-w64
+   (David Allsopp, review by Xavier Leroy)
+ 
++- #10250, #10266: Dynamically allocate alternate signal stacks to
++   accommodate changes in Glibc 2.34.
++  (Xavier Leroy, reports by Tomasz Kłoczko and R.W.M. Jones, review by Anil
++   Madhavapeddy, Stephen Dolan, and Florian Angeletti)
++
+ ### Code generation and optimizations:
+ 
+ - #9551: ocamlc no longer loads DLLs at link time to check that
+diff -urNp -x '*.orig' ocaml-4.12.0.org/runtime/caml/signals.h ocaml-4.12.0/runtime/caml/signals.h
+--- ocaml-4.12.0.org/runtime/caml/signals.h	2021-02-24 14:49:29.000000000 +0100
++++ ocaml-4.12.0/runtime/caml/signals.h	2021-11-21 10:33:11.184661387 +0100
+@@ -87,7 +87,7 @@ value caml_do_pending_actions_exn (void)
  value caml_process_pending_actions_with_root (value extra_root); // raises
  value caml_process_pending_actions_with_root_exn (value extra_root);
  int caml_set_signal_action(int signo, int action);
@@ -31,21 +45,19 @@ index 3ff152c2693..285dbd7febd 100644
  
  CAMLextern void (*caml_enter_blocking_section_hook)(void);
  CAMLextern void (*caml_leave_blocking_section_hook)(void);
-diff --git a/runtime/signals_byt.c b/runtime/signals_byt.c
-index 2183142da18..38eb5e3a47a 100644
---- a/runtime/signals_byt.c
-+++ b/runtime/signals_byt.c
-@@ -81,4 +81,4 @@ int caml_set_signal_action(int signo, int action)
+diff -urNp -x '*.orig' ocaml-4.12.0.org/runtime/signals_byt.c ocaml-4.12.0/runtime/signals_byt.c
+--- ocaml-4.12.0.org/runtime/signals_byt.c	2021-02-24 14:49:29.000000000 +0100
++++ ocaml-4.12.0/runtime/signals_byt.c	2021-11-21 10:33:11.184661387 +0100
+@@ -81,4 +81,4 @@ int caml_set_signal_action(int signo, in
      return 0;
  }
  
 -CAMLexport void caml_setup_stack_overflow_detection(void) {}
 +CAMLexport int caml_setup_stack_overflow_detection(void) { return 0; }
-diff --git a/runtime/signals_nat.c b/runtime/signals_nat.c
-index 1be1b45d420..47b3e29af70 100644
---- a/runtime/signals_nat.c
-+++ b/runtime/signals_nat.c
-@@ -174,8 +174,6 @@ DECLARE_SIGNAL_HANDLER(trap_handler)
+diff -urNp -x '*.orig' ocaml-4.12.0.org/runtime/signals_nat.c ocaml-4.12.0/runtime/signals_nat.c
+--- ocaml-4.12.0.org/runtime/signals_nat.c	2021-02-24 14:49:29.000000000 +0100
++++ ocaml-4.12.0/runtime/signals_nat.c	2021-11-21 10:33:11.184661387 +0100
+@@ -181,8 +181,6 @@ DECLARE_SIGNAL_HANDLER(trap_handler)
  #error "CONTEXT_SP is required if HAS_STACK_OVERFLOW_DETECTION is defined"
  #endif
  
@@ -54,7 +66,7 @@ index 1be1b45d420..47b3e29af70 100644
  /* Code compiled with ocamlopt never accesses more than
     EXTRA_STACK bytes below the stack pointer. */
  #define EXTRA_STACK 256
-@@ -269,28 +267,33 @@ void caml_init_signals(void)
+@@ -276,28 +274,33 @@ void caml_init_signals(void)
  #endif
  
  #ifdef HAS_STACK_OVERFLOW_DETECTION
@@ -79,7 +91,7 @@ index 1be1b45d420..47b3e29af70 100644
 +   especially SIGSEGV signals.
 +   Each thread needs its own alternate stack.
 +   The alternate stack used to be statically-allocated for the main thread,
-+   but this is incompatible with Glibc 2.34 and never, where SIGSTKSZ
++   but this is incompatible with Glibc 2.34 and newer, where SIGSTKSZ
 +   may not be a compile-time constant (issue #10250). */
 +
 +CAMLexport int caml_setup_stack_overflow_detection(void)
@@ -97,52 +109,3 @@ index 1be1b45d420..47b3e29af70 100644
 +  return 0;
  #endif
  }
-
-From 9f5b312d457490032e21d54baa85774e78dcd6c9 Mon Sep 17 00:00:00 2001
-From: Xavier Leroy <xavier.leroy@college-de-france.fr>
-Date: Wed, 3 Mar 2021 17:57:25 +0100
-Subject: [PATCH 2/3] Typo in comment
-
----
- runtime/signals_nat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/runtime/signals_nat.c b/runtime/signals_nat.c
-index 47b3e29af70..ca86956783c 100644
---- a/runtime/signals_nat.c
-+++ b/runtime/signals_nat.c
-@@ -281,7 +281,7 @@ void caml_init_signals(void)
-    especially SIGSEGV signals.
-    Each thread needs its own alternate stack.
-    The alternate stack used to be statically-allocated for the main thread,
--   but this is incompatible with Glibc 2.34 and never, where SIGSTKSZ
-+   but this is incompatible with Glibc 2.34 and newer, where SIGSTKSZ
-    may not be a compile-time constant (issue #10250). */
- 
- CAMLexport int caml_setup_stack_overflow_detection(void)
-
-From 1a6cc6022e35b5a5e8e3b97586e78b39d78df51a Mon Sep 17 00:00:00 2001
-From: Xavier Leroy <xavier.leroy@college-de-france.fr>
-Date: Fri, 5 Mar 2021 19:10:11 +0100
-Subject: [PATCH 3/3] Update Changes
-
----
- Changes | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/Changes b/Changes
-index 1bb07e81d09..9c73ad02e32 100644
---- a/Changes
-+++ b/Changes
-@@ -69,6 +69,11 @@ Working version
-   to the debugger via a socket.
-   (Antonin Décimo, review by Xavier Leroy)
- 
-+- #10250, #10266: Dynamically allocate alternate signal stacks to
-+   accommodate changes in Glibc 2.34.
-+  (Xavier Leroy, reports by Tomasz Kłoczko and R.W.M. Jones, review by Anil
-+   Madhavapeddy, Stephen Dolan, and Florian Angeletti)
-+
- ### Code generation and optimizations:
- 
- - #9876: do not cache the young_limit GC variable in a processor register.
