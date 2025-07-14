@@ -164,9 +164,9 @@ Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
 %setup -q -a1 -a3
-%patch0 -p1
+%patch -P0 -p1
 gunzip infoman/ocaml.info.gz
-%patch1 -p1
+%patch -P1 -p1
 
 mkdir examples
 tar xzf %{SOURCE4} -C examples
