@@ -13,23 +13,22 @@
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
 Name:		ocaml
-Version:	4.12.0
-Release:	7
+Version:	4.14.3
+Release:	1
 Epoch:		1
 License:	QPL v1.0 with linking exception (compiler), LGPL v2 with linking exception (library)
 Group:		Development/Languages
-Source0:	http://caml.inria.fr/distrib/ocaml-%{sver}/%{name}-%{version}.tar.xz
-# Source0-md5:	7343cd398d477001db2c3f2ac92e12ea
-Source1:	http://caml.inria.fr/distrib/ocaml-%{sver}/%{name}-%{sver}-refman-html.tar.gz
+Source0:	https://github.com/ocaml/ocaml/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	0795efdbfb71616a1311edbae3cb2fe4
+Source1:	https://ocaml.org/releases//%{sver}/%{name}-%{sver}-refman-html.tar.gz
 # Source1-md5:	1bda3d0a46328a985c817d551423e2c6
-Source3:	http://caml.inria.fr/distrib/ocaml-%{sver}/%{name}-%{sver}-refman.info.tar.gz
+Source3:	https://ocaml.org/releases/%{sver}/%{name}-%{sver}-refman.info.tar.gz
 # Source3-md5:	c808dbbe35a6cc5d14da6c3b2f175d2c
 Source4:	https://github.com/mmottl/pure-fun/archive/v1.0.13/pure-fun-1.0.13.tar.gz
 # Source4-md5:	0a6ff033df78d0880fe4883ace025ebe
 # note: dead URL
 Source5:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
 # Source5-md5:	77fa1da7375dea1393cc0b6cd802d7e1
-Patch0:		%{name}-10266.patch
 Patch1:		%{name}-info.patch
 URL:		https://www.ocaml.org/
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
@@ -164,7 +163,6 @@ Okasaki'ego, napisane w OCamlu, wraz z dodatkami.
 
 %prep
 %setup -q -a1 -a3
-%patch -P0 -p1
 gunzip infoman/ocaml.info.gz
 %patch -P1 -p1
 
@@ -294,7 +292,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/camlheaderi
 %{_libdir}/%{name}/camlheader_ur
 %attr(755,root,root) %{_libdir}/%{name}/expunge
-%attr(755,root,root) %{_libdir}/%{name}/extract_crc
 %{_mandir}/man1/ocaml.1*
 %{_mandir}/man1/ocamlc.1*
 %{?with_ocaml_opt:%{_mandir}/man1/ocamlc.opt.1*}
