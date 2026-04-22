@@ -8,7 +8,7 @@
 %undefine	with_ocaml_opt
 %endif
 
-%define		sver	4.12
+%define		sver	4.14
 
 Summary:	The Objective Caml compiler and programming environment
 Summary(pl.UTF-8):	Kompilator OCamla (Objective Caml) oraz środowisko programistyczne
@@ -21,14 +21,11 @@ Group:		Development/Languages
 Source0:	https://github.com/ocaml/ocaml/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	0795efdbfb71616a1311edbae3cb2fe4
 Source1:	https://ocaml.org/releases//%{sver}/%{name}-%{sver}-refman-html.tar.gz
-# Source1-md5:	1bda3d0a46328a985c817d551423e2c6
+# Source1-md5:	3fea3c7997571a85748503ef7743367f
 Source3:	https://ocaml.org/releases/%{sver}/%{name}-%{sver}-refman.info.tar.gz
-# Source3-md5:	c808dbbe35a6cc5d14da6c3b2f175d2c
+# Source3-md5:	215e25bbc424eb21d0169fe85ec26057
 Source4:	https://github.com/mmottl/pure-fun/archive/v1.0.13/pure-fun-1.0.13.tar.gz
 # Source4-md5:	0a6ff033df78d0880fe4883ace025ebe
-# note: dead URL
-Source5:	http://www.ocaml.info/ocaml_sources/ds-contrib.tar.gz
-# Source5-md5:	77fa1da7375dea1393cc0b6cd802d7e1
 Patch1:		%{name}-info.patch
 URL:		https://www.ocaml.org/
 Requires:	%{name}-runtime = %{epoch}:%{version}-%{release}
@@ -168,7 +165,6 @@ gunzip infoman/ocaml.info.gz
 
 mkdir examples
 tar xzf %{SOURCE4} -C examples
-tar xzf %{SOURCE5} -C examples
 # order mess with docs somewhat
 mkdir -p docs/html
 %{__mv} htmlman docs/html/ocaml
